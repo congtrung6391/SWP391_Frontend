@@ -1,0 +1,40 @@
+.basic-component-textarea-div {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  label {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 3px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px 0px 10px 3px;
+    outline: none;
+    border: 1px solid $silve;
+    border-radius: $corner;
+  }
+
+  textarea:hover, textarea:focus {
+    border: none;
+    outline: none;
+    border: 1px solid #2196F3;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  .basic-component-textarea-message-label {
+    margin: 0;
+    margin-top: 3px;
+    font-size: 13px;
+    color: red;
+    font-style: italic;
+  }
+}

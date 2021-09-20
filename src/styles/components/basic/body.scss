@@ -1,0 +1,35 @@
+.content-body {
+  min-height: calc(100vh - 125px - 1.5rem - 1.5rem);
+}
+
+.reflex-container {
+  height: 100%;
+  background: #f5f6fa;
+}
+
+.reflex-element {
+  height: 100% !important;
+  overflow: hidden !important;
+  border: 1px solid #c6c6c6;
+  border-radius: 3px;
+}
+
+.vertical > .reflex-splitter {
+  width: 10px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-orientation: upright;
+  text-align: center;
+  font-size: larger;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.horizontal > .reflex-splitter {
+  height: 10px !important;
+  text-align: center;
+  font-size: larger;
+  border-left: none !important;
+  border-right: none !important;
+}

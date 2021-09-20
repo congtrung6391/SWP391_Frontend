@@ -1,0 +1,17 @@
+.language-bar {
+  border-top-left-radius: $corner;
+  border-top-right-radius: $corner;
+  
+  label {
+    display: inline;
+  }
+
+  @extend .input-group;
+
+  .form-control {
+    font-size: 14px;
+    padding: 0;
+    height: 25px;
+    width: 100px;
+  }
+}

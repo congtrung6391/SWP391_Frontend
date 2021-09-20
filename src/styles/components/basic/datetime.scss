@@ -1,0 +1,66 @@
+.basic-component-datetime-div {
+
+  .basic-component-datetime-label {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 3px;
+  }
+
+  .basic-component-datetime-picker {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    .form-control {
+      width: 100%;
+      height: 10%;
+      font-size: 14px;
+      color: black;
+      border-radius: $corner;
+      border: 1px solid $silve;
+      transition: none;
+    }
+
+    .form-control:focus {
+      box-shadow: none;
+    }
+
+    .form-control:active {
+      border: 2px solid $light-blue;
+      box-shadow: none;
+    }
+
+    input {
+      max-width: 165px;
+      text-align: left;
+    }
+
+    input:hover, input:focus {
+      border: 1px solid $light-blue;
+    }
+
+    th, td {
+      color: #2c3e50;
+      background: #ffffff;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    td {
+      border-top: 0px;
+    }
+
+    th:hover {
+      background: #eeeeee;
+    }
+  }
+
+  #datetime-message {
+    font-size: 13px;
+    font-style: italic;
+    color: red;
+    margin-top: 3px;
+  }
+}

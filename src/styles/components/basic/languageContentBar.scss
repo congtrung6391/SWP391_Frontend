@@ -1,0 +1,25 @@
+.language-content-bar {
+  padding-right: 10px;
+
+  button {
+    border: 0;
+    background: $silve;
+    color: white;
+    font-size: 12px;
+    width: 30px;
+  }
+
+  .active {
+    background: $light-blue!important;
+  }
+
+  button:first-child {
+    border-top-left-radius: $corner;
+    border-bottom-left-radius: $corner;
+  }
+
+  button:last-child {
+    border-top-right-radius: $corner;
+    border-bottom-right-radius: $corner;
+  }
+}

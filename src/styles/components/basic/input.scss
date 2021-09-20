@@ -1,0 +1,67 @@
+.basic-component-input-div {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  label {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 3px;
+  }
+
+  input {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px 0px 10px 3px;
+    outline: none;
+    border: 1px solid $silve;
+    border-radius: $corner;
+  }
+
+  input:hover, input:focus {
+    outline: none;
+    border: 1px solid #2196F3;
+  }
+
+  input:disabled {
+    border: 1px solid $silve !important;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  .basic-component-input-message-label {
+    margin: 0;
+    margin-top: 3px;
+    font-size: 13px;
+    color: red;
+    font-style: italic;
+  }
+  
+  .not-error-label {
+    color: gray;
+  }
+}
+
+.input-group {
+  .form-control:focus {
+    outline: none!important;
+    border: 1px solid $light-blue;
+    box-shadow: none;
+  }
+}
+
+.input-group-text {
+  font-size: 14px!important;
+}
+
+.form-control {
+  font-size: 14px!important;
+}
+
+.form-control:-webkit-autofill {
+  background: inherit;
+}

@@ -1,0 +1,22 @@
+.code-details-line-numbers {
+  background-color: #f0f1f3;
+  padding: 5px;
+  max-width: 5% !important;
+  border: 1px solid #d7d8da !important;
+  text-align: right;
+  p {
+    margin: 0;
+  }
+}
+
+.code-details-code {
+  border: 1px solid #d7d8da;
+  border-left: none;
+  padding: 5px;
+  color: black;
+  font-family: monospace;
+  word-break: break-all;
+  p {
+    margin: 0
+  }
+}

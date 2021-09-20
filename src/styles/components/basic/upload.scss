@@ -1,0 +1,13 @@
+.custom-upload {
+  input[type=file] {
+    background-color: inherit;
+    color: inherit;
+    &::file-selector-button{
+      padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+      background-color: inherit;
+      color: inherit;
+      border-radius: 0.25rem;
+      border-width: 1px;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.admin-add-contest-type {
+  width: 300px !important;
+  height: 200px !important;
+}
+
+.admin-add-contest-type-body {
+  padding: 0 !important;
+  padding-top: 20px !important;
+  .basic-component-button {
+    background: $light-blue;
+    padding: 5px 0 5px 0;
+  }
+}

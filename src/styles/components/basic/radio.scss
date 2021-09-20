@@ -1,0 +1,71 @@
+.basic-component-radio-div {
+  .basic-component-radio-title {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 3px;
+  }
+
+  .basic-component-radio-select-box {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .basic-component-radio-select-box .basic-component-radio-check-field {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .basic-component-radio-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: rgb(214, 214, 214);
+    border-radius: 50%;
+  }
+
+  .basic-component-radio-select-box:hover .basic-component-radio-check-field ~ .basic-component-radio-checkmark {
+    background-color: rgb(167, 167, 167);
+  }
+
+  .basic-component-radio-select-box .basic-component-radio-check-field:checked ~ .basic-component-radio-checkmark {
+    background-color: #2196F3;
+  }
+
+  .basic-component-radio-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  .basic-component-radio-select-box .basic-component-radio-check-field:checked ~ .basic-component-radio-checkmark:after {
+    display: block;
+  }
+
+  .basic-component-radio-select-box .basic-component-radio-checkmark:after {
+    top: 5px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+  }
+
+  .radio-disabled {
+    opacity: 0.5;
+  }
+}

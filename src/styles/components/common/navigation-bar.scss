@@ -1,0 +1,26 @@
+.navigation-bar {
+  position: relative;
+  z-index: 2;
+  
+  p, a {
+    display: inline;
+    text-decoration: none;
+    color: $dark-gray;
+    font-size: 11px;
+    margin: 10px;
+
+    text-transform: uppercase;
+  }
+
+  p {
+    font-weight: 700;
+  }
+
+  p:hover {
+    cursor: default;
+  }
+
+  a:hover {
+    font-weight: 700;
+  }
+}

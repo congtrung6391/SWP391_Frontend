@@ -1,0 +1,20 @@
+.testcase-list {
+  td {
+    border: 1px solid $silve!important;
+  }
+  
+  tr {
+    td:first-child {
+      border-left: none!important;
+    }
+
+    td:last-child {
+      border-right: none!important;
+    }
+  }
+
+  th, td {
+    white-space: pre-wrap;
+    vertical-align: top;
+  }
+}

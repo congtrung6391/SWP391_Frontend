@@ -1,0 +1,57 @@
+.user-option-menu:hover {
+  .user-option-menu-dropdown-padding {
+    display: block;
+    font-size: 5px;
+  }
+
+  .user-option-menu-dropdown {
+    display: block;
+  }
+}
+
+.user-option-menu-dropdown-padding {
+  display: none;
+}
+
+.user-option-menu-dropdown {
+  max-width: 300px;
+  min-width: 200px;
+  display: none;
+  position: absolute;
+  right: 90px;
+  z-index: 500;
+  text-transform: none!important;
+  word-break: break-word;
+  li:last-child {
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+  }
+
+  li:first-child {
+    border-top-right-radius: 0.25rem;
+    border-top-left-radius: 0.25rem;
+  }
+
+  li:hover {
+    cursor: pointer;
+    @extend .bg-light-blue;
+    color: white
+  }
+
+  a.active {
+    border: none;
+  }
+
+  .avatar {
+    border-radius: 50%;
+    border: 2px solid gainsboro;
+  }
+}
+
+.user-option-menu-dropdown::before {
+  width: 0;
+	height: 0;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	border-bottom: 50px solid #555;
+}

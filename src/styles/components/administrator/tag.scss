@@ -1,0 +1,25 @@
+.single-edit-tag {
+  button {
+    color: white;
+    background: transparent;
+    border: none;
+    vertical-align: middle;
+    padding: 0;
+    height: 100%;
+    margin-left: 5px;
+    margin-top: 0px;
+    font-size: 16px;
+  }
+
+  display: inline-flex;
+  align-items: center;
+  background: $light-blue;
+  padding: 0.3rem;
+  border-radius: $corner;
+  color: white;
+  margin-right: 5px;
+
+  span {
+    vertical-align: middle;
+  }
+}

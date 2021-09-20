@@ -1,49 +1,302 @@
+import React, {
+  useState, useContext, useEffect,
+} from 'react';
 import { NavLink } from 'react-router-dom';
-import { AppBar, Box, Toolbar, IconButton, Typography } from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import React from 'react';
-import UserMenu from '../user/userprofile/UserMenu';
+
+// Material-UI
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Toolbar,
+  IconButton,
+  SwipeableDrawer,
+  Divider,
+  List,
+  ListItemText,
+  ListItemIcon,
+  ListItem,
+  makeStyles,
+} from '@material-ui/core';
+import {
+  HelpOutline,
+} from '@material-ui/icons';
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import MenuIcon from '@material-ui/icons/Menu';
+import HelpIcon from '@material-ui/icons/Help';
+import { displayDesktop, displayMobile } from '../../utils/materialDisplay';
+
+// import { headerLanguage } from './header.lang';
+// import { LanguageService } from '../../services/language.service';
+// import { LanguageContext } from '../../context/language.context';
+import { AuthenticationContext } from '../../context/authentication.context';
+import UserOptionsMenu from '../user/UserOptionsMenu/UserOptionsMenu';
+import CollapseUserOptionsMenuItem from '../user/UserOptionsMenu/CollapseUserOptionsMenuItem';
+
+const useStyles = makeStyles({
+  grow: {
+    flexGrow: 1,
+  },
+  'nav-menu': {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  'drawer-header': {
+    minWidth: '75vw',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+});
 
 const Header = () => {
-  const user = true;
-  return (
-    <AppBar className="header" position="relative">
-      <Toolbar component={Box} display="flex" justifyContent="space-between">
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <i className="fab fa-angular"></i>
-          &nbsp;
-          <Typography variant="h5"><strong>Brand</strong></Typography>
-        </IconButton>
-        <Box>
-          <Typography className="nav-link" component={NavLink} to="home">Home</Typography>        
-          <Typography className="nav-link" component={NavLink} to="link1">Link 1</Typography>
-          <Typography className="nav-link" component={NavLink} to="link2">Link 2</Typography>
-          <Typography className="nav-link" component={NavLink} to="link3">Link 3</Typography>
-        </Box>
+  const { verifyUser, verifyTutor, user } = useContext(AuthenticationContext);
+  const [navItems, setNavItems] = useState([]);
+  const [openMobibleMenu, setOpenMobileMenu] = useState(false);
+  const classes = useStyles();
+
+  const getNavMenu = () => {
+    const items = [];
+
+    // Default
+    items.push({
+      Id: 1,
+      Link: '/contests',
+      Title: 'Kỳ thi',
+    });
+    items.push({
+      Id: 5,
+      Link: '/articles',
+      Title: 'Bài viết',
+    });
+
+    // Public user
+    if (verifyUser()) {
+      items.push({
+        Id: 3,
+        Link: '/collections',
+        Title: 'Chủ đề',
+      });
+      items.push({
+        Id: 2,
+        Link: '/courses',
+        Title: 'Khóa học',
+      });
+    }
+
+    // Admin
+    if (verifyTutor()) {
+      items.push({
+        Id: 4,
+        Link: '/admin/submissions',
+        Title: 'Bài nộp',
+      });
+    }
+    setNavItems(items);
+  };
+
+  useEffect(() => {
+    getNavMenu();
+  }, []);
+
+  const toggleDrawler = () => {
+    if (openMobibleMenu) {
+      setNavItems([]);
+      setOpenMobileMenu(false);
+    } else {
+      getNavMenu();
+      setOpenMobileMenu(true);
+    }
+  };
+
+  const renderNavMenu = () => (
+    <Box display={displayDesktop}>
+      <List className={`${classes['nav-menu']}`}>
         {
-          user
+          navItems.map((item) => (
+            <NavLink key={item.Id} to={item.Link}>
+              <ListItem color="inherit">
+                <ListItemText primary={item.Title} />
+              </ListItem>
+            </NavLink>
+          ))
+        }
+      </List>
+    </Box>
+  );
+
+  const renderNavMenuMobile = () => (
+    <SwipeableDrawer
+      className={classes['styled-drawer']}
+      anchor="left"
+      open={openMobibleMenu}
+      onClose={toggleDrawler}
+      onOpen={toggleDrawler}
+    >
+      <div
+        className={classes['drawer-header']}
+        onClick={toggleDrawler}
+        role="button"
+        tabIndex={0}
+      >
+        {
+          !verifyUser()
             ? (
-              <Box display="flex">
-                <IconButton color="inherit">
-                  <ShoppingCartIcon />
-                </IconButton>
-                <UserMenu />
-                <IconButton color="inherit">
-                  <SettingsIcon />
-                </IconButton>
-              </Box>
+              <List className={classes['nav-menu']}>
+                <NavLink to="/register" onClick={toggleDrawler}>
+                  <ListItem>
+                    <ListItemText primary="Đăng ký" />
+                  </ListItem>
+                </NavLink>
+                <NavLink to="/login" onClick={toggleDrawler}>
+                  <ListItem>
+                    <ListItemText primary="Đăng nhập" />
+                  </ListItem>
+                </NavLink>
+              </List>
             )
             : (
-              <Box>
-                <Typography className="nav-link" component={NavLink} to="login">Log in</Typography>
-                <Typography className="nav-link" component={NavLink} to="signin">Sign in</Typography>
+              <Box className={classes['nav-menu']} m="0.7rem">
+                <Avatar
+                  border={1}
+                  alt={user.Username}
+                  src={user.Avatar || './image/default_avatar.jpg'}
+                />
+                <Box ml="1rem">
+                  <strong>{ user.Username }</strong>
+                  <br />
+                  <i>{ user.Email }</i>
+                </Box>
               </Box>
             )
         }
-      </Toolbar>
-    </AppBar>
-  )
+        <Box
+          ml="auto"
+          component={IconButton}
+          color="inherit"
+        >
+          <ArrowLeftIcon fontSize="large" />
+        </Box>
+      </div>
+      <Divider />
+      <List>
+        {
+          navItems.map((item) => (
+            <NavLink key={item.Id} to={item.Link} onClick={toggleDrawler}>
+              <ListItem key={item.Id}>
+                <ListItemText primary={item.Title} />
+              </ListItem>
+            </NavLink>
+          ))
+        }
+        {
+          verifyUser() && (
+            [
+              <Divider key={6} />,
+              <CollapseUserOptionsMenuItem key={7} onClick={toggleDrawler} />,
+            ]
+          )
+        }
+        <Divider />
+        <NavLink to="/help" onClick={toggleDrawler}>
+          <ListItem button>
+            <ListItemIcon>
+              <HelpOutline color="inherit" />
+            </ListItemIcon>
+            <ListItemText primary="Help" />
+          </ListItem>
+        </NavLink>
+      </List>
+      <Divider />
+    </SwipeableDrawer>
+  );
+
+  return (
+    <div className="header">
+      <AppBar position="static">
+        <Toolbar>
+          <NavLink className="no-border" to="/">
+            <IconButton>
+              <Avatar
+                alt="Big-O Coding"
+                src="logo.svg"
+              />
+            </IconButton>
+          </NavLink>
+
+          {renderNavMenu()}
+
+          <div className={classes.grow} />
+
+          {
+            verifyTutor()
+            && (
+              <List className={classes['nav-menu']}>
+                <ListItem button>
+                  <NavLink className="admin-badge" to="/admin">
+                    <ListItemText>
+                      <span className="fas fa-cogs" />
+                      &nbsp;&nbsp;
+                      { user.Role }
+                    </ListItemText>
+                  </NavLink>
+                </ListItem>
+              </List>
+            )
+          }
+
+          {
+            verifyUser()
+              ? (
+                <Box display={displayDesktop}>
+                  <UserOptionsMenu />
+                </Box>
+              )
+              : (
+                <List className={classes['nav-menu']}>
+                  <NavLink to="/register">
+                    <ListItem>
+                      <ListItemText primary="Đăng ký" />
+                    </ListItem>
+                  </NavLink>
+                  <NavLink to="/login">
+                    <ListItem>
+                      <ListItemText primary="Đăng nhập" />
+                    </ListItem>
+                  </NavLink>
+                </List>
+              )
+          }
+
+          <Box display={displayDesktop}>
+            <NavLink className="no-border" exact to="/help">
+              <IconButton
+                color="inherit"
+                aria-controls="help"
+              >
+                <HelpIcon />
+              </IconButton>
+            </NavLink>
+          </Box>
+
+          {
+            verifyUser() && (
+              <Box display={displayMobile}>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={toggleDrawler}
+                >
+                  <MenuIcon fontSize="large" />
+                </IconButton>
+              </Box>
+            )
+          }
+        </Toolbar>
+      </AppBar>
+      {renderNavMenuMobile()}
+    </div>
+  );
 };
 
 export default Header;

@@ -1,0 +1,138 @@
+@import './color.scss';
+@import './spacing.scss';
+@import './extra-class.scss';
+@import './font-face.scss';
+// @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap&subset=vietnamese');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=JetBrains+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=JetBrains+Mono&family=Roboto+Mono&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  height: 100%;
+  color: $dark-gray;
+  font-size: 14px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+html, body {
+  height: 100%;
+}
+
+$corner: 2.5px;
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: $corner;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@-moz-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@-webkit-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@-ms-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@-o-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+* {
+  outline: 0 !important;
+}
+
+*:focus {
+  outline: 0 !important;
+}
+
+h1 {
+  font-size: 26px;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+#root {
+  height: 100vh;
+}
+
+.corner {
+  border-radius: $corner;
+}
+
+.font-semi-bold {
+  font-weight: 600!important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.h100 {
+  height: 100%;
+}
+
+.styledBorder {
+  border: 1px solid white;
+}
+
+.font-mono {
+  font-family: 'Roboto Mono', 'JetBrains Mono', 'Fira Code',
+  'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono','Courier New',  monospace;
+}

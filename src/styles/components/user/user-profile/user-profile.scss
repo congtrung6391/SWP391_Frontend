@@ -1,0 +1,143 @@
+.userprofile-avatar {
+  border: 5px solid #59A6F3;
+  width: 14.5rem;
+  height: 14.5rem;
+  padding: 0.3rem;
+  border-radius: 7.25rem;
+  position: relative;
+
+  @media screen and (max-width: 1024px){
+    width: 11.5rem;
+    height: 11.5rem;
+  }
+
+  .avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 7.25rem;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .change-avatar-btn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+  }
+
+  &:hover {
+    .avatar {
+      filter: blur(8px);
+      -webkit-filter: blur(1px);
+    }
+    .change-avatar-btn {
+      display: block
+    }
+  }
+}
+
+.certificate-thumbnail {
+  position: relative;
+  .button-group {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+  }
+  &:hover {
+    .button-group {
+      display: block;
+    }
+  }
+}
+
+.userprofile-side-nav {
+  border-radius: 0.3rem;
+  transition: box-shadow 0.3s;
+  &:hover {
+    z-index: 1000;
+    box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.active-tab {
+  background-color: #59A6F3;
+  color: #fff;
+}
+
+.guest-view {
+  .basic-component-input-div {
+    text-align: left !important;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    cursor: default;
+    input {
+      cursor: default;
+      color: transparent;
+      text-shadow: 0 0 0 #000000;
+    }
+    input:hover, input:focus {
+      border: 1px solid $silve;
+    }
+  }
+}
+
+.owner-view {
+  .basic-component-input-div, .basic-component-datetime-div, .basic-component-select {
+    text-align: left !important;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .input-disabled {
+    cursor: default;
+    input {
+      cursor: default;
+      color: transparent;
+      text-shadow: 0 0 0 #000000;
+    }
+    input:hover, input:focus {
+      border: 1px solid $silve;
+    }
+  }
+}
+
+.change-avatar-field {
+  span {
+    visibility: hidden;
+    font-size: 40px;
+    position: absolute;
+    opacity: 0.8;
+    width: 100%;
+    left: 0;
+    margin-top: 80px;
+  }
+
+  .avatar-hover {
+    opacity: 0.5;
+    transition: 0.7ms;
+  }
+
+  .show-camera-change-avatar {
+    visibility: visible;
+  }
+}
+
+.change-info-btn {
+  background: $light-blue;
+  font-weight: 600;
+  padding: 8px 0px 8px 3px;
+}
+
+.cancel-change-info-btn {
+  background: red;
+  font-weight: 600;
+  padding: 8px 0px 8px 3px;
+}
+
+.change-new-password-profile {
+  margin-bottom: 0 !important;
+}

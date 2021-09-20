@@ -1,0 +1,54 @@
+.single-admin-feature {
+  width: 250px;
+  margin: 1.0rem;
+  margin-right: 2.0rem;
+  
+  .cover {
+    .container {
+      padding: 0!important;
+    }
+
+    .logo {
+      font-size: 45px;  
+    }
+
+    .number {
+      p {
+        margin: 0;
+        font-size: 15px;
+      }
+      font-size: 30px;
+    }
+  }
+
+  .control {
+    padding: 5px 0.3rem 5px 0.3rem;
+  }
+
+  .control-add {
+    background: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 1px solid $silve;
+  }
+
+  .control-add:hover {
+    transform: translateY(-1px);
+    border: none;
+    background: $green;
+    color: white;
+    transition: 0.25s;
+  }
+}
+
+.single-admin-feature:hover {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  transition: 0.25s;
+}
+
+@media only screen and (max-width: 900px) {
+  .single-admin-feature {
+    width: 100%;
+  }
+}

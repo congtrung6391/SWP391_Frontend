@@ -1,0 +1,46 @@
+.pagination-basic {
+  @extend .flex-center;
+  list-style-type: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.page-active-basic {
+  @extend .basic;
+  @extend .flex-center;
+  background: $light-blue;
+  color: white;
+  border-radius: 50%;
+}
+
+.page-basic {
+  @extend .flex-center;
+  user-select: none;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  a {
+    line-height: 20px;
+    padding: 5px;
+  }
+}
+
+.page-link-basic {
+  color: $light-blue;
+}
+
+.page-basic:hover {
+  @extend .page-active-basic;
+  background: #74b9ff;
+}
+
+.break-me, .next, .previous {
+  @extend .page-basic;
+  @extend .page-link-basic;
+}
+
+.next:hover, .previous:hover {
+  background: #74b9ff;
+  color: white;
+}

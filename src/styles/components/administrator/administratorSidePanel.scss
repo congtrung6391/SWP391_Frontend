@@ -1,0 +1,75 @@
+.administrator-side-panel {
+  width: 20px;
+  height: 100%;
+
+  z-index: 1000;
+  background: white;
+  border-right: 1px solid $cloud;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  .hover-display {
+    padding-top: 100px;
+    background: white;
+    color: $dark-gray;
+    vertical-align: middle;
+  }
+
+  .main-control {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: none;
+    top: 0;
+    padding-top: 70px;
+  }
+
+  .hover-display {
+    display: block;
+  }
+
+  transition: width 0.25s;
+}
+
+.administrator-side-panel:hover {
+  width: 200px;
+  border-right: 1px solid $cloud;
+  transition: width 0.25s;
+
+  .main-control {
+    display: block;
+  }
+
+  .hover-display {
+    display: none!important;
+  }
+}
+
+.admin-feature-list {
+  padding: 0.6rem;
+  font-size: 16px;
+
+  .admin-feature:last-child {
+    border-bottom: 1px solid $cloud;
+  }
+
+  .admin-feature {
+    border-top: 1px solid $cloud;
+
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+
+    a {
+      width: 100%;
+    }
+
+    .admin-feature-active {
+      font-weight: 900;
+    }
+  }
+  
+  .admin-feature:hover {
+    font-weight: 900;
+  }
+}

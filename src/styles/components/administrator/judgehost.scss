@@ -1,0 +1,30 @@
+.judgehost-single-list {
+  &.ok {
+    background-color: #ecffe6;
+    border-color: greenyellow;
+  }
+
+  &.warning {
+    background-color: #ffffcc;
+    border-color: yellow;
+  }
+
+  &.dead {
+    background-color: #ffe6e6;
+    border-color: red;
+  }
+}
+
+.status-judgehost {
+  &.ok {
+    color: #009933;
+  }
+
+  &.warning {
+    color: #cc7a00;
+  }
+
+  &.dead {
+    color: #b30000;
+  }
+}

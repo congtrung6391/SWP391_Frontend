@@ -1,0 +1,79 @@
+@import '~codemirror/lib/codemirror.css';
+@import '~codemirror/theme/material.css';
+
+.CodeMirror {
+  min-height: 100px;
+  height: 100% !important;
+}
+
+.CodeMirror-scroll {
+  min-height: 200px;
+  height: 100%;
+  // max-height: 100% !important;
+}
+
+.editor {
+  border-radius: $corner;
+}
+
+.toolbar {
+  button {
+    border: 1px solid transparent;
+    background: white;
+  }
+  
+  button:hover {
+    border: 1px solid $light-blue;
+    color: $light-blue;
+    border-radius: 4px;
+  }
+}
+
+.dark-bar {
+  background: #263238;
+}
+
+.custom-input {
+  .CodeMirror {
+    min-height: 100px;
+    height: 100%!important;
+  }
+  
+  .CodeMirror-scroll {
+    min-height: 100px;
+    height: 100%!important;
+  }
+}
+
+.test-code-result {
+  font-family: monospace!important;
+
+  .CodeMirror {
+    min-height: 10px;
+    height: 100%!important;
+  }
+  
+  .CodeMirror-scroll {
+    min-height: 10px;
+    height: 100%!important;
+  }
+}
+
+#submit-code {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .editor {
+    height: calc(100% - 40px);
+  }
+
+  .submit-bar {
+    height: 40px;
+    padding: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

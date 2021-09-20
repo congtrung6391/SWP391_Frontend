@@ -1,0 +1,21 @@
+.admin-list-contests-btn-statistic {
+  background: orange;
+}
+
+.admin-list-contests-btn-edit {
+  background: $green;
+}
+
+.admin-list-contests-btn-remove {
+  background: red;
+}
+
+.admin-list-contests-top-btn {
+  background: $green;
+  padding: 5px 0 5px 0;
+}
+
+.contests-number:hover {
+  box-shadow: none;
+  transform: none;
+}

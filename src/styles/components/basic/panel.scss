@@ -1,0 +1,32 @@
+.panel {
+  .panel-title {
+    color: white;
+    border-top-left-radius: $corner;
+    border-top-right-radius: $corner;
+    padding: 0.3rem;
+    text-transform: capitalize;
+    margin: 0 !important;
+
+    h4 {
+      margin: 0;
+    }
+  }
+
+  .table-inside {
+    table {
+      box-shadow: none!important;
+    }
+
+    th:first-child {
+      border-top-left-radius: 0;
+    }
+    
+    th:last-child {
+      border-top-right-radius: 0;
+    }
+  }
+}
+
+.panel.card {
+  margin-bottom: 2rem;
+}

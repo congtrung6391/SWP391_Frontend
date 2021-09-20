@@ -1,0 +1,78 @@
+.basic-component-checkbox-div {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  label {
+    text-align: left;
+  }
+
+  .basic-component-checkbox-title {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 3px;
+  }
+
+  .basic-component-checkbox-select-box {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 100%;
+  }
+  
+  .basic-component-checkbox-select-box .basic-component-checkbox-check-field {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .basic-component-checkbox-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+  }
+  
+  .basic-component-checkbox-select-box:hover .basic-component-checkbox-check-field ~ .basic-component-checkbox-checkmark {
+    background-color: #ccc;
+  }
+  
+  .basic-component-checkbox-select-box .basic-component-checkbox-check-field:checked ~ .basic-component-checkbox-checkmark {
+    background-color: #2196F3;
+  }
+  
+  .basic-component-checkbox-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .basic-component-checkbox-select-box .basic-component-checkbox-check-field:checked ~ .basic-component-checkbox-checkmark:after {
+    display: block;
+  }
+  
+  .basic-component-checkbox-select-box .basic-component-checkbox-checkmark:after {
+    left: 5px;
+    top: 3px;
+    width: 10px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}

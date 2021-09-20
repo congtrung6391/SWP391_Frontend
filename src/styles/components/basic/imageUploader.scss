@@ -1,0 +1,34 @@
+.upload-image-btn {
+  border: none;
+  background: $cloud;
+  width: 150px;
+  height: 150px;
+  border-radius: 2px;
+}
+
+.review-img {
+  display: inline-block;
+  position: relative;
+  max-width: 150px;
+  max-height: 150px;
+  margin: 5px;
+
+  img {
+    max-width: 150px;
+    max-height: 150px;
+  }
+
+  button {
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: none;
+    border: none;
+    color: $silve;
+  }
+
+  button:hover {
+    background: rgb(102, 102, 102);
+  }
+}

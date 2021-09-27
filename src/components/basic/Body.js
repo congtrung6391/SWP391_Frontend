@@ -6,7 +6,7 @@ import {
   Box,
   Grid,
   Container,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { breakpointPropType } from '../../propTypes/propTypes';
 

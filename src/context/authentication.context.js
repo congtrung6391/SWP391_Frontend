@@ -45,8 +45,8 @@ class AuthenticationProvider extends React.Component {
   }
 
   // eslint-disable-next-line no-return-await
-  register = async (fullname, username, email, password) => {
-    const result = await AuthenticationService.register(fullname, username, email, password);
+  register = async (fullname, username, email, password, phone, role) => {
+    const result = await AuthenticationService.register(fullname, username, email, password, phone, role);
     return result;
   }
 

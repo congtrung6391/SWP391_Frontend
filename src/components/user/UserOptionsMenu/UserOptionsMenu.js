@@ -10,7 +10,7 @@ import {
   Divider,
   Typography,
   useTheme,
-} from '@material-ui/core';
+} from '@mui/material';
 
 // import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';

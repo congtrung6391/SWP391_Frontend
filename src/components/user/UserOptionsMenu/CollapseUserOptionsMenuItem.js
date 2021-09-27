@@ -8,9 +8,9 @@ import {
   ListItem,
   ListItemAvatar,
   Collapse,
-} from '@material-ui/core';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+} from '@mui/material';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';

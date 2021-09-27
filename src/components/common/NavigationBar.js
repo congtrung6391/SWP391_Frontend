@@ -8,7 +8,7 @@ import {
   Link,
   Box,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import LanguageService from '../../services/language.service';
 import navigationLanguage from './navigation.lang';
@@ -42,14 +42,14 @@ const NavigationBar = (props) => {
       let { nav /* , style, bannerUrl */ } = props;
 
       if (!checkNav(nav)) {
-        nav = [['Trang chủ', '/']];
+        nav = [['Home', '/']];
       }
 
       return (
         <Container
           component={Box}
-          px="1rem"
-          py="1rem"
+          py={2}
+          style={{ paddingLeft: '3rem' }}
         >
           <Breadcrumbs separator="›&nbsp;" aria-label="breadcrumb">
             {
@@ -80,45 +80,7 @@ const NavigationBar = (props) => {
               ))
             }
           </Breadcrumbs>
-          {/* {
-            bannerUrl
-            && (
-              <div
-                className="d-flex flex-row justify-content-center"
-                style={{
-                  backgroundColor: bannerBg,
-                }}
-              >
-                <img
-                  src={bannerUrl}
-                  alt="Line Code Wow banner"
-                  style={{
-                    maxHeight: '300px',
-                    width: 'min(100%, 1500px)',
-                  }}
-                />
-              </div>
-            )
-          } */}
         </Container>
-        // <div className="py-1 pr-0 pl-1 shadow-sm navigation-bar" style={style}>
-        //   <div className="pl-5">
-        //     {
-        //       nav.map((link, index) => (
-        //         <span key={link[0]}>
-        //           {
-        //             (index < nav.length - 1 && <Link to={link[1]}>{LS.get(link[0])}</Link>)
-        //             || <p>{LS.get(link[0])}</p>
-        //           }
-        //           {
-        //             index < nav.length - 1
-        //             && <span className="fas fa-chevron-right" style={{ fontSize: '10px' }} />
-        //           }
-        //         </span>
-        //       ))
-        //     }
-        //   </div>
-        // </div>
       );
     }
     )

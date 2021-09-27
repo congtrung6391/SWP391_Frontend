@@ -16,19 +16,18 @@ import {
   ListItemText,
   ListItemIcon,
   ListItem,
+  Container,
+} from '@mui/material';
+import {
   makeStyles,
-} from '@material-ui/core';
+} from '@mui/styles';
 import {
   HelpOutline,
-} from '@material-ui/icons';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import MenuIcon from '@material-ui/icons/Menu';
-import HelpIcon from '@material-ui/icons/Help';
+  ArrowBackIosNew as ArrowLeftIcon,
+  Menu as MenuIcon,
+} from '@mui/icons-material';
 import { displayDesktop, displayMobile } from '../../utils/materialDisplay';
 
-// import { headerLanguage } from './header.lang';
-// import { LanguageService } from '../../services/language.service';
-// import { LanguageContext } from '../../context/language.context';
 import { AuthenticationContext } from '../../context/authentication.context';
 import UserOptionsMenu from '../user/UserOptionsMenu/UserOptionsMenu';
 import CollapseUserOptionsMenuItem from '../user/UserOptionsMenu/CollapseUserOptionsMenuItem';
@@ -196,77 +195,79 @@ const Header = () => {
   return (
     <div className="header">
       <AppBar position="static" color="inherit">
-        <Toolbar justifyContent="space-between">
-          <NavLink className="no-border" to="/">
-            <IconButton>
-              <Avatar
-                alt="Online tutor"
-                src="logo.png"
-              />
-            </IconButton>
-          </NavLink>
+        <Container>
+          <Toolbar style={{ paddingLeft: '0', paddingRight: '0' }}>
+            <NavLink className="no-border" to="/">
+              <IconButton>
+                <Avatar
+                  alt="Online tutor"
+                  src="logo.png"
+                />
+              </IconButton>
+            </NavLink>
 
-          {/* <div className={classes.grow} /> */}
-          
-          {renderNavMenu()}
+            {/* <div className={classes.grow} /> */}
+            
+            {renderNavMenu()}
 
-          <div className={classes.grow} />
+            <div className={classes.grow} />
 
-          {
-            verifyTutor()
-            && (
-              <List className={classes['nav-menu']}>
-                <ListItem button>
-                  <NavLink className="admin-badge" to="/admin">
-                    <ListItemText>
-                      <span className="fas fa-cogs" />
-                      &nbsp;&nbsp;
-                      { user.Role }
-                    </ListItemText>
-                  </NavLink>
-                </ListItem>
-              </List>
-            )
-          }
-
-          {
-            verifyUser()
-              ? (
-                <Box display={displayDesktop}>
-                  <UserOptionsMenu />
-                </Box>
-              )
-              : (
+            {
+              verifyTutor()
+              && (
                 <List className={classes['nav-menu']}>
-                  <NavLink className="nav-item" to="/register">
-                    <ListItem>
-                      <ListItemText primary="Đăng ký" />
-                    </ListItem>
-                  </NavLink>
-                  <NavLink className="nav-item" to="/login">
-                    <ListItem>
-                      <ListItemText primary="Đăng nhập" />
-                    </ListItem>
-                  </NavLink>
+                  <ListItem button>
+                    <NavLink className="admin-badge" to="/admin">
+                      <ListItemText>
+                        <span className="fas fa-cogs" />
+                        &nbsp;&nbsp;
+                        { user.Role }
+                      </ListItemText>
+                    </NavLink>
+                  </ListItem>
                 </List>
               )
-          }
+            }
 
-          {
-            verifyUser() && (
-              <Box display={displayMobile}>
-                <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={toggleDrawler}
-                >
-                  <MenuIcon fontSize="large" />
-                </IconButton>
-              </Box>
-            )
-          }
-        </Toolbar>
+            {
+              verifyUser()
+                ? (
+                  <Box display={displayDesktop}>
+                    <UserOptionsMenu />
+                  </Box>
+                )
+                : (
+                  <List className={classes['nav-menu']}>
+                    <NavLink className="nav-item" to="/register">
+                      <ListItem>
+                        <ListItemText primary="Đăng ký" />
+                      </ListItem>
+                    </NavLink>
+                    <NavLink className="nav-item" to="/login">
+                      <ListItem>
+                        <ListItemText primary="Đăng nhập" />
+                      </ListItem>
+                    </NavLink>
+                  </List>
+                )
+            }
+
+            {
+              verifyUser() && (
+                <Box display={displayMobile}>
+                  <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={toggleDrawler}
+                  >
+                    <MenuIcon fontSize="large" />
+                  </IconButton>
+                </Box>
+              )
+            }
+          </Toolbar>
+        </Container>
       </AppBar>
       {renderNavMenuMobile()}
     </div>

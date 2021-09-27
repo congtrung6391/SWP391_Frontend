@@ -3,7 +3,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import {
   Box, Typography, Paper, TextField, Checkbox, FormControlLabel, Avatar, Button, Link,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { isLoggedIn } from '../../../utils/cookies';
 import { Loading } from '../../common/Loading';

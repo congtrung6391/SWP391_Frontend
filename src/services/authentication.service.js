@@ -19,17 +19,19 @@ class AuthenticationService {
     return isLoggedIn();
   }
 
-  static async register(Fullname, Username, Email, Password) {
+  static async register(fullName, username, email, password, phone, role) {
     try {
       await new APIService(
         'post',
         REGISTER,
         null,
         {
-          Fullname,
-          Username,
-          Email,
-          Password,
+          fullName,
+          username,
+          email,
+          password,
+          // phone,
+          role: [role],
         },
       ).request();
       return null;

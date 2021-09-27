@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Box, Container, Paper, TextField, Typography, Button, styled,
-} from '@material-ui/core';
+} from '@mui/material';
 import { isLoggedIn } from '../../../utils/cookies';
 import history from '../../../BrowserHistory';
 import Body from '../../basic/Body';

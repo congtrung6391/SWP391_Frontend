@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@mui/material';
 
 const ThemeWrapper = (props) => {
-  const theme = createMuiTheme({
+  const theme = createTheme({
     typography: {
       fontFamily: [
         '-apple-system',
@@ -45,11 +45,11 @@ const ThemeWrapper = (props) => {
   const { children } = props;
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       {
         children
       }
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

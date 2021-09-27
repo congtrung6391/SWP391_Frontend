@@ -20,12 +20,11 @@ const ThemeWrapper = (props) => {
     },
     palette: {
       primary: {
-        light: '#fff',
-        main: '#2c3e50',
-        dark: '#000',
+        main: '#21B8D9',
+        contrastText: '#fff',
       },
       secondary: {
-        main: '#3498db',
+        main: '#DC8EF8',
         contrastText: '#fff',
       },
       success: {

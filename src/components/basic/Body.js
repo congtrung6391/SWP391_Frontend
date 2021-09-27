@@ -22,7 +22,7 @@ const Body = ({ className, children, backgroundColor }) => (
     style={{ background: backgroundColor }}
   >
     <Container className="content-body">
-      <Grid container>
+      <Grid container justifyContent="center">
         {children}
       </Grid>
       <ToastStack />
@@ -35,7 +35,7 @@ Body.propTypes = {
 };
 Body.defaultProps = {
   className: '',
-  backgroundColor: '#f5f6fa',
+  backgroundColor: '#fff',
 };
 
 export const Main = ({ gridBreakpont, className, children }) => (

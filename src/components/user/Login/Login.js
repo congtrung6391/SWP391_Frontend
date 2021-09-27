@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Container, Col, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import {
+  Box, Typography, Paper, TextField, Checkbox, FormControlLabel, Avatar, Button, Link,
+} from '@material-ui/core';
 
-import Input from '../../basic/Input';
-import Button from '../../basic/Button';
-import Checkbox from '../../basic/Checkbox';
 import { isLoggedIn } from '../../../utils/cookies';
 import { Loading } from '../../common/Loading';
 import Body from '../../basic/Body';
@@ -26,8 +25,6 @@ class Login extends React.Component {
       isFacebookLoggingIn: false,
       socialLoginError: '',
     };
-    this.GOOGLE_ID = process.env.REACT_APP_GOOGLE_LOGIN_ID;
-    this.FACEBOOK_ID = process.env.REACT_APP_FACEBOOK_LOGIN_ID;
     this.context = AuthenticationContext;
   }
 
@@ -151,8 +148,6 @@ class Login extends React.Component {
       remember,
       errorUsername,
       isLoggingIn,
-      isGoolgeLoggingIn,
-      isFacebookLoggingIn,
       socialLoginError,
     } = this.state;
 
@@ -175,90 +170,54 @@ class Login extends React.Component {
                 ]}
               />
               <Body>
-                <Container>
-                  <Row className="justify-content-md-center">
-                    <Col xs lg="5" className="form login-div shadow-sm" style={{ backgroundColor: 'white' }}>
-                      <form onSubmit={this.onSubmitLogin}>
-                        <h1>Đăng nhập</h1>
-                        {
-                          wrongPassword
-                          && (
-                          <div className="login-error">
-                            <label>{wrongPassword}</label>
-                          </div>
-                          )
-                        }
-                        <Input
-                          name="Tên đăng nhập / Email"
-                          value={Username}
-                          type="text"
-                          message={errorUsername}
-                          onChange={this.onChangeUsername}
-                        />
-                        <Input
-                          name="Mật khẩu"
-                          type="password"
-                          className="password-input"
-                          value={Password}
-                          onChange={this.onChangePassword}
-                        />
-                        <Container>
-                          <Row>
-                            <Col>
-                              <Checkbox
-                                name="remember"
-                                values={remember}
-                                options={[{ value: 'remember', text: 'Ghi nhớ tài khoản' }]}
-                                className="login-remember"
-                                onChange={this.toggleRemember}
-                              />
-                            </Col>
-                            <Col style={{ textAlign: 'right' }}>
-                              <label
-                                className="forgot-password-label"
-                              >
-                                <div role="link" tabIndex={0} onClick={() => this.props.history.push('/forgot')}>Quên mật khẩu?</div>
-                              </label>
-                            </Col>
-                          </Row>
-                        </Container>
-                        <Button
-                          type="submit"
-                          disabled={isLoggingIn}
-                          className="login-button w-100"
-                        >
-                          {isLoggingIn ? (<div style={{ padding: '5px 0 5px 0' }}><Loading /></div>) : 'Đăng nhập'}
-                        </Button>
-                      </form>
-                    </Col>
-                  </Row>
-                  <Row className="justify-content-md-center" style={{ marginBottom: '10%' }}>
-                    <Col
-                      xs
-                      lg="5"
-                      className="form login-div shadow-sm"
-                      style={{ textAlign: 'center', marginTop: '20px', backgroundColor: 'white' }}
-                    >
-                      {'Lần đầu đến với Big-O Coder? '}
-                      <label
-                        className="to-register"
-                      >
-                        <div role="link" tabIndex={0} onClick={() => this.props.history.push('/register')}>Tạo ngay tài khoản.</div>
-                      </label>
-                      <div className="mt-1">
-                        {'Hoặc đăng nhập với '}
-                      </div>
-                      {
-                        socialLoginError
-                        && (
-                        <div className="login-error">
-                          <label>{socialLoginError}</label>
-                        </div>
-                        )
-                      }
-                    </Col>
-                  </Row>
-                </Container>
+                <Box
+                  component={Paper}
+                  elevation={3}
+                  p={3}
+                  sx={{ minWidth: '25rem' }}
+                >
+                  <Box mb={2} display="flex" flexDirection="column" alignItems="center">
+                    <Avatar
+                      src="logo.png"
+                      style={{ width: '5rem', height: '5rem' }}
+                    />
+                    <Typography variant="h6" color="primary">
+                      Online Tutor
+                    </Typography>
+                  </Box>
+                  <Box display="flex" flexDirection="column" mb={1}>
+                    <Box mb={1}>
+                      <TextField
+                        fullWidth
+                        label="Username"
+                        variant="outlined"
+                      />
+                    </Box>
+                    <Box mb={1}>
+                      <TextField
+                        fullWidth
+                        label="Password"
+                        type="password"
+                        variant="outlined"
+                      />
+                    </Box>
+                    <Box>
+                      <FormControlLabel
+                        value="end"
+                        control={<Checkbox color="primary" />}
+                        label="Remember me"
+                        labelPlacement="end"
+                      />
+                    </Box>
+                  </Box>
+                  <Button color="primary" variant="contained" fullWidth>
+                    Login
+                  </Button>
+                  <Box mt={2} display="flex" flexDirection="row" justifyContent="space-between">
+                    <Link href="/forget-password" underline="none">Reset passwored</Link>
+                    <Link href="/register" underline="none">Create new account</Link>
+                  </Box>
+                </Box>
               </Body>
             </div>
           );

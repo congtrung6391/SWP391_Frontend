@@ -3,6 +3,7 @@ import { Link as LinkRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
+  Container,
   Breadcrumbs,
   Link,
   Box,
@@ -20,7 +21,7 @@ const NavigationBar = (props) => {
   useEffect(() => {
     const { nav } = props;
     if (nav.length > 1) {
-      document.title = `Big-O Coder | ${nav[nav.length - 1][0]}`;
+      document.title = `Online Tutor | ${nav[nav.length - 1][0]}`;
     }
   });
 
@@ -45,10 +46,10 @@ const NavigationBar = (props) => {
       }
 
       return (
-        <Box
-          px="1.5rem"
-          py="0.3rem"
-          style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.2)' }}
+        <Container
+          component={Box}
+          px="1rem"
+          py="1rem"
         >
           <Breadcrumbs separator="›&nbsp;" aria-label="breadcrumb">
             {
@@ -99,7 +100,7 @@ const NavigationBar = (props) => {
               </div>
             )
           } */}
-        </Box>
+        </Container>
         // <div className="py-1 pr-0 pl-1 shadow-sm navigation-bar" style={style}>
         //   <div className="pl-5">
         //     {

@@ -60,37 +60,20 @@ const Header = () => {
     // Default
     items.push({
       Id: 1,
-      Link: '/contests',
-      Title: 'Kỳ thi',
+      Link: '/courses',
+      Title: 'Course',
     });
     items.push({
-      Id: 5,
-      Link: '/articles',
-      Title: 'Bài viết',
+      Id: 2,
+      Link: '/tutors',
+      Title: 'Tutor',
     });
+    items.push({
+      Id: 3,
+      Link: '/forum',
+      Title: 'Forum',
+    })
 
-    // Public user
-    if (verifyUser()) {
-      items.push({
-        Id: 3,
-        Link: '/collections',
-        Title: 'Chủ đề',
-      });
-      items.push({
-        Id: 2,
-        Link: '/courses',
-        Title: 'Khóa học',
-      });
-    }
-
-    // Admin
-    if (verifyTutor()) {
-      items.push({
-        Id: 4,
-        Link: '/admin/submissions',
-        Title: 'Bài nộp',
-      });
-    }
     setNavItems(items);
   };
 
@@ -113,7 +96,7 @@ const Header = () => {
       <List className={`${classes['nav-menu']}`}>
         {
           navItems.map((item) => (
-            <NavLink key={item.Id} to={item.Link}>
+            <NavLink className="nav-item" key={item.Id} to={item.Link}>
               <ListItem color="inherit">
                 <ListItemText primary={item.Title} />
               </ListItem>
@@ -212,17 +195,19 @@ const Header = () => {
 
   return (
     <div className="header">
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" color="inherit">
+        <Toolbar justifyContent="space-between">
           <NavLink className="no-border" to="/">
             <IconButton>
               <Avatar
-                alt="Big-O Coding"
-                src="logo.svg"
+                alt="Online tutor"
+                src="logo.png"
               />
             </IconButton>
           </NavLink>
 
+          {/* <div className={classes.grow} /> */}
+          
           {renderNavMenu()}
 
           <div className={classes.grow} />
@@ -253,12 +238,12 @@ const Header = () => {
               )
               : (
                 <List className={classes['nav-menu']}>
-                  <NavLink to="/register">
+                  <NavLink className="nav-item" to="/register">
                     <ListItem>
                       <ListItemText primary="Đăng ký" />
                     </ListItem>
                   </NavLink>
-                  <NavLink to="/login">
+                  <NavLink className="nav-item" to="/login">
                     <ListItem>
                       <ListItemText primary="Đăng nhập" />
                     </ListItem>
@@ -266,17 +251,6 @@ const Header = () => {
                 </List>
               )
           }
-
-          <Box display={displayDesktop}>
-            <NavLink className="no-border" exact to="/help">
-              <IconButton
-                color="inherit"
-                aria-controls="help"
-              >
-                <HelpIcon />
-              </IconButton>
-            </NavLink>
-          </Box>
 
           {
             verifyUser() && (

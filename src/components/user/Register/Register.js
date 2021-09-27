@@ -1,13 +1,12 @@
 import React/* , { useContext, useState, useEffect } */ from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import SHA256 from 'crypto-js/sha256';
 import validate from 'validate.js';
 import { Redirect } from 'react-router-dom';
 
-import Input from '../../basic/Input';
-import Button from '../../basic/Button';
+import {
+  Box, Typography, Paper, TextField, Checkbox, FormControlLabel, Avatar, Button, Link, RadioGroup, Radio,
+} from '@material-ui/core';
+
 // import { isLoggedIn } from '../../../utils/cookies';
 import { Loading } from '../../common/Loading';
 // import AuthenticationService from '../../../services/authentication.service';
@@ -33,11 +32,7 @@ class Register extends React.Component {
       errorConfirmPassword: '',
       passwordStrength: 0,
       isRegistering: false,
-      isGoolgeLoggingIn: false,
-      socialLoginError: '',
     };
-    this.GOOGLE_ID = process.env.REACT_APP_GOOGLE_LOGIN_ID;
-    this.FACEBOOK_ID = process.env.REACT_APP_FACEBOOK_LOGIN_ID;
     this.language = new LanguageService();
     this.language.import(registerLanguage);
   }
@@ -203,52 +198,6 @@ class Register extends React.Component {
     this.setState(() => ({ isRegistering: false }));
   };
 
-  successResponseGoogle = async (googleResponse) => {
-    const { tokenId, googleId } = googleResponse;
-    const { googleLogin } = this.authenticationcContext;
-
-    // loading google logo
-    this.setState(() => ({
-      isGoolgeLoggingIn: true,
-    }));
-
-    const response = await googleLogin(tokenId, googleId);
-
-    if (response) {
-      this.setState(() => ({
-        socialLoginError: response.includes('duplicate') ? 'Tài khoản đã tồn tại' : 'Đăng nhập thất bại',
-        isGoolgeLoggingIn: false,
-      }));
-    } else {
-      const { history } = this.props;
-      history.goBack();
-    }
-  }
-
-  failureResponseGoogle = () => {
-  }
-
-  responseFacebook = async (response) => {
-    const { accessToken, userID } = response;
-    const { facebookLogin } = this.authenticationcContext;
-
-    this.setState(() => ({
-      isFacebookLoggingIn: true,
-    }));
-
-    const responseAccount = await facebookLogin(accessToken, userID);
-
-    if (responseAccount) {
-      this.setState(() => ({
-        socialLoginError: responseAccount.includes('duplicate') ? 'Tài khoản đã tồn tại' : 'Đăng nhập thất bại',
-        isFacebookLoggingIn: false,
-      }));
-    } else {
-      const { history } = this.props;
-      history.goBack();
-    }
-  }
-
   render = () => {
     const {
       Username,
@@ -293,98 +242,90 @@ class Register extends React.Component {
                       ]}
                     />
                     <Body>
-                      <Container>
-                        <Row className="justify-content-md-center">
-                          <Col xg lg="5" className="form register-div shadow-sm" style={{ backgroundColor: 'white' }}>
-                            <form onSubmit={this.registerNewUser}>
-                              <h1>{this.language.get('Register')}</h1>
-                              <Input
-                                name={this.language.get('Username')}
-                                value={Username}
-                                onChange={this.onChangeUsername}
-                                message={errorUsername}
-                              />
-                              <Input
-                                name={this.language.get('Email')}
-                                type="email"
-                                value={Email}
-                                onChange={this.onChangeEmail}
-                                message={errorEmail}
-                                onFocus={this.onFocusEmail}
-                              />
-                              <Input
-                                name={this.language.get('Password')}
-                                type="password"
-                                autoComplete="new-password"
-                                className="register-password"
-                                value={Password}
-                                onChange={this.onChangePassword}
-                                message={errorPassword}
-                                onFocus={this.onFocusPassword}
-                              />
-                              <Container>
-                                <Row className="justify-content-md-center">
-                                  <Col className={`${passwordStrength > 0 && 'very-weak-password'}`} />
-                                  <Col className={`${passwordStrength > 1 && 'weak-password'}`} />
-                                  <Col className={`${passwordStrength > 2 && 'medium-password'}`} />
-                                  <Col className={`${passwordStrength > 3 && 'strong-password'}`} />
-                                </Row>
-                              </Container>
-                              <Input
-                                name={this.language.get('Confirm password')}
-                                type="password"
-                                value={confirmPassword}
-                                onChange={this.onChangeConfirmPassword}
-                                message={errorConfirmPassword}
-                                onFocus={this.onFocusConfirmPassword}
-                              />
-                              <Button
-                                className="register-button w-100"
-                                type="submit"
-                                disabled={
-                                  isRegistering
-                                  || errorConfirmPassword
-                                  || errorEmail
-                                  || errorPassword
-                                  || errorUsername
-                                }
-                              >
-                                {isRegistering ? <div style={{ padding: '5px 0 5px 0' }}><Loading /></div> : this.language.get('Register')}
-                              </Button>
-                            </form>
-                          </Col>
-                        </Row>
-                        <Row className="justify-content-md-center">
-                          <Col
-                            xg
-                            lg="5"
-                            className="form register-div shadow-sm"
-                            style={{
-                              textAlign: 'center', marginTop: '20px', marginBottom: '50px', backgroundColor: 'white',
-                            }}
+                      <Box
+                        component={Paper}
+                        elevation={3}
+                        p={3}
+                        sx={{ minWidth: '25rem' }}
+                      >
+                        <Box mb={2} display="flex" flexDirection="column" alignItems="center">
+                          <Avatar
+                            src="logo.png"
+                            style={{ width: '5rem', height: '5rem' }}
+                          />
+                          <Typography variant="h6" color="primary">
+                            Online Tutor
+                          </Typography>
+                        </Box>
+                        <Box display="flex" flexDirection="column" mb={1}>
+                          <Box mb={1}>
+                            <TextField
+                              fullWidth
+                              required
+                              label="Fullname"
+                              variant="outlined"
+                            />
+                          </Box>
+                          <Box mb={1}>
+                            <TextField
+                              fullWidth
+                              required
+                              label="Username"
+                              variant="outlined"
+                            />
+                          </Box>
+                          <Box mb={1}>
+                            <TextField
+                              fullWidth
+                              required
+                              label="Email"
+                              variant="outlined"
+                            />
+                          </Box>
+                          <Box mb={1}>
+                            <TextField
+                              fullWidth
+                              required
+                              label="Password"
+                              type="password"
+                              variant="outlined"
+                            />
+                          </Box>
+                          <Box mb={1}>
+                            <TextField
+                              fullWidth
+                              required
+                              label="Comfirm password"
+                              type="password"
+                              variant="outlined"
+                            />
+                          </Box>
+                          <Box mb={1}>
+                            <TextField
+                              fullWidth
+                              type="number"
+                              label="Phone number"
+                              variant="outlined"
+                            />
+                          </Box>
+                          <Box>
+                          <RadioGroup
+                            aria-label="role"
+                            defaultValue="student"
+                            name="radio-buttons-group"
                           >
-                            {this.language.get('Already have account? ')}
-                            <label
-                              className="to-login"
-                              htmlFor="login-now-text"
-                            >
-                              <div role="link" tabIndex={0} id="login-now-text" onClick={() => history.push('/login')}>{this.language.get('Login now')}</div>
-                            </label>
-                            <div className="mt-1">
-                              {'Hoặc đăng nhập với '}
-                              
-                            </div>
-                            {
-                              socialLoginError
-                              && (
-                              <div className="login-error text-danger">
-                                <p>{socialLoginError}</p>
-                              </div>
-                              )
-                            }
-                          </Col>
-                        </Row>
-                      </Container>
+                            <FormControlLabel value="student" control={<Radio color="primary" />} label="Student" />
+                            <FormControlLabel value="tutor" control={<Radio color="primary" />} label="Tutor" />
+                          </RadioGroup>
+                          </Box>
+                        </Box>
+                        <Button color="primary" variant="contained" fullWidth>
+                          Register
+                        </Button>
+                        <Box mt={2} display="flex" flexDirection="row" justifyContent="center">
+                          <Link href="/register" underline="none">Already have an account</Link>
+                        </Box>
+                      </Box>
                     </Body>
                   </>
                 );

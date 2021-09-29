@@ -36,12 +36,13 @@ const Footer = () => {
         <Toolbar>
           <Avatar
             alt="Big-O Logo"
-            src="logo.svg"
+            src="logo.png"
+            style={{ backgroundColor: '#fff' }}
           />
           <span style={{ color: theme.palette.primary.contrastText }}>
             &nbsp;
             <strong>
-              Big-O Coding
+              Online Tutor
             </strong>
           </span>
         </Toolbar>
@@ -54,12 +55,12 @@ const Footer = () => {
           }}
         >
           <strong>
-            Copyright © 2020 Big-O Coder
+            Copyright © 2021 Online Tutor
           </strong>
         </Toolbar>
       </Box>
 
-      <List
+      {/* <List
         className={classes.root}
         style={{
           backgroundColor: theme.palette.primary.main,
@@ -97,7 +98,7 @@ const Footer = () => {
             </ListItem>
           ))
         }
-      </List>
+      </List> */}
     </div>
     // <div className="footer bg-dark-gray p-1 pl-5 pr-5">
     //   <div className="d-flex justify-content-between footer-content">

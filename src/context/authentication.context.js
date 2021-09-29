@@ -68,10 +68,10 @@ class AuthenticationProvider extends React.Component {
   verifyUser = () => !!this.state.user
 
   // eslint-disable-next-line react/destructuring-assignment
-  verifyAdministrator = () => this.verifyUser() && ['Administrator', 'SuperAdministrator'].includes(this.state.user.Role)
+  verifyAdministrator = () => this.verifyUser() && ['ADMIN', 'SUPER_ADMIN'].includes(this.state.user.role)
 
   // eslint-disable-next-line react/destructuring-assignment
-  verifyTutor = () => this.verifyUser() && ['Tutor', 'Administrator', 'SuperAdministrator'].includes(this.state.user.Role)
+  verifyTutor = () => this.verifyUser() && ['TUTOR', 'ADMIN', 'SUPER_ADMIN'].includes(this.state.user.role)
 
   render() {
     const { ready } = this.state;

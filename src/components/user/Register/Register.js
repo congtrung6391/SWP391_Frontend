@@ -109,7 +109,7 @@ class Register extends React.Component {
   validatePhone = (phone) => {
     if (!phone) {
       this.setState(() => ({ errorPhone: 'Phone cannot be empty.' }));
-    } else if (phone.length > 10 || isNaN(parseInt(phone, 10))) {
+    } else if (phone.length !== 10 || isNaN(parseInt(phone, 10))) {
       this.setState(() => ({ errorPhone: 'Invalid phone number' }));
     } else {
       this.setState(() => ({ errorPhone: '' }));
@@ -334,7 +334,8 @@ class Register extends React.Component {
                   component={Paper}
                   elevation={3}
                   p={3}
-                  sx={{ minWidth: '25rem' }}
+                  flexGrow={1}
+                  sx={{ minWidth: '17rem', maxWidth: '25rem' }}
                 >
                   <Box mb={2} display="flex" flexDirection="column" alignItems="center">
                     <Avatar

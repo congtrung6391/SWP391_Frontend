@@ -18,12 +18,9 @@ class Login extends React.Component {
     this.state = {
       Username: '',
       Password: '',
-      remember: '',
+      remember: false,
       wrongPassword: '',
       isLoggingIn: false,
-      isGoolgeLoggingIn: false,
-      isFacebookLoggingIn: false,
-      socialLoginError: '',
     };
     this.context = AuthenticationContext;
   }
@@ -78,7 +75,7 @@ class Login extends React.Component {
     const { Username, Password, remember } = this.state;
     const { login } = this.context;
     if (Username.trim().length === 0 || Password.length === 0) {
-      await this.setState(() => ({ wrongPassword: 'Sai tên đăng nhập hoặc mật khẩu.' }));
+      await this.setState(() => ({ wrongPassword: 'Wrong username or password.' }));
       return;
     }
 
@@ -89,54 +86,11 @@ class Login extends React.Component {
     const response = await login(Username, Password, remember);
     if (response) {
       this.setState(() => ({
-        wrongPassword: response.includes('Invalid user') ? 'Sai tên đăng nhập hoặc mật khẩu.' : response,
+        wrongPassword: (response.includes('Invalid user') || response.includes('Bad credentials')) ? 'Wrong password or username.' : response,
         isLoggingIn: false,
       }));
     } else {
-      history.goBack();
-    }
-  }
-
-  successResponseGoogle = async (googleResponse) => {
-    const { tokenId, googleId } = googleResponse;
-    const { googleLogin } = this.context;
-
-    this.setState(() => ({
-      isGoolgeLoggingIn: true,
-    }));
-
-    const response = await googleLogin(tokenId, googleId);
-    if (response) {
-      this.setState(() => ({
-        socialLoginError: response.includes('duplicate') ? 'Tài khoản đã tồn tại' : 'Đăng nhập thất bại',
-        isGoolgeLoggingIn: false,
-      }));
-    } else {
-      history.goBack();
-    }
-  }
-
-  failureResponseGoogle = () => {
-    // console.log(response);
-  }
-
-  responseFacebook = async (response) => {
-    const { accessToken, userID } = response;
-    const { facebookLogin } = this.context;
-
-    this.setState(() => ({
-      isFacebookLoggingIn: true,
-    }));
-
-    const responseAccount = await facebookLogin(accessToken, userID);
-
-    if (responseAccount) {
-      this.setState(() => ({
-        socialLoginError: responseAccount.includes('duplicate') ? 'Tài khoản đã tồn tại' : 'Đăng nhập thất bại',
-        isFacebookLoggingIn: false,
-      }));
-    } else {
-      history.goBack();
+      // history.push('/');
     }
   }
 
@@ -146,9 +100,7 @@ class Login extends React.Component {
       wrongPassword,
       Password,
       remember,
-      errorUsername,
       isLoggingIn,
-      socialLoginError,
     } = this.state;
 
     return (
@@ -174,7 +126,8 @@ class Login extends React.Component {
                   component={Paper}
                   elevation={3}
                   p={3}
-                  sx={{ minWidth: '25rem' }}
+                  flexGrow={1}
+                  sx={{ minWidth: '17rem', maxWidth: '25rem' }}
                 >
                   <Box mb={2} display="flex" flexDirection="column" alignItems="center">
                     <Avatar
@@ -186,19 +139,25 @@ class Login extends React.Component {
                     </Typography>
                   </Box>
                   <Box display="flex" flexDirection="column" mb={1}>
-                    <Box mb={1}>
+                    <Box mb={2}>
                       <TextField
                         fullWidth
                         label="Username"
                         variant="outlined"
+                        value={Username || ''}
+                        onChange={(event) => this.onChangeUsername(event.target.value)}
                       />
                     </Box>
-                    <Box mb={1}>
+                    <Box mb={2}>
                       <TextField
                         fullWidth
                         label="Password"
                         type="password"
                         variant="outlined"
+                        value={Password || ''}
+                        onChange={(event) => this.onChangePassword(event.target.value)}
+                        error={!!wrongPassword}
+                        helperText={wrongPassword}
                       />
                     </Box>
                     <Box>
@@ -207,10 +166,20 @@ class Login extends React.Component {
                         control={<Checkbox color="primary" />}
                         label="Remember me"
                         labelPlacement="end"
+                        onChange={this.toggleRemember}
                       />
                     </Box>
                   </Box>
-                  <Button color="primary" variant="contained" fullWidth>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    fullWidth disabled={isLoggingIn}
+                    onClick={this.onSubmitLogin}
+                  >
+                    {
+                      isLoggingIn && <Loading />
+                    }
+                    &nbsp;
                     Login
                   </Button>
                   <Box mt={2} display="flex" flexDirection="row" justifyContent="space-between">

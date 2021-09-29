@@ -44,51 +44,29 @@ const CollapseUserOptionsMenuItem = ({ onClick }) => {
     {
       Id: uniqid(),
       Icon: <span className="fas fa-user-circle mr-2 fa-fw" />,
-      Content: 'Thông tin của bạn',
+      Content: 'Your profile',
       Link: `/users/${Id}`,
       EventHandler: handleClose,
     },
     {
       Id: uniqid(),
       Icon: <span className="fas fa-sign-out-alt mr-2 fa-fw" />,
-      Content: 'Đăng xuất',
+      Content: 'Logout',
       Link: '/',
       EventHandler: handleLogout,
     },
   ];
 
   return (
-    <div>
-      <ListItem button onClick={handleClick}>
-        <ListItemAvatar>
-          <Avatar
-            border={1}
-            alt={Username}
-            src={AvatarImg || './image/default_avatar.jpg'}
-            style={{ width: '1.5rem', height: '1.5rem' }}
-          />
-        </ListItemAvatar>
-        <ListItemText primary="Tài khoản" />
-        {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-      </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List>
-          <Divider />
-          {
-            MenuOptions.map((op) => (
-              <Link key={op.Id} to={op.Link}>
-                <ListItem
-                  onClick={op.EventHandler}
-                >
-                  <ListItemIcon />
-                  <ListItemText>{op.Content}</ListItemText>
-                </ListItem>
-              </Link>
-            ))
-          }
-        </List>
-      </Collapse>
-    </div>
+      MenuOptions.map((op) => (
+        <Link key={op.Id} to={op.Link}>
+          <ListItem
+            onClick={op.EventHandler}
+          >
+            <ListItemText>{op.Content}</ListItemText>
+          </ListItem>
+        </Link>
+      ))
   );
 };
 

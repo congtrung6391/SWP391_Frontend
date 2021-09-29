@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import {
   AppBar,
   Avatar,
+  Typography,
   Box,
   Toolbar,
   IconButton,
@@ -126,12 +127,12 @@ const Header = () => {
               <List className={classes['nav-menu']}>
                 <NavLink to="/register" onClick={toggleDrawler}>
                   <ListItem>
-                    <ListItemText primary="Đăng ký" />
+                    <ListItemText primary="Sign-up" />
                   </ListItem>
                 </NavLink>
                 <NavLink to="/login" onClick={toggleDrawler}>
                   <ListItem>
-                    <ListItemText primary="Đăng nhập" />
+                    <ListItemText primary="Sign-in" />
                   </ListItem>
                 </NavLink>
               </List>
@@ -140,13 +141,14 @@ const Header = () => {
               <Box className={classes['nav-menu']} m="0.7rem">
                 <Avatar
                   border={1}
-                  alt={user.Username}
-                  src={user.Avatar || './image/default_avatar.jpg'}
+                  sx={{ bgcolor: 'primary.main' }}
+                  alt={user.username}
+                  src={user.avatar || './image/default_avatar.jpg'}
                 />
                 <Box ml="1rem">
-                  <strong>{ user.Username }</strong>
+                  <strong>{ user.username }</strong>
                   <br />
-                  <i>{ user.Email }</i>
+                  <i>{ user.email }</i>
                 </Box>
               </Box>
             )
@@ -173,20 +175,10 @@ const Header = () => {
         {
           verifyUser() && (
             [
-              <Divider key={6} />,
               <CollapseUserOptionsMenuItem key={7} onClick={toggleDrawler} />,
             ]
           )
         }
-        <Divider />
-        <NavLink to="/help" onClick={toggleDrawler}>
-          <ListItem button>
-            <ListItemIcon>
-              <HelpOutline color="inherit" />
-            </ListItemIcon>
-            <ListItemText primary="Help" />
-          </ListItem>
-        </NavLink>
       </List>
       <Divider />
     </SwipeableDrawer>
@@ -198,12 +190,17 @@ const Header = () => {
         <Container>
           <Toolbar style={{ paddingLeft: '0', paddingRight: '0' }}>
             <NavLink className="no-border" to="/">
-              <IconButton>
-                <Avatar
-                  alt="Online tutor"
-                  src="logo.png"
-                />
-              </IconButton>
+              <Box display="flex" flexDirection="row" alignItems="center">
+                <IconButton>
+                  <Avatar
+                    alt="Online tutor"
+                    src="logo.png"
+                  />
+                </IconButton>
+                <Box display={displayMobile}>
+                  <Typography variant="h6" color="primary">Online Tutor</Typography>
+                </Box>
+              </Box>
             </NavLink>
 
             {/* <div className={classes.grow} /> */}
@@ -237,23 +234,26 @@ const Header = () => {
                   </Box>
                 )
                 : (
-                  <List className={classes['nav-menu']}>
-                    <NavLink className="nav-item" to="/register">
-                      <ListItem>
-                        <ListItemText primary="Đăng ký" />
-                      </ListItem>
-                    </NavLink>
-                    <NavLink className="nav-item" to="/login">
-                      <ListItem>
-                        <ListItemText primary="Đăng nhập" />
-                      </ListItem>
-                    </NavLink>
-                  </List>
+                  <Box display={displayDesktop} >
+                    <List className={classes['nav-menu']}>
+                      <NavLink className="nav-item" to="/register">
+                        <ListItem>
+                          <ListItemText primary="Đăng ký" />
+                        </ListItem>
+                      </NavLink>
+                      <NavLink className="nav-item" to="/login">
+                        <ListItem>
+                          <ListItemText primary="Đăng nhập" />
+                        </ListItem>
+                      </NavLink>
+                    </List>
+                  </Box>
                 )
             }
 
             {
-              verifyUser() && (
+              // verifyUser() && 
+              (
                 <Box display={displayMobile}>
                   <IconButton
                     edge="start"

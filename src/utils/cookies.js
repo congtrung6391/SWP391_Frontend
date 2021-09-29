@@ -4,30 +4,33 @@ import Cookies from 'universal-cookie';
 // eslint-disable-next-line import/no-cycle
 import { APIService } from '../services/api.service';
 
+const COOKIE_KEY = process.env.REACT_APP_COOKIE_KEY;
+const COOKIE_ACCOUNT_NAME = process.env.REACT_APP_COOKIE_ACCOUNT_NAME;
+
 export const saveUser = (user, isRemember = false) => {
   const cookies = new Cookies();
 
-  const encodeUser = AES.encrypt(JSON.stringify(user), 'Big-O Coder private key');
+  const encodeUser = AES.encrypt(JSON.stringify(user), COOKIE_KEY);
 
   if (isRemember) {
-    localStorage.setItem('Big-O Coder', encodeUser.toString());
-  } else if (!localStorage.getItem('Big-O Coder')) {
+    localStorage.setItem(COOKIE_ACCOUNT_NAME, encodeUser.toString());
+  } else if (!localStorage.getItem(COOKIE_ACCOUNT_NAME)) {
     const time = new Date();
-    time.setDate(time.getDate() + 30);
-    cookies.set('Big-O Coder', encodeUser.toString(), {
+    time.setDate(time.getDate() + 7);
+    cookies.set(COOKIE_ACCOUNT_NAME, encodeUser.toString(), {
       expires: time,
       path: '/',
       sameSite: true,
     });
   } else {
-    localStorage.setItem('Big-O Coder', encodeUser.toString());
+    localStorage.setItem(COOKIE_ACCOUNT_NAME, encodeUser.toString());
   }
 };
 
 export const isLoggedIn = () => {
   try {
     const cookies = new Cookies();
-    if (localStorage.getItem('Big-O Coder') || cookies.get('Big-O Coder')) {
+    if (localStorage.getItem(COOKIE_ACCOUNT_NAME) || cookies.get(COOKIE_ACCOUNT_NAME)) {
       return true;
     }
   } catch (error) {
@@ -42,20 +45,21 @@ export const getUserInformation = (option = 'all') => {
   }
 
   let getEncryptData;
-  if (localStorage.getItem('Big-O Coder')) {
-    getEncryptData = localStorage.getItem('Big-O Coder');
+  if (localStorage.getItem(COOKIE_ACCOUNT_NAME)) {
+    getEncryptData = localStorage.getItem(COOKIE_ACCOUNT_NAME);
   } else {
     const cookies = new Cookies();
-    getEncryptData = cookies.get('Big-O Coder');
+    getEncryptData = cookies.get(COOKIE_ACCOUNT_NAME);
   }
 
   try {
-    const decrypt = AES.decrypt(getEncryptData, 'Big-O Coder private key');
+    const decrypt = AES.decrypt(getEncryptData, COOKIE_KEY);
     const decryptToInfo = JSON.parse(decrypt.toString(CryptoJS.enc.Utf8));
 
     if (option === 'all') {
       return decryptToInfo;
     }
+    console.log(decryptToInfo);
     return decryptToInfo[option];
   } catch (error) {
     return null;
@@ -63,9 +67,9 @@ export const getUserInformation = (option = 'all') => {
 };
 
 const clearSavedData = () => {
-  document.cookie = 'Big-O Coder=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  document.cookie = 'Big-O Coder=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/user;';
-  localStorage.removeItem('Big-O Coder');
+  document.cookie = `${COOKIE_ACCOUNT_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  document.cookie = `${COOKIE_ACCOUNT_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/user;`;
+  localStorage.removeItem(COOKIE_ACCOUNT_NAME);
 };
 
 export const logOut = () => {

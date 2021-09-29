@@ -33,6 +33,9 @@ const ThemeWrapper = (props) => {
         dark: '#388e3c',
         contrastText: '#fff',
       },
+      error: {
+        main: '#F56A6A',
+      },
       start: {
         light: '#5abafa',
         main: '#3498db',

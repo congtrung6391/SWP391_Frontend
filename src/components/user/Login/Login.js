@@ -10,7 +10,6 @@ import { Loading } from '../../common/Loading';
 import Body from '../../basic/Body';
 import NavigationBar from '../../common/NavigationBar';
 import { AuthenticationContext } from '../../../context/authentication.context';
-import history from '../../../BrowserHistory';
 
 class Login extends React.Component {
   constructor(props) {
@@ -18,7 +17,7 @@ class Login extends React.Component {
     this.state = {
       Username: '',
       Password: '',
-      remember: false,
+      remember: true,
       wrongPassword: '',
       isLoggingIn: false,
     };
@@ -32,9 +31,9 @@ class Login extends React.Component {
     }
   }
 
-  toggleRemember = (value) => {
+  toggleRemember = () => {
     const { remember } = this.state;
-    if (remember === value) {
+    if (remember) {
       this.setState(() => ({
         remember: '',
       }));
@@ -162,11 +161,15 @@ class Login extends React.Component {
                     </Box>
                     <Box>
                       <FormControlLabel
-                        value="end"
-                        control={<Checkbox color="primary" />}
+                        control={
+                          <Checkbox
+                            color="primary"
+                            checked={remember}
+                            onChange={this.toggleRemember}
+                          />
+                        }
                         label="Remember me"
                         labelPlacement="end"
-                        onChange={this.toggleRemember}
                       />
                     </Box>
                   </Box>

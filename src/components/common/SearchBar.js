@@ -13,6 +13,7 @@ const SearchBar = (props) => {
       searchInput.current.value = query[props.searchKey] || '';
     }
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(toggleQueryHandler, []);
 
   const onKeyUp = () => {

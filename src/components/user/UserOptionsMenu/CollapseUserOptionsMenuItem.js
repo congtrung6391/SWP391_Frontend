@@ -1,18 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
-  Avatar,
-  Divider,
-  List,
-  ListItemIcon,
   ListItemText,
   ListItem,
-  ListItemAvatar,
-  Collapse,
 } from '@mui/material';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-// import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import uniqid from 'uniqid';
 
@@ -20,23 +11,14 @@ import PropTypes from 'prop-types';
 import { AuthenticationContext } from '../../../context/authentication.context';
 
 const CollapseUserOptionsMenuItem = ({ onClick }) => {
-  const [open, setOpen] = useState(false);
   const { logout, user } = useContext(AuthenticationContext);
-  const {
-    Avatar: AvatarImg, Username, Id,
-  } = user;
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  const { Id } = user;
 
   const handleClose = () => {
-    setOpen(false);
     onClick();
   };
 
   const handleLogout = () => {
-    setOpen(false);
     logout();
   };
 
@@ -45,7 +27,7 @@ const CollapseUserOptionsMenuItem = ({ onClick }) => {
       Id: uniqid(),
       Icon: <span className="fas fa-user-circle mr-2 fa-fw" />,
       Content: 'Your profile',
-      Link: `/users/${Id}`,
+      Link: `/users/${Id}/edit`,
       EventHandler: handleClose,
     },
     {

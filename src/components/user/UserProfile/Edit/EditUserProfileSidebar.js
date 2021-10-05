@@ -6,7 +6,7 @@ import {
   AccountCircle as AccountCircleIcon,
   VpnKey as VpnKeyIcon,
 } from '@mui/icons-material';
-import SideTabControl from '../../basic/SideTabControl/SideTabControl';
+import SideTabControl from '../../../basic/SideTabControl/SideTabControl';
 
 const UserSideNavigation = () => (
   <Paper

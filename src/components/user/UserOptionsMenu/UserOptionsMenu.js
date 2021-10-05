@@ -1,44 +1,25 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
   Avatar,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
   Typography,
   useTheme,
   IconButton,
 } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
-// import { Image } from 'react-bootstrap';
-import uniqid from 'uniqid';
 import { AuthenticationContext } from '../../../context/authentication.context';
 
 const UserOptionsMenu = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const theme = useTheme();
   const { logout, user } = useContext(AuthenticationContext);
   const {
-    avatar: avatarImg, username, email, id,
+    avatar: avatarImg, username, id,
   } = user;
 
-  const handleMenu = (event) => {
-    event.preventDefault();
-    const anchor = document.getElementById('user-options-div');
-    setAnchorEl(anchor);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleLogout = () => {
-    setAnchorEl(null);
     logout();
   };
 
@@ -56,7 +37,7 @@ const UserOptionsMenu = () => {
           padding: '0.2rem',
         }}
         component={Link}
-        to={`/users/${id}`}
+        to={`/users/${id}/edit`}
       >
         <Avatar
           border={1}

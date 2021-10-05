@@ -1,5 +1,4 @@
 import React/* , { useContext, useState, useEffect } */ from 'react';
-import SHA256 from 'crypto-js/sha256';
 import validate from 'validate.js';
 import { Redirect } from 'react-router-dom';
 
@@ -17,7 +16,7 @@ import {
 } from '@mui/material';
 
 // import { isLoggedIn } from '../../../utils/cookies';
-import { Loading, LoadingInterwind } from '../../common/Loading';
+import { Loading } from '../../common/Loading';
 import Body from '../../basic/Body';
 import NavigationBar from '../../common/NavigationBar';
 import { AuthenticationContext } from '../../../context/authentication.context';

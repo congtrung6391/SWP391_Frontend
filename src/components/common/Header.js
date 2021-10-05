@@ -15,7 +15,6 @@ import {
   Divider,
   List,
   ListItemText,
-  ListItemIcon,
   ListItem,
   Container,
 } from '@mui/material';
@@ -23,7 +22,6 @@ import {
   makeStyles,
 } from '@mui/styles';
 import {
-  HelpOutline,
   ArrowBackIosNew as ArrowLeftIcon,
   Menu as MenuIcon,
 } from '@mui/icons-material';

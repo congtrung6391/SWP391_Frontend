@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Box, Container, Paper, TextField, Typography, Button, styled,
+  Box, Paper, TextField, Typography, Button, styled,
 } from '@mui/material';
 import { isLoggedIn } from '../../../utils/cookies';
 import history from '../../../BrowserHistory';
@@ -49,15 +49,12 @@ class ForgotPassword extends React.Component {
     }
 
     try {
-      const username = {
-        Username: emailOrUsername,
-      };
       await this.setState(() => ({ isSending: true }));
-      const forgotPasswordApi = new APIService('post', `${BASE}forgot-password`, null, username);
+      const forgotPasswordApi = new APIService('post', `${BASE}/auth/send-forgot-password?email=${emailOrUsername}`);
       await forgotPasswordApi.request();
       history.push('/reset');
     } catch (error) {
-      this.setState(() => ({ error: error.message }));
+      this.setState(() => ({ error: 'Request failed' }));
     }
     this.setState(() => ({ isSending: false }));
   };
@@ -70,101 +67,70 @@ class ForgotPassword extends React.Component {
           nav={[
             ['home', '/'],
             ['login', '/login'],
-            ['Quên mật khẩu'],
+            ['Forget password'],
           ]}
         />
         <Body>
-          <Container>
-            <Box display="flex" justifyContent="center">
-              <Paper
-                component={Box}
-                display="flex"
-                flexDirection="column"
-                boxShadow={2}
-                m={4}
-                px={4}
-                py={2}
-                style={{ backgroundColor: 'white', minWidth: '30rem' }}
+          <Box
+            component={Paper}
+            elevation={3}
+            p={3}
+            flexGrow={1}
+            sx={{ minWidth: '17rem', maxWidth: '25rem' }}
+          >
+            <Typography variant="h5">Reset password</Typography>
+            <Box
+              display="flex"
+              flexDirection="column"
+              component="form"
+              onSubmit={this.onSendResetEmail}
+              autoComplete="off"
+              sx={{
+                width: 500,
+                maxWidth: '100%',
+              }}
+            >
+              <Box
+                mt={3}
+                sx={{
+                  width: 500,
+                  maxWidth: '100%',
+                }}
               >
-                <Typography variant="h5">Reset password</Typography>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  component="form"
-                  onSubmit={this.onSendResetEmail}
+                <TextField
+                  required
+                  fullWidth
                   autoComplete="off"
-                  sx={{
-                    width: 500,
-                    maxWidth: '100%',
-                  }}
+                  id="sendreset-input"
+                  label="Email"
+                  variant="outlined"
+                  value={emailOrUsername}
+                  onChange={this.onChangeUsernameEmail}
+                  helperText={error || 'Reset code will be sent to your email'}
+                  error={!!error}
+                />
+              </Box>
+              <Box
+                mt={3}
+                mb={3}
+                sx={{
+                  width: 500,
+                  maxWidth: '100%',
+                }}
+              >
+                <ResetButton
+                  variant="contained"
+                  type="submit"
+                  disabled={isSending}
+                  className="w-50"
                 >
-                  <Box
-                    mt={3}
-                    sx={{
-                      width: 500,
-                      maxWidth: '100%',
-                    }}
-                  >
-                    <TextField
-                      required
-                      fullWidth
-                      autoComplete="off"
-                      id="sendreset-input"
-                      label="Username hoặc Email"
-                      variant="outlined"
-                      value={emailOrUsername}
-                      onChange={this.onChangeUsernameEmail}
-                      helperText={error || 'Reset code will be sent to your email'}
-                      error={!!error}
-                    />
-                  </Box>
-                  <Box
-                    mt={3}
-                    mb={3}
-                    sx={{
-                      width: 500,
-                      maxWidth: '100%',
-                    }}
-                  >
-                    <ResetButton
-                      variant="contained"
-                      type="submit"
-                      disabled={isSending}
-                      className="w-50"
-                    >
-                      <div style={{ fontSize: '18px' }}>
-                        {isSending ? <div className="py-1"><Loading /></div> : 'Xác nhận'}
-                      </div>
-                    </ResetButton>
-                  </Box>
-                </Box>
-              </Paper>
+                  <div style={{ fontSize: '18px' }}>
+                    {isSending ? <div className="py-1"><Loading /></div> : 'Xác nhận'}
+                  </div>
+                </ResetButton>
+              </Box>
             </Box>
-          </Container>
-          {
-            // <Col md={5} className="d-flex justify-content-center">
-            //   <Card className="w-50 shadow-sm">
-            //     <Card.Body>
-            //       <h1 className="text-center">Quên mật khẩu</h1>
-            //       <form onSubmit={this.onSendResetEmail}>
-            //         <Input
-            //           name="Username hoặc Email"
-            //           value={this.state.emailOrUsername}
-            //           onChange={this.onChangeUsernameEmail}
-            //           message={this.state.error}
-            //         />
-            //         <Button
-            //           type="submit"
-            //           disabled={this.state.isSending}
-            //           className="bg-light-blue w-50 font-semi-bold py-2"
-            //         >
-            //           {this.state.isSending ? <Loading /> : 'Quên mật khẩu'}
-            //         </Button>
-            //       </form>
-            //     </Card.Body>
-            //   </Card>
-            // </Col>
-          }
+          </Box>
         </Body>
       </div>
     );

@@ -1,5 +1,3 @@
-import validate from 'validate.js';
-import SHA256 from 'crypto-js/sha256';
 import { isLoggedIn, getUserInformation } from '../utils/cookies';
 import { APIService } from './api.service';
 import {

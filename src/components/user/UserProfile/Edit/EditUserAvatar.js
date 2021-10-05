@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
   Paper, Box, Typography, Button,
-} from '@material-ui/core';
-import { saveUser, getUserInformation } from '../../../utils/cookies';
-import { APIService } from '../../../services/api.service';
-import ImageService from '../../../services/image.service';
-import ImageUploader from '../../basic/ImageUploader/ImageUploader';
+} from '@mui/material';
+import { saveUser, getUserInformation } from '../../../../utils/cookies';
+import { APIService } from '../../../../services/api.service';
+import ImageService from '../../../../services/image.service';
+import ImageUploader from '../../../basic/ImageUploader/ImageUploader';
 
 const UserAvatar = () => {
   const [user, setUser] = useState({});
@@ -60,6 +60,7 @@ const UserAvatar = () => {
   return (
     <Paper
       component={Box}
+      elevation={2}
       p={3}
       mb={2}
       boxShadow={2}
@@ -73,7 +74,7 @@ const UserAvatar = () => {
         <div
           className="avatar"
           style={{
-            backgroundImage: `url(${user.Avatar || './image/default_avatar.jpg'})`,
+            backgroundImage: `url(${user.Avatar || './image/user.png'})`,
           }}
         />
         <Button

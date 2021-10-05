@@ -1,11 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
-import NavigationBar from '../../common/NavigationBar';
-import Body, { Main, SideBar } from '../../basic/Body';
-import SideTabContent from '../../basic/SideTabControl/SideTabContent';
-import UserInformation from './UserInformation';
-import UserAvater from './Edit/EditUserAvatar';
-import UserSideNavigation from './UserSideNavigation';
+import NavigationBar from '../../../common/NavigationBar';
+import Body, { Main, SideBar } from '../../../basic/Body';
+import SideTabContent from '../../../basic/SideTabControl/SideTabContent';
+import EditUserInformation from './EditUserInformation';
+import EditUserAvater from './EditUserAvatar';
+import EditUserProfileSidebar from './EditUserProfileSidebar';
+import EditUserPassword from './EditUserPassword';
 
 const UserProfile = (props) => {
   const { match } = props;
@@ -18,18 +19,21 @@ const UserProfile = (props) => {
       <NavigationBar
         nav={[
           ['Home', '/'],
-          ['Profile'],
+          ['Edit Profile'],
         ]}
       />
       <Body className="user-profile-body">
         <SideBar>
-          <UserAvater />
-          <UserSideNavigation />
+          <EditUserAvater />
+          <EditUserProfileSidebar />
         </SideBar>
         <Main>
           <SideTabContent controlKey="userprofile-view">
             <div route="info">
-              <UserInformation />
+              <EditUserInformation />
+            </div>
+            <div route="password">
+              <EditUserPassword />
             </div>
           </SideTabContent>
         </Main>

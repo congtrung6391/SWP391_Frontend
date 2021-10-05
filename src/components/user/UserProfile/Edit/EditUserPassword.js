@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Box, withStyles, Paper, TextField, Typography, Button, useTheme,
-} from '@material-ui/core';
+  Box, Paper, TextField, Typography, Button,
+} from '@mui/material';
+import {
+  withStyles,
+  useTheme,
+} from '@mui/styles';
 import SHA256 from 'crypto-js/sha256';
-import { getUserInformation, saveUser } from '../../../utils/cookies';
-import { APIService } from '../../../services/api.service';
-import { Loading } from '../../common/Loading';
-import { ToastContext } from '../../../context/toast.context';
+import { getUserInformation, saveUser } from '../../../../utils/cookies';
+import { APIService } from '../../../../services/api.service';
+import { Loading } from '../../../common/Loading';
+import { ToastContext } from '../../../../context/toast.context';
 
 const CustomMuiInput = withStyles((theme) => ({
   root: {
@@ -47,6 +51,7 @@ const UserPassword = () => {
     if (error) {
       toastContext.addNotification('Lỗi', error, 'error');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [message, error]);
 
   const calculatePasswordStrength = (pw) => {
@@ -78,7 +83,7 @@ const UserPassword = () => {
       setErrorConfirmPassword('');
       return;
     }
-    setErrorConfirmPassword('Xác nhận mật khẩu mới không chính xác');
+    setErrorConfirmPassword('Confrim password is not correct.');
   };
   useEffect(validateConfirmPassword, [confirmPassword]);
 
@@ -86,7 +91,7 @@ const UserPassword = () => {
     setPasswordStrength(0);
 
     if (resetPassword && resetPassword.length < 8) {
-      setErrorResetPassword('Mật khẩu mới phải có ít nhất 8 ký tự');
+      setErrorResetPassword('New password must has the at least 8 characters.');
     } else if (!resetPassword) {
       setErrorResetPassword('');
     } else if (resetPassword && resetPassword.length >= 8) {
@@ -96,6 +101,7 @@ const UserPassword = () => {
     }
     validateConfirmPassword();
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(validateNewPassword, [resetPassword]);
 
   const onChangeCurrentPassword = (event) => {
@@ -134,12 +140,12 @@ const UserPassword = () => {
     if (errorPassword || errorResetPassword || errorConfirmPassword) {
       return;
     }
-    if (password && !resetPassword) {
-      setErrorResetPassword('Bạn phải nhập mật khẩu mới để thay đổi mật khẩu');
+    if (!resetPassword) {
+      setErrorResetPassword('You have not entered a new password');
       return;
     }
-    if (resetPassword && !password && currentUser.UpdatedPassword) {
-      setErrorPassword('Bạn phải nhập mật khẩu hiện tại để thay đổi mật khẩu');
+    if (!password) {
+      setErrorPassword('You have not entered your current password.');
       return;
     }
 
@@ -147,9 +153,9 @@ const UserPassword = () => {
     const updateInfo = {};
     if (resetPassword) {
       if (currentUser.UpdatedPassword) {
-        updateInfo.Password = SHA256(password).toString();
+        updateInfo.Password = password;
       }
-      updateInfo.resetPassword = SHA256(resetPassword).toString();
+      updateInfo.resetPassword = resetPassword;
     }
     if (resetPassword && !password) {
       updateInfo.UpdatedPassword = true;
@@ -173,7 +179,7 @@ const UserPassword = () => {
         currentUser.Password = password;
         saveUser(currentUser);
         resetPasswordField();
-        setMessage('Thay đổi mật khẩu thành công');
+        setMessage('Password is changed successfully.');
         setIsSaving(false);
       }
     } catch (err) {
@@ -181,7 +187,7 @@ const UserPassword = () => {
       const msg = err.message.toLowerCase();
       if (msg.includes('password')) {
         if (msg.includes('invalid')) {
-          setErrorPassword('Sai mật khẩu');
+          setErrorPassword('Wrong password');
         } else if (msg.includes('missing')) {
           setErrorPassword('Bạn chưa nhập mật khẩu hiện tại');
         }
@@ -216,20 +222,20 @@ const UserPassword = () => {
           <CustomMuiInput
             fullWidth
             autoComplete="new-password"
-            label="Mật khẩu hiện tại"
+            label="Current password"
             variant="outlined"
             type="password"
             value={password || ''}
             onChange={onChangeCurrentPassword}
             error={!!errorPassword}
-            helperText={errorPassword || 'Nếu bạn đăng ký với Google/Facebook thì thay đổi password lần đầu không yêu cầu nhập phần này'}
+            helperText={errorPassword}
           />
         </Box>
         <Box mt={2}>
           <CustomMuiInput
             fullWidth
             autoComplete="new-password"
-            label="Mật khẩu mới"
+            label="New password"
             variant="outlined"
             type="password"
             value={resetPassword || ''}
@@ -256,7 +262,7 @@ const UserPassword = () => {
           <CustomMuiInput
             fullWidth
             autoComplete="new-password"
-            label="Xác nhận mật khẩu"
+            label="Confirm password"
             variant="outlined"
             type="password"
             value={confirmPassword || ''}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { Grow } from '@material-ui/core';
+import { Alert, AlertTitle } from '@mui/material';
+import { Grow } from '@mui/material';
 import { ToastContext } from '../../context/toast.context';
 
 const ToastStack = () => (

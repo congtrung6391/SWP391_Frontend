@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import {
   AppBar,
   Avatar,
+  Typography,
   Box,
   Toolbar,
   IconButton,
@@ -14,21 +15,18 @@ import {
   Divider,
   List,
   ListItemText,
-  ListItemIcon,
   ListItem,
-  makeStyles,
-} from '@material-ui/core';
+  Container,
+} from '@mui/material';
 import {
-  HelpOutline,
-} from '@material-ui/icons';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import MenuIcon from '@material-ui/icons/Menu';
-import HelpIcon from '@material-ui/icons/Help';
+  makeStyles,
+} from '@mui/styles';
+import {
+  ArrowBackIosNew as ArrowLeftIcon,
+  Menu as MenuIcon,
+} from '@mui/icons-material';
 import { displayDesktop, displayMobile } from '../../utils/materialDisplay';
 
-// import { headerLanguage } from './header.lang';
-// import { LanguageService } from '../../services/language.service';
-// import { LanguageContext } from '../../context/language.context';
 import { AuthenticationContext } from '../../context/authentication.context';
 import UserOptionsMenu from '../user/UserOptionsMenu/UserOptionsMenu';
 import CollapseUserOptionsMenuItem from '../user/UserOptionsMenu/CollapseUserOptionsMenuItem';
@@ -60,37 +58,20 @@ const Header = () => {
     // Default
     items.push({
       Id: 1,
-      Link: '/contests',
-      Title: 'Kỳ thi',
+      Link: '/courses',
+      Title: 'Course',
     });
     items.push({
-      Id: 5,
-      Link: '/articles',
-      Title: 'Bài viết',
+      Id: 2,
+      Link: '/tutors',
+      Title: 'Tutor',
     });
+    items.push({
+      Id: 3,
+      Link: '/forum',
+      Title: 'Forum',
+    })
 
-    // Public user
-    if (verifyUser()) {
-      items.push({
-        Id: 3,
-        Link: '/collections',
-        Title: 'Chủ đề',
-      });
-      items.push({
-        Id: 2,
-        Link: '/courses',
-        Title: 'Khóa học',
-      });
-    }
-
-    // Admin
-    if (verifyTutor()) {
-      items.push({
-        Id: 4,
-        Link: '/admin/submissions',
-        Title: 'Bài nộp',
-      });
-    }
     setNavItems(items);
   };
 
@@ -113,7 +94,7 @@ const Header = () => {
       <List className={`${classes['nav-menu']}`}>
         {
           navItems.map((item) => (
-            <NavLink key={item.Id} to={item.Link}>
+            <NavLink className="nav-item" key={item.Id} to={item.Link}>
               <ListItem color="inherit">
                 <ListItemText primary={item.Title} />
               </ListItem>
@@ -144,12 +125,12 @@ const Header = () => {
               <List className={classes['nav-menu']}>
                 <NavLink to="/register" onClick={toggleDrawler}>
                   <ListItem>
-                    <ListItemText primary="Đăng ký" />
+                    <ListItemText primary="Sign-up" />
                   </ListItem>
                 </NavLink>
                 <NavLink to="/login" onClick={toggleDrawler}>
                   <ListItem>
-                    <ListItemText primary="Đăng nhập" />
+                    <ListItemText primary="Sign-in" />
                   </ListItem>
                 </NavLink>
               </List>
@@ -158,13 +139,14 @@ const Header = () => {
               <Box className={classes['nav-menu']} m="0.7rem">
                 <Avatar
                   border={1}
-                  alt={user.Username}
-                  src={user.Avatar || './image/default_avatar.jpg'}
+                  sx={{ bgcolor: 'primary.main' }}
+                  alt={user.username}
+                  src={user.avatar || './image/default_avatar.jpg'}
                 />
                 <Box ml="1rem">
-                  <strong>{ user.Username }</strong>
+                  <strong>{ user.username }</strong>
                   <br />
-                  <i>{ user.Email }</i>
+                  <i>{ user.email }</i>
                 </Box>
               </Box>
             )
@@ -191,20 +173,10 @@ const Header = () => {
         {
           verifyUser() && (
             [
-              <Divider key={6} />,
               <CollapseUserOptionsMenuItem key={7} onClick={toggleDrawler} />,
             ]
           )
         }
-        <Divider />
-        <NavLink to="/help" onClick={toggleDrawler}>
-          <ListItem button>
-            <ListItemIcon>
-              <HelpOutline color="inherit" />
-            </ListItemIcon>
-            <ListItemText primary="Help" />
-          </ListItem>
-        </NavLink>
       </List>
       <Divider />
     </SwipeableDrawer>
@@ -212,87 +184,88 @@ const Header = () => {
 
   return (
     <div className="header">
-      <AppBar position="static">
-        <Toolbar>
-          <NavLink className="no-border" to="/">
-            <IconButton>
-              <Avatar
-                alt="Big-O Coding"
-                src="logo.svg"
-              />
-            </IconButton>
-          </NavLink>
-
-          {renderNavMenu()}
-
-          <div className={classes.grow} />
-
-          {
-            verifyTutor()
-            && (
-              <List className={classes['nav-menu']}>
-                <ListItem button>
-                  <NavLink className="admin-badge" to="/admin">
-                    <ListItemText>
-                      <span className="fas fa-cogs" />
-                      &nbsp;&nbsp;
-                      { user.Role }
-                    </ListItemText>
-                  </NavLink>
-                </ListItem>
-              </List>
-            )
-          }
-
-          {
-            verifyUser()
-              ? (
-                <Box display={displayDesktop}>
-                  <UserOptionsMenu />
+      <AppBar position="static" color="inherit">
+        <Container>
+          <Toolbar style={{ paddingLeft: '0', paddingRight: '0' }}>
+            <NavLink className="no-border" to="/">
+              <Box display="flex" flexDirection="row" alignItems="center">
+                <IconButton>
+                  <Avatar
+                    alt="Online tutor"
+                    src="logo.png"
+                  />
+                </IconButton>
+                <Box display={displayMobile}>
+                  <Typography variant="h6" color="primary">Online Tutor</Typography>
                 </Box>
-              )
-              : (
+              </Box>
+            </NavLink>
+
+            {/* <div className={classes.grow} /> */}
+            
+            {renderNavMenu()}
+
+            <div className={classes.grow} />
+
+            {
+              verifyTutor()
+              && (
                 <List className={classes['nav-menu']}>
-                  <NavLink to="/register">
-                    <ListItem>
-                      <ListItemText primary="Đăng ký" />
-                    </ListItem>
-                  </NavLink>
-                  <NavLink to="/login">
-                    <ListItem>
-                      <ListItemText primary="Đăng nhập" />
-                    </ListItem>
-                  </NavLink>
+                  <ListItem button>
+                    <NavLink className="admin-badge" to="/admin">
+                      <ListItemText>
+                        <span className="fas fa-cogs" />
+                        &nbsp;&nbsp;
+                        { user.Role }
+                      </ListItemText>
+                    </NavLink>
+                  </ListItem>
                 </List>
               )
-          }
+            }
 
-          <Box display={displayDesktop}>
-            <NavLink className="no-border" exact to="/help">
-              <IconButton
-                color="inherit"
-                aria-controls="help"
-              >
-                <HelpIcon />
-              </IconButton>
-            </NavLink>
-          </Box>
+            {
+              verifyUser()
+                ? (
+                  <Box display={displayDesktop}>
+                    <UserOptionsMenu />
+                  </Box>
+                )
+                : (
+                  <Box display={displayDesktop} >
+                    <List className={classes['nav-menu']}>
+                      <NavLink className="nav-item" to="/register">
+                        <ListItem>
+                          <ListItemText primary="Đăng ký" />
+                        </ListItem>
+                      </NavLink>
+                      <NavLink className="nav-item" to="/login">
+                        <ListItem>
+                          <ListItemText primary="Đăng nhập" />
+                        </ListItem>
+                      </NavLink>
+                    </List>
+                  </Box>
+                )
+            }
 
-          {
-            verifyUser() && (
-              <Box display={displayMobile}>
-                <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={toggleDrawler}
-                >
-                  <MenuIcon fontSize="large" />
-                </IconButton>
-              </Box>
-            )
-          }
-        </Toolbar>
+            {
+              // verifyUser() && 
+              (
+                <Box display={displayMobile}>
+                  <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={toggleDrawler}
+                  >
+                    <MenuIcon fontSize="large" />
+                  </IconButton>
+                </Box>
+              )
+            }
+          </Toolbar>
+        </Container>
       </AppBar>
       {renderNavMenuMobile()}
     </div>

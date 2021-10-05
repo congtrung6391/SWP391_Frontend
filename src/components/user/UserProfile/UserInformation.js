@@ -1,21 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
+import MomentUtils from '@date-io/moment';
 import {
   Box,
-  withStyles,
   Paper,
   TextField,
   Typography,
   Button,
-  useTheme,
   FormControl,
   InputLabel,
   Select,
-} from '@material-ui/core';
-import MomentUtils from '@date-io/moment';
+} from '@mui/material';
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+  useTheme,
+  withStyles,
+} from '@mui/styles';
+import {
+  LocalizationProvider,
+  // DatePicker,
+} from '@mui/lab';
 import validate from 'validate.js';
 import { getUserInformation, saveUser } from '../../../utils/cookies';
 import { APIService } from '../../../services/api.service';
@@ -77,6 +79,7 @@ const UserPassword = () => {
     if (error) {
       toastContext.addNotification('Lỗi', error, 'error');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [message, error]);
 
   const validateUsername = () => {
@@ -91,6 +94,7 @@ const UserPassword = () => {
 
   useEffect(() => {
     validateUsername();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
   const onUsernameChange = (event) => {
@@ -121,6 +125,7 @@ const UserPassword = () => {
 
   useEffect(() => {
     validateEmail();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email]);
 
   const onEmailChange = (event) => {
@@ -137,6 +142,7 @@ const UserPassword = () => {
 
   useEffect(() => {
     validateFullname();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fullname]);
 
   const onFullnameChange = (event) => {
@@ -153,6 +159,7 @@ const UserPassword = () => {
 
   useEffect(() => {
     validateAffiliation();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [affiliation]);
 
   const onAffiliationChange = (event) => {
@@ -163,6 +170,7 @@ const UserPassword = () => {
     setCountry(event.target.value);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const onBirthdayChange = (date) => {
     setBirthday(date.valueOf());
   };
@@ -375,8 +383,8 @@ const UserPassword = () => {
               }
             </Select>
           </FormControl>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <KeyboardDatePicker
+          <LocalizationProvider dateAdapter={MomentUtils}>
+            {/* <DatePicker
               inputVariant="outlined"
               id="birthday-picker-dialog"
               label="Ngày sinh"
@@ -386,8 +394,8 @@ const UserPassword = () => {
               KeyboardButtonProps={{
                 'aria-label': 'change birthday',
               }}
-            />
-          </MuiPickersUtilsProvider>
+            /> */}
+          </LocalizationProvider>
         </Box>
         <Box mt={2}>
           <Button

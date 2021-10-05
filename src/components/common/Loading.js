@@ -5,6 +5,12 @@ import HorizontalContainer from '../basic/HorizontalContainer';
 import Body from '../basic/Body';
 import NavigationBar from './NavigationBar';
 
+export const LoadingInterwind = () => (
+  <div class="loadingio-spinner-interwind-kf4315nhojd"><div class="ldio-h51982wfzh">
+<div><div><div><div></div></div></div><div><div><div></div></div></div></div>
+</div></div>
+)
+
 export const Loading = ({ className }) => (
   <CenterContainer style={{ height: '100%' }} className={className}>
     <span className="fas fa-spin fa-spinner m-auto" style={{ verticalAlign: 'middle' }} />

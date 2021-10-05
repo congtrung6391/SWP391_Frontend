@@ -1,61 +1,27 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
   Avatar,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
   Typography,
   useTheme,
-} from '@material-ui/core';
+  IconButton,
+} from '@mui/material';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
-// import { Image } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import uniqid from 'uniqid';
 import { AuthenticationContext } from '../../../context/authentication.context';
 
 const UserOptionsMenu = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const theme = useTheme();
   const { logout, user } = useContext(AuthenticationContext);
   const {
-    Avatar: AvatarImg, Username, Email, Id,
+    avatar: avatarImg, username, id,
   } = user;
 
-  const handleMenu = (event) => {
-    event.preventDefault();
-    const anchor = document.getElementById('user-options-div');
-    setAnchorEl(anchor);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleLogout = () => {
-    setAnchorEl(null);
     logout();
   };
-
-  const MenuOptions = [
-    {
-      Id: uniqid(),
-      Icon: <span className="fas fa-user-circle mr-2 fa-fw" />,
-      Content: 'Thông tin của bạn',
-      Link: `/users/${Id}`,
-      EventHandler: handleClose,
-    },
-    {
-      Id: uniqid(),
-      Icon: <span className="fas fa-sign-out-alt mr-2 fa-fw" />,
-      Content: 'Đăng xuất',
-      Link: '/',
-      EventHandler: handleLogout,
-    },
-  ];
 
   return (
     <div id="user-options-div">
@@ -63,18 +29,21 @@ const UserOptionsMenu = () => {
         aria-label="user-avatar"
         aria-controls="user-options-menu"
         aria-haspopup="true"
-        color="inherit"
+        sx = {{ color: 'primary.main', marginRight: 1 }}
         variant="text"
-        onClick={handleMenu}
         style={{
           textTransform: 'unset',
           borderRadius: '2rem',
+          padding: '0.2rem',
         }}
+        component={Link}
+        to={`/users/${id}/edit`}
       >
         <Avatar
           border={1}
-          alt="Avatar"
-          src={AvatarImg || './image/default_avatar.jpg'}
+          sx={{ bgcolor: 'primary.main' }}
+          alt={`${username}`}
+          src={avatarImg || './image/default_avatar.jpg'}
           style={{
             height: theme.spacing(4),
             width: theme.spacing(4),
@@ -82,58 +51,12 @@ const UserOptionsMenu = () => {
           }}
         />
         <Box>
-          <Typography noWrap style={{ maxWidth: '8rem' }}>{user.Username}</Typography>
+          <Typography noWrap style={{ maxWidth: '8rem' }}>{user.username}</Typography>
         </Box>
       </Button>
-      <Menu
-        id="user-options-menu"
-        anchorEl={anchorEl}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem>
-          <ListItemIcon>
-            <Avatar
-              border={1}
-              alt={Username}
-              src={AvatarImg || './image/default_avatar.jpg'}
-            />
-          </ListItemIcon>
-          <ListItemText>
-            <div>
-              <strong>{ Username }</strong>
-              <br />
-              <i>{ Email }</i>
-            </div>
-          </ListItemText>
-        </MenuItem>
-
-        <Divider />
-
-        {
-          MenuOptions.map((op) => (
-
-            <Link key={op.Id} to={op.Link}>
-              <MenuItem
-                onClick={op.EventHandler}
-              >
-                <ListItemIcon>{op.Icon}</ListItemIcon>
-                <ListItemText>{op.Content}</ListItemText>
-              </MenuItem>
-            </Link>
-          ))
-        }
-      </Menu>
+      <IconButton sx={{ color: 'error.main' }} onClick={handleLogout}>
+        <ExitToAppIcon />
+      </IconButton>
     </div>
   );
 

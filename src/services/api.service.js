@@ -53,7 +53,7 @@ export class APIService {
     };
 
     if (auth) {
-      this.headers.Authorization = getUserInformation('AuthToken');
+      this.headers.Authorization = `${getUserInformation('AuthToken')}`;
     }
 
     if (cancelToken) {

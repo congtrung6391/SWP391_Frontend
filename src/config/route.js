@@ -3,9 +3,9 @@ require('dotenv').config();
 export const BASE = process.env.REACT_APP_BASE_URL;
 
 // auth
-export const REGISTER = `${BASE}sign-up`;
-export const LOGIN = `${BASE}sign-in`;
-export const VERIFY_TOKEN = `${BASE}verify-token`;
+export const REGISTER = `${BASE}/auth/signup`;
+export const LOGIN = `${BASE}/auth/log-in`;
+export const VERIFY_TOKEN = `${BASE}/auth/verify-authorization`;
 
 // users
 export const USERS = 'users?:queryString';

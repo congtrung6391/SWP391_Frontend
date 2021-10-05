@@ -1,73 +1,27 @@
 .header {
   $admin: #ffdd59;
 
-  span {
-    font-weight: bold;
-  }
-
-  a {
-    cursor: pointer;
-    text-transform: uppercase;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-    font-weight: bold;
-  }
-
-  a.hover {
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid $light-blue;
-  }
-
-  a.active {
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid $light-blue;
-  }
-
-  .logo.active {
-    border: none;
-  }
-
-  .username {
-    text-transform: none;
-  }
-
-  .admin-badge {
-    border-radius: 10rem;
-    padding: 0 0.5rem;
-    text-transform: none;
-    color: #ffdd59;
-    border: 2px solid #ffdd59;
-    margin: -2px;
-  }
-
-  .admin-badge.active {
-    color: $dark-gray;
-    background: #ffdd59;
-    border: 2px solid #ffdd59;
-    margin: -2px;
-  }
-
-  .admin-badge:hover {
-    color: $dark-gray;
-    background: #ffdd59;
-  }
-
-  .no-border {
-    border: none;
-    margin-bottom: 0;
-  }
-  .no-border.active {
-    border: none;
-    margin-bottom: 0;
-  }
-
-  .MuiList-padding {
+  .nav-item {
+    border-radius: 2rem;
     padding: 0;
-  }
+    margin: 0 0.25rem;
 
-  .MuiIconButton-root {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    .MuiListItem-root {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+
+    &:hover {
+      background-color: rgba($primary-color, 0.2);
+      border: 1px solid rgba($primary-color, 0.8);
+      margin-top: -1px;
+      margin-bottom: -1px;
+    }
+
+    &.active {
+      background-color: $primary-color;
+      color: $contrast-text-color; 
+    }
   }
 
   @media (min-width: 600px) {

@@ -1,5 +1,3 @@
-import validate from 'validate.js';
-import SHA256 from 'crypto-js/sha256';
 import { isLoggedIn, getUserInformation } from '../utils/cookies';
 import { APIService } from './api.service';
 import {
@@ -19,17 +17,19 @@ class AuthenticationService {
     return isLoggedIn();
   }
 
-  static async register(Fullname, Username, Email, Password) {
+  static async register(fullName, username, email, password, phone, role) {
     try {
       await new APIService(
         'post',
         REGISTER,
         null,
         {
-          Fullname,
-          Username,
-          Email,
-          Password,
+          fullName,
+          username,
+          email,
+          password,
+          phone,
+          role: [role],
         },
       ).request();
       return null;
@@ -38,33 +38,23 @@ class AuthenticationService {
     }
   }
 
-  static async login(usernameOrEmail, password) {
+  static async login(username, password) {
     try {
-      const user = {
-        Password: SHA256(password).toString(),
-      };
-
-      const constraints = {
-        from: {
-          email: true,
-        },
-      };
-
-      if (validate({ from: usernameOrEmail }, constraints) === undefined) {
-        user.Email = usernameOrEmail;
-        user.Username = '';
-      } else {
-        user.Username = usernameOrEmail;
-        user.Email = '';
-      }
 
       const response = await new APIService(
         'post',
         LOGIN,
         null,
-        user,
+        {
+          username,
+          password,
+        },
       ).request();
-      return response.user;
+      response.AuthToken = response.access_token;
+      response.role = response.roles[0];
+      delete response.access_token;
+      delete response.roles;
+      return response;
     } catch (error) {
       return error.message;
     }
@@ -73,9 +63,11 @@ class AuthenticationService {
   static async verifyToken() {
     try {
       await new APIService(
-        'get',
+        'post',
         VERIFY_TOKEN,
-        null, null, true,
+        null,
+        null,
+        true,
       ).request();
       return null;
     } catch (error) {

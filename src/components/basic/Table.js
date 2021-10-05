@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableCell, withStyles } from '@material-ui/core';
+import { TableCell, withStyles } from '@mui/material';
 
 export const PrimaryMuiTableCell = withStyles((theme) => ({
   root: {

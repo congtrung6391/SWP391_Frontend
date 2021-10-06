@@ -216,7 +216,7 @@ const Header = () => {
                       <ListItemText>
                         <span className="fas fa-cogs" />
                         &nbsp;&nbsp;
-                        { user.Role }
+                        {'Dashboard'}
                       </ListItemText>
                     </NavLink>
                   </ListItem>

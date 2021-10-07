@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Typography,
+  // Typography,
   Box,
-  Grid,
+  // Grid,
   TableContainer,
   Paper,
   TableHead,
@@ -12,21 +12,21 @@ import {
   TableBody,
   Pagination,
   FormControl,
-  InputLabel,
+  // InputLabel,
   Select,
   MenuItem,
   IconButton,
-  TextField,
+  // TextField,
   Button,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+// import { makeStyles } from '@mui/styles';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { LoadingDNA3X } from '../../common/Loading';
-import PaginationList from '../../basic/PaginationList';
+// import PaginationList from '../../basic/PaginationList';
 import URLService from '../../../services/URL.service';
 import AdminUsersService from '../../../services/adminUsers.service';
-import SingleUser from './SingleUser';
-import UserTypeProvider, { UserTypeContext } from '../../../context/usertype.context';
+// import SingleUser from './SingleUser';
+// import UserTypeProvider, { UserTypeContext } from '../../../context/usertype.context';
 import { AdminUserContext } from '../../../context/adminUser.context';
 import { ToastContext } from '../../../context/toast.context';
 import MuiSearch from '../../common/MuiSearch';
@@ -34,7 +34,7 @@ import MuiSearch from '../../common/MuiSearch';
 const ListUsers = () => {
   const itemPerPage = 20;
   const userContext = useContext(AdminUserContext);
-  const userTypeContext = useContext(UserTypeContext);
+  // const userTypeContext = useContext(UserTypeContext);
   const toastContext = useContext(ToastContext);
   const [fetched, setFetched] = useState(false);
   const [search, setSearch] = useState('');
@@ -45,7 +45,7 @@ const ListUsers = () => {
     const { page: pageUrl, search: searchUrl } = URLService.getAllQueryString();
     setPage(Number(pageUrl) || 1);
     setSearch(searchUrl);
-  })
+  }, [])
 
   const onPageChange = (event, value) => {
     setPage(page);
@@ -57,7 +57,7 @@ const ListUsers = () => {
       setting.key = setting.search;
       await AdminUsersService.getUserList(setting);
       setFetched(true);
-      setNumberofPages(Math.ceil(userContext.totalUsers / this.itemPerPage));
+      setNumberofPages(Math.ceil(userContext.totalUsers / itemPerPage));
     } catch (error) {
       setFetched(true);
     }
@@ -88,11 +88,11 @@ const ListUsers = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search])
 
-  const refresh = async () => {
-    setFetched(true);
-    URLService.setQueryString('page', this.state.page);
-    await fetchUsers();
-  }
+  // const refresh = async () => {
+  //   setFetched(true);
+  //   URLService.setQueryString('page', this.state.page);
+  //   await fetchUsers();
+  // }
 
   if (!fetched) {
     return <LoadingDNA3X />;
@@ -121,6 +121,7 @@ const ListUsers = () => {
               <TableCell sx={{ color: 'primary.contrastText' }}>#</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Username</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Email</TableCell>
+              <TableCell sx={{ color: 'primary.contrastText' }}>Fullname</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Role</TableCell>
               <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Delete</TableCell>
             </TableRow>
@@ -132,13 +133,14 @@ const ListUsers = () => {
                   <TableCell>{index+1}</TableCell>
                   <TableCell>{user.username}</TableCell>
                   <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.fullName}</TableCell>
                   <TableCell>
                     <FormControl>
                       <Select
                         id="demo-simple-select"
                         value={user.roles[0].userRole}
                         onChange={(event) => onChangeUserRole(event, user.username)}
-                        sx={{ minWidth: '8.5rem' }}
+                        sx={{ minWidth: '8.5rem', height: '1.4rem' }}
                         variant="standard"
                       >
                         <MenuItem value='SUPER_ADMIN'>Super Admin</MenuItem>

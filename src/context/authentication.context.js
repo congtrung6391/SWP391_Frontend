@@ -15,6 +15,7 @@ class AuthenticationProvider extends React.Component {
       register: this.register,
       login: this.login,
       verifyToken: this.verifyToken,
+      verifySuperAdministrator: this.verifySuperAdministrator,
       verifyAdministrator: this.verifyAdministrator,
       verifyTutor: this.verifyTutor,
       verifyUser: this.verifyUser,
@@ -70,6 +71,9 @@ class AuthenticationProvider extends React.Component {
   // eslint-disable-next-line react/destructuring-assignment
   verifyAdministrator = () => this.verifyUser() && ['ADMIN', 'SUPER_ADMIN'].includes(this.state.user.role)
 
+  // eslint-disable-next-line react/destructuring-assignment
+  verifySuperAdministrator = () => this.verifyUser() && ['SUPER_ADMIN'].includes(this.state.user.role)
+  
   // eslint-disable-next-line react/destructuring-assignment
   verifyTutor = () => this.verifyUser() && ['TUTOR', 'ADMIN', 'SUPER_ADMIN'].includes(this.state.user.role)
 

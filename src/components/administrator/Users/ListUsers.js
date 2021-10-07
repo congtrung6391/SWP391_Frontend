@@ -48,7 +48,7 @@ const ListUsers = () => {
   }, [])
 
   const onPageChange = (event, value) => {
-    setPage(page);
+    setPage(value);
   }
 
   const fetchUsers = async () => {

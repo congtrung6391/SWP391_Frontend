@@ -1,20 +1,19 @@
 import React from 'react';
 import {
-  Typography,
   Grid,
+  Typography,
 } from '@mui/material';
 import NavigationBar from '../../common/NavigationBar';
 import Body from '../../basic/Body';
-import ListUsers from './ListUsers';
+import EditCourseList from './EditCourseList';
 
-const UserPage = () => {
-
+const CoursePage = (props) => {
   return (
     <>
       <NavigationBar
         nav={[
           ['admin', '/admin'],
-          ['users', '/admin/users'],
+          ['courses', '/admin/course'],
         ]}
       />
       <Body>
@@ -24,13 +23,13 @@ const UserPage = () => {
             fontWeight="bold"
             sx={{ pl: 2, mb: 2 }}
           >
-            Account management
+            Course management
           </Typography>
-          <ListUsers />
+          <EditCourseList />
         </Grid>
       </Body>
     </>
   );
-};
+}
 
-export default UserPage;
+export default CoursePage;

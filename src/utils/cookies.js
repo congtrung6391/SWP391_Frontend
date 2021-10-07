@@ -59,7 +59,6 @@ export const getUserInformation = (option = 'all') => {
     if (option === 'all') {
       return decryptToInfo;
     }
-    console.log(decryptToInfo);
     return decryptToInfo[option];
   } catch (error) {
     return null;

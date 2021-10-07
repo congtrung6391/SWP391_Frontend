@@ -4,10 +4,11 @@ import Dashboard from '../components/administrator/Dashboard/Dashboard';
 import ToastProvider from '../context/toast.context';
 import UserPage from '../components/administrator/Users/UserPage';
 import { AuthenticationContext } from '../context/authentication.context';
+import AdminUserProvider from '../context/adminUser.context';
 
 const AdministratorRoute = () => {
-  const { verifyModerator } = useContext(AuthenticationContext);
-  if (!verifyModerator()) {
+  const { verifyTutor } = useContext(AuthenticationContext);
+  if (!verifyTutor()) {
     return <Redirect to="/" />;
   }
 
@@ -15,10 +16,12 @@ const AdministratorRoute = () => {
     <div className="d-flex">
       <div style={{ width: '100%' }}>
         <ToastProvider>
-          <Switch>
-            <Route exact path="/admin" component={Dashboard} />
-            <Route exact path="/admin/users" component={UserPage} />
-          </Switch>
+          <AdminUserProvider>
+            <Switch>
+              <Route exact path="/admin" component={Dashboard} />
+              <Route exact path="/admin/users" component={UserPage} />
+            </Switch>
+          </AdminUserProvider>
         </ToastProvider>
       </div>
     </div>

@@ -30,3 +30,20 @@
     }
   }
 }
+
+.admin-badge {
+  border: 1px solid #ffdd59;
+  color: #ffdd59;
+  padding: 0rem 0.5rem;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #ffdd59;
+    color: #fff;
+  }
+
+  &.active {
+    background-color: #ffdd59;
+    color: #fff;
+  }
+}

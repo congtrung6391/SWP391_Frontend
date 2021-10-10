@@ -81,6 +81,7 @@ const AddCoursePage = (props) => {
       toastContext.addNotification('Error', response, 'error');
     } else {
       toastContext.addNotification('Success');
+      props.history.push(`admin/courses/edit/${response.id}`);
     }
     setSaving(false);
   }
@@ -184,7 +185,12 @@ const AddCoursePage = (props) => {
                 >
                   {
                     subjectContext.subjects.map((subject) => (
-                      <MenuItem key={subject.id} value={subject.id}>{subject.name}</MenuItem>
+                      <MenuItem
+                        key={subject.id}
+                        value={subject.id}
+                      >
+                        {subject.subjectName}
+                      </MenuItem>
                     ))
                   }
                 </Select>

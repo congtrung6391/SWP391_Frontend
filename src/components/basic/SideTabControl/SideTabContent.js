@@ -14,6 +14,7 @@ const SideTabContent = (props) => {
   children = children.filter((child) => child);
 
   const tab = URLService.getQueryString(controlKey);
+  console.log(tab);
 
   const content = children.find((child) => child.props.route === tab);
 

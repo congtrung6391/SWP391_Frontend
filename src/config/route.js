@@ -14,7 +14,7 @@ export const USER_TYPE = 'usertypes';
 export const USER_PASSWORD = 'users/reset-password';
 
 // courses
-export const SUBJECTS = 'users/reset-password';
+export const SUBJECTS = 'course/subject';
 export const COURSES = 'course';
 export const COURSE_ID = 'course/:id';
 

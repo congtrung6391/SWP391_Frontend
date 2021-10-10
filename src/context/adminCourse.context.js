@@ -26,7 +26,24 @@ class AdminCourseProvider extends React.Component {
     } else {
         this.setState({ courseList: response.courseList, totalCourse: response.totalCourse });
     }
+  }
 
+  getCourse = async (id) => {
+    const { courseList } = this.state;
+    const course = courseList.find((c) => c.id === id);
+    
+    if (course) {
+      this.setState({ course });
+      return course;
+    }
+
+    const newCourse = await AdminCourseService.getCourse(id);
+    if (typeof newCourse === 'string') {
+      return {};
+    }
+    courseList.push(newCourse);
+    this.setState({ courseList, course: newCourse });
+    return course;
   }
 
   createCourse = async (info) => {

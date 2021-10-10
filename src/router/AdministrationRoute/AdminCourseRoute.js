@@ -10,6 +10,7 @@ const AdminUserRoute = () => {
     <AdminCourseProvider>
         <Switch>
             <Route path="/admin/courses/add" component={AddCoursePage} />
+            <Route path="/admin/courses/edit/:id" component={EditCoursePage} />
             <Route path="/admin/courses" component={CoursePage} />
         </Switch>
     </AdminCourseProvider>

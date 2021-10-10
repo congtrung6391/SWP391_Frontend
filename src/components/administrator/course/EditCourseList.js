@@ -14,7 +14,7 @@ import {
   MenuItem,
   IconButton,
   Button,
-  InputLabel,
+  ButtonGroup,
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -88,15 +88,26 @@ const ListUsers = () => {
   return (
     <Box>
       <Box mb={1} display="flex" flexDirection="row">
-        <Button
-          disableFocusRipple
-          disableRipple
-          disableElevation
-          variant="contained"
-          color="primary"
-        >
-          {`Total courses: ${courseContext.totalCourse}`}
-        </Button>
+        <ButtonGroup>
+          <Button
+            disableFocusRipple
+            disableRipple
+            disableElevation
+            variant="contained"
+            color="secondary"
+          >
+            Add new
+          </Button>
+          <Button
+            disableFocusRipple
+            disableRipple
+            disableElevation
+            variant="contained"
+            color="primary"
+          >
+            {`Total courses: ${courseContext.totalCourse}`}
+          </Button>
+        </ButtonGroup>
         <Box flexGrow={1}>
           <MuiSearch />
         </Box>
@@ -120,7 +131,12 @@ const ListUsers = () => {
             <MenuItem key={0} value={0}>All subject</MenuItem>
             {
               subjectContext.subjects.map((subject) => (
-                <MenuItem key={subject.id} value={subject.id}>{subject.name}</MenuItem>
+                <MenuItem
+                  key={subject.id}
+                  value={subject.id}
+                >
+                  {subject.subjectName}
+                </MenuItem>
               ))
             }
           </Select>
@@ -144,27 +160,27 @@ const ListUsers = () => {
               courseContext.courseList.map((course, index) => (
                 <TableRow compnent={NavLink} key={course.id}>
                   <TableCell>
-                    <NavLink to={`/admin/course/edit/${course.id}`}>
+                    <NavLink to={`/admin/courses/edit/${course.id}`}>
                       {index + 1}
                     </NavLink>
                   </TableCell>
                   <TableCell>
-                    <NavLink to={`/admin/course/edit/${course.id}`}>
+                    <NavLink to={`/admin/courses/edit/${course.id}`}>
                       {course.courseName}
                     </NavLink>
                   </TableCell>
                   <TableCell>
-                    <NavLink to={`/admin/course/edit/${course.id}`}>
+                    <NavLink to={`/admin/courses/edit/${course.id}`}>
                       {course.tutor.username}
                     </NavLink>
                   </TableCell>
                   <TableCell>
-                    <NavLink to={`/admin/course/edit/${course.id}`}>
+                    <NavLink to={`/admin/courses/edit/${course.id}`}>
                       {course.student ? course.student.username : 'No student'}
                     </NavLink>
                   </TableCell>
                   <TableCell>
-                    <NavLink to={`/admin/course/edit/${course.id}`}>
+                    <NavLink to={`/admin/courses/edit/${course.id}`}>
                       {course.subject}
                     </NavLink>
                   </TableCell>

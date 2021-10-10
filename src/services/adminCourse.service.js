@@ -4,6 +4,7 @@ import URLService from './URL.service';
 import {
   COURSES, COURSE_ID, USERS, USER, USER_TYPE,
 } from '../config/route';
+import { APIService } from './api.service';
 
 class AdminCourseService {
 
@@ -45,6 +46,20 @@ class AdminCourseService {
         { id },
       ).request();
       return null;
+    } catch (error) {
+      return error.message;
+    }
+  }
+
+  static async getCourse(id) {
+    try {
+      const response = await new APIService(
+        'get',
+        COURSE_ID,
+        { id },
+      ).request();
+      console.log(response);
+      return response.course;
     } catch (error) {
       return error.message;
     }

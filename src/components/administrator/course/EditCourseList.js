@@ -83,6 +83,15 @@ const ListUsers = () => {
     }
   }
 
+  const onReplyRegister = async (course, action) => {
+    const response = await courseContext.replyRegister(course.id, action, course);
+    if (response === null) {
+      toastContext.addNotification('Action success');
+    } else {
+      toastContext.addNotification('Action failed', response, 'error');
+    }
+  }
+
   useEffect(() => {
     fetchCourseList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -198,7 +207,12 @@ const ListUsers = () => {
                   </TableCell>
                   <TableCell>
                     <NavLink to={`/admin/courses/edit/${course.id}`}>
-                      {course.student ? course.student.username : 'No student'}
+                      <Typography
+                        noWrap
+                        sx={{ maxWidth: '8rem' }}
+                      >
+                        {course.student ? course.student.email : 'No student'}
+                      </Typography>
                     </NavLink>
                   </TableCell>
                   <TableCell>
@@ -208,15 +222,21 @@ const ListUsers = () => {
                   </TableCell>
                   <TableCell align="center">
                     <MenuBookIcon
-                      color={course.courseStatus ? 'success' : 'error'}
+                      color={course.courseStatus ? 'error' : 'success'}
                     />
                   </TableCell>
                   <TableCell align="center">
                     <ButtonGroup variant="contained" size="small">
-                      <Button color="success" >
+                      <Button
+                        color="success"
+                        onClick={() => onReplyRegister(course, true, course)}
+                      >
                         <CheckCircleOutlineIcon />
                       </Button>
-                      <Button color="error">
+                      <Button
+                        color="error"
+                        onClick={() => onReplyRegister(course, false, course)}
+                      >
                         <HighlightOffIcon />
                       </Button>
                     </ButtonGroup>

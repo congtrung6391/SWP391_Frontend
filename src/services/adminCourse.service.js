@@ -2,7 +2,7 @@ import _ from 'lodash';
 import AdminAPIService from './adminAPI.service';
 import URLService from './URL.service';
 import {
-  COURSES, COURSE_ID, COURSE_INFO, USERS, USER, USER_TYPE,
+  COURSES, COURSE_ID, COURSE_INFO, USERS, USER, USER_TYPE, COURSE_REGISTER,
 } from '../config/route';
 import { APIService } from './api.service';
 
@@ -73,8 +73,24 @@ class AdminCourseService {
         { id },
         data,
       ).request();
-      console.log(response);
       return response.course;
+    } catch (error) {
+      return error.message;
+    }
+  }
+
+  static async replyCourseRegister(id, action) {
+    try {
+      const response = await new AdminAPIService(
+        'put',
+        COURSE_REGISTER,
+        { id },
+        {
+          action,
+        },
+      ).request();
+      console.log(response);
+      return response;
     } catch (error) {
       return error.message;
     }

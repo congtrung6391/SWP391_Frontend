@@ -6,7 +6,7 @@ import {
   AccountCircle as AccountCircleIcon,
   VpnKey as VpnKeyIcon,
 } from '@mui/icons-material';
-import SideTabControl from '../../basic/SideTabControl/SideTabControl';
+import SideTabControl from '../../../basic/SideTabControl/SideTabControl';
 
 const UserSideNavigation = () => (
   <Paper
@@ -28,11 +28,6 @@ const UserSideNavigation = () => (
         <AccountCircleIcon />
         &nbsp;
         <ListItemText>Thông tin cơ bản</ListItemText>
-      </ListItem>
-      <ListItem route="password" key="password">
-        <VpnKeyIcon />
-        &nbsp;
-        <ListItemText>Tài khoản & Mật khẩu</ListItemText>
       </ListItem>
     </SideTabControl>
   </Paper>

@@ -23,13 +23,9 @@ const PublicCourseList = (props) => {
               padding: '0.35rem',
             }}
           >
-            <NavLink
-              to={`/courses/${course.id}`}
-            >
-              <PublicCourseSingleList
-                course={course}
-              />
-            </NavLink>
+            <PublicCourseSingleList
+              course={course}
+            />
           </Grid>
         ))
       }

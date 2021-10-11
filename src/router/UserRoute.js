@@ -11,6 +11,7 @@ import Page404 from '../components/common/404';
 
 import ToastProvider from '../context/toast.context';
 import CourseRoute from './UserRoute/CourseRoute';
+import TutorRoute from './UserRoute/TutorRoute';
 
 
 const UserRoute = () => (
@@ -21,7 +22,8 @@ const UserRoute = () => (
       <Route exact path="/forget-password" component={ForgotPassword} />
       <Route exact path="/reset" component={ResetPassword} />
       <Route path="/courses" component={CourseRoute} />
-      <Route path="/users" component={UserProfileRoute} />
+      <Route path="/userS" component={UserProfileRoute} />
+      <Route path="/tutors" component={TutorRoute} />
       <Route component={Page404} />
     </Switch>
   </ToastProvider>

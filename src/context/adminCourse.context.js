@@ -17,6 +17,7 @@ class AdminCourseProvider extends React.Component {
       deleteCourse: this.deleteCourse,
       createCourse: this.createCourse,
       publicCourse: this.publicCourse,
+      replyRegister: this.replyRegister,
     };
   }
 
@@ -77,6 +78,23 @@ class AdminCourseProvider extends React.Component {
     const { courseList } = this.state;
     const index = courseList.findIndex((c) => c.id === id);
     courseList.splice(index, 1, response);
+    this.setState({ courseList });
+    return null;
+  }
+
+  replyRegister = async (id, action, course) => {
+    const response = await AdminCourseService.replyCourseRegister(id, action);
+    if (typeof response === 'string') {
+      return response;
+    }
+    const { courseList } = this.state;
+    const index = courseList.findIndex((c) => c.id === id);
+    if (!action) {
+      delete course.student;
+    } else {
+      course.courseStatus = false;
+    }
+    courseList.splice(index, 1, course);
     this.setState({ courseList });
     return null;
   }

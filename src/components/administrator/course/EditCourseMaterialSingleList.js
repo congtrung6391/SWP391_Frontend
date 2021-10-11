@@ -11,7 +11,6 @@ const EditCourseMaterialSingleList = ({ material, updateMaterial, deleteMaterial
   const [filename, setFilename] = useState('');
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const [editing, setEditing] = useState(false);
   const theme = useTheme();
 
   const onChangeTitle = (event) => {

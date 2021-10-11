@@ -12,6 +12,8 @@ export const USERS = 'get-user-list';
 export const USER = 'user/:id';
 export const USER_TYPE = 'usertypes';
 export const USER_PASSWORD = 'users/reset-password';
+export const TUTORS = 'tutor';
+export const USER_PROFILE = 'user/:id/profile';
 
 // courses
 export const SUBJECTS = 'course/subject';
@@ -20,6 +22,7 @@ export const COURSE_INFO = 'course/:id/info';
 export const COURSE_ID = 'course/:id';
 export const COURSE_MATERIAL = 'course/:cid/material';
 export const COURSE_MATERIAL_ID = 'course/:cid/material/:mid';
+export const COURSE_REGISTER = 'course/:id/register';
 
 // material
 

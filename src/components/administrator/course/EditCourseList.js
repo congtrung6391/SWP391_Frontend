@@ -15,7 +15,11 @@ import {
   IconButton,
   Button,
   ButtonGroup,
+  Typography,
 } from '@mui/material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import PublicIcon from '@mui/icons-material/Public';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { LoadingDNA3X } from '../../common/Loading';
@@ -70,6 +74,15 @@ const ListUsers = () => {
     }
   }
 
+  const onPublicCourse = async (course) => {
+    const response = await courseContext.publicCourse(course.id, course.courseStatus ? false : true);
+    if (response === null) {
+      toastContext.addNotification('Toggle public course success');
+    } else {
+      toastContext.addNotification('Toggle public course failed', response, 'error');
+    }
+  }
+
   useEffect(() => {
     fetchCourseList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,7 +109,9 @@ const ListUsers = () => {
             variant="contained"
             color="secondary"
           >
-            Add new
+            <NavLink to="/admin/courses/add">
+              Add new
+            </NavLink>
           </Button>
           <Button
             disableFocusRipple
@@ -152,6 +167,8 @@ const ListUsers = () => {
               <TableCell sx={{ color: 'primary.contrastText' }}>Student</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Subject</TableCell>
               <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Learning</TableCell>
+              <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Approve/Reject</TableCell>
+              <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Toggle Public</TableCell>
               <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Delete</TableCell>
             </TableRow>
           </TableHead>
@@ -171,7 +188,12 @@ const ListUsers = () => {
                   </TableCell>
                   <TableCell>
                     <NavLink to={`/admin/courses/edit/${course.id}`}>
-                      {course.tutor.username}
+                      <Typography
+                        noWrap
+                        sx={{ maxWidth: '8rem' }}
+                      >
+                        {course.tutor.email}
+                      </Typography>
                     </NavLink>
                   </TableCell>
                   <TableCell>
@@ -181,13 +203,28 @@ const ListUsers = () => {
                   </TableCell>
                   <TableCell>
                     <NavLink to={`/admin/courses/edit/${course.id}`}>
-                      {course.subject}
+                      {course.subject.subjectName}
                     </NavLink>
                   </TableCell>
                   <TableCell align="center">
                     <MenuBookIcon
                       color={course.courseStatus ? 'success' : 'error'}
                     />
+                  </TableCell>
+                  <TableCell align="center">
+                    <ButtonGroup variant="contained" size="small">
+                      <Button color="success" >
+                        <CheckCircleOutlineIcon />
+                      </Button>
+                      <Button color="error">
+                        <HighlightOffIcon />
+                      </Button>
+                    </ButtonGroup>
+                  </TableCell>
+                  <TableCell align="center">
+                    <IconButton onClick={() => onPublicCourse(course)}>
+                      <PublicIcon color={course.courseStatus ? 'success' : 'warning'} />
+                    </IconButton>
                   </TableCell>
                   <TableCell align="center">
                     <IconButton onClick={() => onDeleteCourse(course.id)}>

@@ -15,6 +15,7 @@ import { Box } from '@mui/system';
 import SideTabControl from '../../basic/SideTabControl/SideTabControl';
 import SideTabContent from '../../basic/SideTabControl/SideTabContent';
 import EditCourseInformation from './EditCourseInformation';
+import EditCourseMaterial from './EditCourseMaterial';
 
 const EditCoursePage = (props) => {
   const [fetched, setFetched] = useState(false);
@@ -87,6 +88,11 @@ const EditCoursePage = (props) => {
             <SideTabContent controlKey="editcourse-view">
               <Box route="info" flexGrow={1}>
                 <EditCourseInformation
+                  course={course}
+                />
+              </Box>
+              <Box route="material" flexGrow={1}>
+                <EditCourseMaterial
                   course={course}
                 />
               </Box>

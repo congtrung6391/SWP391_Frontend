@@ -16,6 +16,7 @@ class AdminCourseProvider extends React.Component {
       updateCourse: this.updateCourse,
       deleteCourse: this.deleteCourse,
       createCourse: this.createCourse,
+      publicCourse: this.publicCourse,
     };
   }
 
@@ -43,7 +44,7 @@ class AdminCourseProvider extends React.Component {
     }
     courseList.push(newCourse);
     this.setState({ courseList, course: newCourse });
-    return course;
+    return newCourse;
   }
 
   createCourse = async (info) => {
@@ -68,8 +69,39 @@ class AdminCourseProvider extends React.Component {
     this.setState({ courseList });
   }
 
+  publicCourse = async (id, value) => {
+    const response = await AdminCourseService.updateCourse(id, { course_status: value });
+    if (typeof response === 'string') {
+      return response;
+    }
+    const { courseList } = this.state;
+    const index = courseList.findIndex((c) => c.id === id);
+    courseList.splice(index, 1, response);
+    this.setState({ courseList });
+    return null;
+  }
+
+  updateCourse = async (course) => {
+    const { course: origin } = this.state;
+    const packData = {};
+    Object.keys(course).forEach((key) => {
+      if (course[key] !== origin[key]) {
+        packData[key] = course[key];
+      }
+    });
+    const response = await AdminCourseService.updateCourse(course.id, packData);
+    if (typeof response === 'string') {
+      return response;
+    }
+    const { courseList } = this.state;
+    const index = courseList.findIndex((c) => c.id === course.id);
+    courseList.splice(index, 1, response);
+    this.setState({ courseList });
+  }
+
   componentDidMount() {
     this.getCourseList();
+    console.log(this.state.courseList);
   }
 
   render() {

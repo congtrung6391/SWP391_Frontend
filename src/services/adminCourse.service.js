@@ -2,7 +2,7 @@ import _ from 'lodash';
 import AdminAPIService from './adminAPI.service';
 import URLService from './URL.service';
 import {
-  COURSES, COURSE_ID, USERS, USER, USER_TYPE,
+  COURSES, COURSE_ID, COURSE_INFO, USERS, USER, USER_TYPE,
 } from '../config/route';
 import { APIService } from './api.service';
 
@@ -16,8 +16,8 @@ class AdminCourseService {
         null,
       ).request();
       return {
-        courseList: response,
-        totalCourse: response.length,
+        courseList: response.courseList,
+        totalCourse: response.totalCourse,
       };
     } catch (error) {
       return error.message;
@@ -53,10 +53,25 @@ class AdminCourseService {
 
   static async getCourse(id) {
     try {
-      const response = await new APIService(
+      const response = await new AdminAPIService(
         'get',
+        COURSE_INFO,
+        { id },
+      ).request();
+      console.log(response);
+      return response;
+    } catch (error) {
+      return error.message;
+    }
+  }
+
+  static async updateCourse(id, data) {
+    try {
+      const response = await new AdminAPIService(
+        'put',
         COURSE_ID,
         { id },
+        data,
       ).request();
       console.log(response);
       return response.course;

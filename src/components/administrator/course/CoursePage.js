@@ -17,7 +17,7 @@ const CoursePage = (props) => {
         ]}
       />
       <Body>
-        <Grid item md={12}>
+        <Grid item md={12} xs={12}>
           <Typography
             variant="h5"
             fontWeight="bold"

@@ -6,15 +6,11 @@ import {
   Paper,
   Select,
   TextField,
-  Typography,
-  Container,
   Button,
   InputLabel,
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { AdminCourseContext } from '../../../context/adminCourse.context';
-import NavigationBar from '../../common/NavigationBar';
-import Body from '../../basic/Body';
 import { SubjectContext } from '../../../context/subject.context';
 import { ToastContext } from '../../../context/toast.context';
 
@@ -77,7 +73,7 @@ const EditCourseInformation = (props) => {
   const onSaveCourse = async () => {
     setSaving(true);
     console.log(course);
-    const response = await courseContext.createCourse(course);
+    const response = await courseContext.updateCourse(course);
     if (typeof response === 'string') {
       toastContext.addNotification('Error', response, 'error');
     } else {
@@ -95,6 +91,7 @@ const EditCourseInformation = (props) => {
         borderColor: 'primary.main',
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
+        minHeight: '23rem',
       }}
       variant='outlined'
     >
@@ -114,7 +111,6 @@ const EditCourseInformation = (props) => {
           variant="outlined"
           fullWidth
           multiline
-          rows={4}
           maxRows={10}
           label="Descrtiption"
           name="description"
@@ -185,13 +181,13 @@ const EditCourseInformation = (props) => {
             <Select
               id="select-subject"
               label="Subject"
-              value={course.subjectId || 1}
+              value={course.subjectId || course.subject.id || 1}
               onChange={(event) => onChangeSubject(event)}
               sx={{ minWidth: '8rem' }}
             >
               {
                 subjectContext.subjects.map((subject) => (
-                  <MenuItem key={subject.id} value={subject.id}>{subject.name}</MenuItem>
+                  <MenuItem key={subject.id} value={subject.id}>{subject.subjectName}</MenuItem>
                 ))
               }
             </Select>

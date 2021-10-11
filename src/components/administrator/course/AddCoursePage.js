@@ -81,7 +81,7 @@ const AddCoursePage = (props) => {
       toastContext.addNotification('Error', response, 'error');
     } else {
       toastContext.addNotification('Success');
-      props.history.push(`admin/courses/edit/${response.id}`);
+      props.history.push(`/admin/courses/edit/${response.id}`);
     }
     setSaving(false);
   }

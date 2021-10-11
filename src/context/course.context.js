@@ -27,21 +27,13 @@ class CourseProvider extends React.Component {
   }
 
   getCourse = async (id) => {
-    const { courseList } = this.state;
-    const course = courseList.find((c) => c.id === id);
-    
-    if (course) {
-      this.setState({ course });
-      return course;
-    }
-
     const newCourse = await CourseService.getCourse(id);
     if (typeof newCourse === 'string') {
-      return {};
+      return null;
     }
-    courseList.push(newCourse);
-    this.setState({ courseList, course: newCourse });
-    return course;
+
+    this.setState({ course: newCourse });
+    return newCourse;
   }
 
   componentDidMount() {

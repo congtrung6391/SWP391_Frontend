@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Box,
-  Avatar,
   Typography,
-  Grid,
   Button,
   Divider,
 } from '@mui/material';
+import { CourseContext } from '../../../context/course.context';
 
 const PublicCourseSingleList = ({ course }) => {
+  const courseContext = useContext(CourseContext);
+  const [registering, setRegistering] = useState(false);
+
+  const onRegisterCourse = async () => {
+    setRegistering(true);
+  }
+
   return (
     <Box
       sx={{
@@ -20,7 +26,7 @@ const PublicCourseSingleList = ({ course }) => {
         justifyContent: 'flex-end',
         bgcolor: 'primary.main',
         width: '100%',
-        backgroundImage: `url(/image/background/${course.subject}.jpg)`,
+        backgroundImage: `url(/image/background/${course.subject.subjectName}.jpg)`,
         '&:hover': {
           boxShadow: 7,
         }
@@ -51,7 +57,7 @@ const PublicCourseSingleList = ({ course }) => {
             typography="caption"
             fontStyle="italic"
           >
-            {course.tutorFullName}
+            {course.tutor.fullName}
           </Box>'
           <Box
             typography="caption"
@@ -65,13 +71,17 @@ const PublicCourseSingleList = ({ course }) => {
               color: 'secondary.main',
             }}
           >
-            {course.subject}
+            {course.subject.subjectName}
           </Box>
         </Box>
         <Box
-          sx={{ mb: 1 }}
+          sx={{ my: 1 }}
         >
-          {course.courseDescription}
+          <Typography
+            noWrap
+          >
+            {course.courseDescription}
+          </Typography>
         </Box>
         <Divider sx={{ my: 1 }} />
         <Box
@@ -92,6 +102,7 @@ const PublicCourseSingleList = ({ course }) => {
               variant="contained"
               color="success"
               sx={{ borderRadius: 50 }}
+              onClick={onRegisterCourse}
             >
               Register
             </Button>

@@ -16,7 +16,10 @@ export const USER_PASSWORD = 'users/reset-password';
 // courses
 export const SUBJECTS = 'course/subject';
 export const COURSES = 'course';
+export const COURSE_INFO = 'course/:id/info';
 export const COURSE_ID = 'course/:id';
+export const COURSE_MATERIAL = 'course/:cid/material';
+export const COURSE_MATERIAL_ID = 'course/:cid/material/:mid';
 
 // material
 

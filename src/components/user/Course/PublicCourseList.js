@@ -5,7 +5,6 @@ import {
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import PublicCourseSingleList from './PublicCourseSingleList';
-import { Box } from '@mui/system';
 
 const PublicCourseList = (props) => {
   const courseContext = useContext(CourseContext);

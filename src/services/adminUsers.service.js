@@ -19,8 +19,8 @@ class AdminUsersService {
         },
       ).request();
       return {
-        users: response,
-        totalUsers: response.length,
+        users: response.userList,
+        totalUsers: response.totalUser,
       }
       // return {
       //   users: response.users,

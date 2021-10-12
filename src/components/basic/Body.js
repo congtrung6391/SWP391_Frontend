@@ -16,7 +16,6 @@ import ToastStack from './ToastStack';
 const Body = ({ className, children, backgroundColor }) => (
   <Box
     component={Grid}
-    pt="1rem"
     pb="1rem"
     className={`${className}`}
     style={{ background: backgroundColor }}

@@ -48,7 +48,7 @@ const ListUsers = () => {
   }, [])
 
   const onPageChange = (event, value) => {
-    setPage(page);
+    setPage(value);
   }
 
   const fetchUsers = async () => {
@@ -73,6 +73,7 @@ const ListUsers = () => {
   }
 
   const onDeleteUser = async (id) => {
+    console.log(id);
     if (window.confirm('This action cannot be undo, are you sure?')) {
       const response = await userContext.deleteUser(id);
       if (response === null) {
@@ -138,7 +139,7 @@ const ListUsers = () => {
                     <FormControl>
                       <Select
                         id="demo-simple-select"
-                        value={user.roles[0].userRole}
+                        value={user.role[0].userRole}
                         onChange={(event) => onChangeUserRole(event, user.username)}
                         sx={{ minWidth: '8.5rem', height: '1.4rem' }}
                         variant="standard"

@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Dashboard from '../components/administrator/Dashboard/Dashboard';
 import ToastProvider from '../context/toast.context';
-import UserPage from '../components/administrator/Users/UserPage';
 import { AuthenticationContext } from '../context/authentication.context';
-import AdminUserProvider from '../context/adminUser.context';
+import AdminUserRoute from './AdministrationRoute/AdminUserRoute';
+import AdminCourseRoute from './AdministrationRoute/AdminCourseRoute';
 
 const AdministratorRoute = () => {
   const { verifyTutor } = useContext(AuthenticationContext);
@@ -16,12 +16,11 @@ const AdministratorRoute = () => {
     <div className="d-flex">
       <div style={{ width: '100%' }}>
         <ToastProvider>
-          <AdminUserProvider>
-            <Switch>
-              <Route exact path="/admin" component={Dashboard} />
-              <Route exact path="/admin/users" component={UserPage} />
-            </Switch>
-          </AdminUserProvider>
+          <Switch>
+            <Route exact path="/admin" component={Dashboard} />
+            <Route exact path="/admin/users" component={AdminUserRoute} />
+            <Route path = "/admin/courses" component={AdminCourseRoute} />
+          </Switch>
         </ToastProvider>
       </div>
     </div>

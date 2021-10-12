@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button as MuiButton, Typography, withStyles } from '@material-ui/core';
+import { Button as MuiButton, Typography } from '@mui/material';
+import { withStyles } from '@mui/styles';
 
 const CustomMuiButton = withStyles(() => ({
   root: {

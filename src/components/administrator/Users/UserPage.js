@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {
+  Typography,
+  Grid,
+} from '@mui/material';
 import NavigationBar from '../../common/NavigationBar';
 import Body from '../../basic/Body';
 import ListUsers from './ListUsers';
-import SearchBar from '../../common/SearchBar';
 
 const UserPage = () => {
-  const [totalUser, setTotalUsers] = useState(0);
 
   return (
     <>
@@ -16,21 +18,16 @@ const UserPage = () => {
         ]}
       />
       <Body>
-        <div className="shadow-sm w-100 mt-2 p-2">
-          <h2 className="mb-3"><strong>Users</strong></h2>
-          <div className="d-flex mb-2">
-            <div className="bg-green h-100 text-white corner p-2 text-right mr-2">
-              <strong>
-                Số lượng users:
-                {totalUser}
-              </strong>
-            </div>
-            <div className="flex-grow-1">
-              <SearchBar toggleQuery />
-            </div>
-          </div>
-          <ListUsers setTotalUsers={setTotalUsers} />
-        </div>
+        <Grid item md={12}>
+          <Typography
+            variant="h5"
+            fontWeight="bold"
+            sx={{ pl: 2, mb: 2 }}
+          >
+            Account management
+          </Typography>
+          <ListUsers />
+        </Grid>
       </Body>
     </>
   );

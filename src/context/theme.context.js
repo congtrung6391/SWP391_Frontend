@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@mui/material';
 
 const ThemeWrapper = (props) => {
-  const theme = createMuiTheme({
+  const theme = createTheme({
     typography: {
       fontFamily: [
         '-apple-system',
@@ -20,12 +20,11 @@ const ThemeWrapper = (props) => {
     },
     palette: {
       primary: {
-        light: '#fff',
-        main: '#2c3e50',
-        dark: '#000',
+        main: '#21B8D9',
+        contrastText: '#fff',
       },
       secondary: {
-        main: '#3498db',
+        main: '#DC8EF8',
         contrastText: '#fff',
       },
       success: {
@@ -33,6 +32,9 @@ const ThemeWrapper = (props) => {
         main: '#4caf50',
         dark: '#388e3c',
         contrastText: '#fff',
+      },
+      error: {
+        main: '#F56A6A',
       },
       start: {
         light: '#5abafa',
@@ -46,11 +48,11 @@ const ThemeWrapper = (props) => {
   const { children } = props;
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       {
         children
       }
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

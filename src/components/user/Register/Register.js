@@ -452,7 +452,7 @@ class Register extends React.Component {
                     Register
                   </Button>
                   <Box mt={2} display="flex" flexDirection="row" justifyContent="center">
-                    <Link href="/register" underline="none">Already have an account</Link>
+                    <Link href="/login" underline="none">Already have an account</Link>
                   </Box>
                 </Box>
               </Body>

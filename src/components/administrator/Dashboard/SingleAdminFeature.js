@@ -51,13 +51,14 @@ const SingleAdminFeature = (props) => {
                   type="button"
                   id="add-button"
                   sx={{ border: 1 }}
+                  onClick={onClickHandler}
                 >
                   <span className="fas fa-plus" />
                 </IconButton>
               )
             )
             || (
-            <IconButton variant="outlined" type="button" sx={{ border: 1 }}>
+            <IconButton variant="outlined" type="button" sx={{ border: 1 }} onClick={onClickHandler}>
               <span className="fas fa-tools" />
             </IconButton>
             )

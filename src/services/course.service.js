@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { APIService } from './api.service';
 import URLService from './URL.service';
 import {
-  COURSES, COURSE_ID, COURSE_REGISTER,
+  COURSES, COURSE_INFO, COURSE_REGISTER,
 } from '../config/route';
 
 class AdminCourseService {
@@ -65,7 +65,7 @@ class AdminCourseService {
     try {
       const response = await new APIService(
         'get',
-        COURSE_ID,
+        COURSE_INFO,
         { id },
       ).request();
       console.log(response);

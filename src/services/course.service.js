@@ -69,7 +69,7 @@ class AdminCourseService {
         { id },
       ).request();
       console.log(response);
-      return response.course;
+      return response;
     } catch (error) {
       return error.message;
     }

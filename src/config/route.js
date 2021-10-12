@@ -14,6 +14,7 @@ export const USER_TYPE = 'usertypes';
 export const USER_PASSWORD = 'users/reset-password';
 export const TUTORS = 'tutor';
 export const USER_PROFILE = 'user/:id/profile';
+export const USER_ROLE = "user/:id/change-role";
 
 // courses
 export const SUBJECTS = 'course/subject';

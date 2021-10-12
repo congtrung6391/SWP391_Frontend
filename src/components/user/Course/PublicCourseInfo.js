@@ -70,7 +70,7 @@ const PublicCourseInfor = ({ course }) => {
           <TableRow>
             <TableCell>
               <Typography>
-                Length of each lession:
+                Length of each lesson:
               </Typography>
             </TableCell>
             <TableCell>
@@ -82,7 +82,7 @@ const PublicCourseInfor = ({ course }) => {
           <TableRow>
             <TableCell>
               <Typography>
-                Cost of each lession:
+                Cost of each lesson:
               </Typography>
             </TableCell>
             <TableCell>

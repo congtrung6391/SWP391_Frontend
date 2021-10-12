@@ -2,7 +2,7 @@ import _ from 'lodash';
 import AdminAPIService from './adminAPI.service';
 import URLService from './URL.service';
 import {
-  USERS, USER, USER_TYPE,
+  USERS, USER, USER_TYPE, USER_ROLE,
 } from '../config/route';
 
 class AdminUsersService {
@@ -38,7 +38,7 @@ class AdminUsersService {
     try {
       await new AdminAPIService(
         'post',
-        USER,
+        USER_ROLE,
         { id: username },
         { role: role },
       ).request();

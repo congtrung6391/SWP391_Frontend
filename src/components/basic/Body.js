@@ -6,7 +6,7 @@ import {
   Box,
   Grid,
   Container,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { breakpointPropType } from '../../propTypes/propTypes';
 
@@ -16,13 +16,12 @@ import ToastStack from './ToastStack';
 const Body = ({ className, children, backgroundColor }) => (
   <Box
     component={Grid}
-    pt="1rem"
     pb="1rem"
     className={`${className}`}
     style={{ background: backgroundColor }}
   >
     <Container className="content-body">
-      <Grid container>
+      <Grid container justifyContent="center">
         {children}
       </Grid>
       <ToastStack />
@@ -35,7 +34,7 @@ Body.propTypes = {
 };
 Body.defaultProps = {
   className: '',
-  backgroundColor: '#f5f6fa',
+  backgroundColor: '#fff',
 };
 
 export const Main = ({ gridBreakpont, className, children }) => (

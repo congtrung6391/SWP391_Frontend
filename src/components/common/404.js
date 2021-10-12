@@ -6,7 +6,7 @@ const Page404 = () => (
   <div>
     <NavigationBar
       nav={[
-        ['Home Page', '/'],
+        ['Home', '/'],
       ]}
     />
     <Body>

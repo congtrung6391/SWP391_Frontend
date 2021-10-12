@@ -1,17 +1,15 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Container, Col, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import {
+  Box, Typography, Paper, TextField, Checkbox, FormControlLabel, Avatar, Button, Link,
+} from '@mui/material';
 
-import Input from '../../basic/Input';
-import Button from '../../basic/Button';
-import Checkbox from '../../basic/Checkbox';
 import { isLoggedIn } from '../../../utils/cookies';
 import { Loading } from '../../common/Loading';
 import Body from '../../basic/Body';
 import NavigationBar from '../../common/NavigationBar';
 import { AuthenticationContext } from '../../../context/authentication.context';
-import history from '../../../BrowserHistory';
 
 class Login extends React.Component {
   constructor(props) {
@@ -19,15 +17,10 @@ class Login extends React.Component {
     this.state = {
       Username: '',
       Password: '',
-      remember: '',
+      remember: true,
       wrongPassword: '',
       isLoggingIn: false,
-      isGoolgeLoggingIn: false,
-      isFacebookLoggingIn: false,
-      socialLoginError: '',
     };
-    this.GOOGLE_ID = process.env.REACT_APP_GOOGLE_LOGIN_ID;
-    this.FACEBOOK_ID = process.env.REACT_APP_FACEBOOK_LOGIN_ID;
     this.context = AuthenticationContext;
   }
 
@@ -38,9 +31,9 @@ class Login extends React.Component {
     }
   }
 
-  toggleRemember = (value) => {
+  toggleRemember = () => {
     const { remember } = this.state;
-    if (remember === value) {
+    if (remember) {
       this.setState(() => ({
         remember: '',
       }));
@@ -81,7 +74,7 @@ class Login extends React.Component {
     const { Username, Password, remember } = this.state;
     const { login } = this.context;
     if (Username.trim().length === 0 || Password.length === 0) {
-      await this.setState(() => ({ wrongPassword: 'Sai tên đăng nhập hoặc mật khẩu.' }));
+      await this.setState(() => ({ wrongPassword: 'Wrong username or password.' }));
       return;
     }
 
@@ -92,54 +85,11 @@ class Login extends React.Component {
     const response = await login(Username, Password, remember);
     if (response) {
       this.setState(() => ({
-        wrongPassword: response.includes('Invalid user') ? 'Sai tên đăng nhập hoặc mật khẩu.' : response,
+        wrongPassword: (response.includes('Invalid user') || response.includes('Bad credentials')) ? 'Wrong password or username.' : response,
         isLoggingIn: false,
       }));
     } else {
-      history.goBack();
-    }
-  }
-
-  successResponseGoogle = async (googleResponse) => {
-    const { tokenId, googleId } = googleResponse;
-    const { googleLogin } = this.context;
-
-    this.setState(() => ({
-      isGoolgeLoggingIn: true,
-    }));
-
-    const response = await googleLogin(tokenId, googleId);
-    if (response) {
-      this.setState(() => ({
-        socialLoginError: response.includes('duplicate') ? 'Tài khoản đã tồn tại' : 'Đăng nhập thất bại',
-        isGoolgeLoggingIn: false,
-      }));
-    } else {
-      history.goBack();
-    }
-  }
-
-  failureResponseGoogle = () => {
-    // console.log(response);
-  }
-
-  responseFacebook = async (response) => {
-    const { accessToken, userID } = response;
-    const { facebookLogin } = this.context;
-
-    this.setState(() => ({
-      isFacebookLoggingIn: true,
-    }));
-
-    const responseAccount = await facebookLogin(accessToken, userID);
-
-    if (responseAccount) {
-      this.setState(() => ({
-        socialLoginError: responseAccount.includes('duplicate') ? 'Tài khoản đã tồn tại' : 'Đăng nhập thất bại',
-        isFacebookLoggingIn: false,
-      }));
-    } else {
-      history.goBack();
+      // history.push('/');
     }
   }
 
@@ -149,11 +99,7 @@ class Login extends React.Component {
       wrongPassword,
       Password,
       remember,
-      errorUsername,
       isLoggingIn,
-      isGoolgeLoggingIn,
-      isFacebookLoggingIn,
-      socialLoginError,
     } = this.state;
 
     return (
@@ -175,90 +121,75 @@ class Login extends React.Component {
                 ]}
               />
               <Body>
-                <Container>
-                  <Row className="justify-content-md-center">
-                    <Col xs lg="5" className="form login-div shadow-sm" style={{ backgroundColor: 'white' }}>
-                      <form onSubmit={this.onSubmitLogin}>
-                        <h1>Đăng nhập</h1>
-                        {
-                          wrongPassword
-                          && (
-                          <div className="login-error">
-                            <label>{wrongPassword}</label>
-                          </div>
-                          )
+                <Box
+                  component={Paper}
+                  elevation={3}
+                  p={3}
+                  flexGrow={1}
+                  sx={{ minWidth: '17rem', maxWidth: '25rem' }}
+                >
+                  <Box mb={2} display="flex" flexDirection="column" alignItems="center">
+                    <Avatar
+                      src="logo.png"
+                      style={{ width: '5rem', height: '5rem' }}
+                    />
+                    <Typography variant="h6" color="primary">
+                      Online Tutor
+                    </Typography>
+                  </Box>
+                  <Box display="flex" flexDirection="column" mb={1}>
+                    <Box mb={2}>
+                      <TextField
+                        fullWidth
+                        label="Username"
+                        variant="outlined"
+                        value={Username || ''}
+                        onChange={(event) => this.onChangeUsername(event.target.value)}
+                      />
+                    </Box>
+                    <Box mb={2}>
+                      <TextField
+                        fullWidth
+                        label="Password"
+                        type="password"
+                        variant="outlined"
+                        value={Password || ''}
+                        onChange={(event) => this.onChangePassword(event.target.value)}
+                        error={!!wrongPassword}
+                        helperText={wrongPassword}
+                      />
+                    </Box>
+                    <Box>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            color="primary"
+                            checked={remember}
+                            onChange={this.toggleRemember}
+                          />
                         }
-                        <Input
-                          name="Tên đăng nhập / Email"
-                          value={Username}
-                          type="text"
-                          message={errorUsername}
-                          onChange={this.onChangeUsername}
-                        />
-                        <Input
-                          name="Mật khẩu"
-                          type="password"
-                          className="password-input"
-                          value={Password}
-                          onChange={this.onChangePassword}
-                        />
-                        <Container>
-                          <Row>
-                            <Col>
-                              <Checkbox
-                                name="remember"
-                                values={remember}
-                                options={[{ value: 'remember', text: 'Ghi nhớ tài khoản' }]}
-                                className="login-remember"
-                                onChange={this.toggleRemember}
-                              />
-                            </Col>
-                            <Col style={{ textAlign: 'right' }}>
-                              <label
-                                className="forgot-password-label"
-                              >
-                                <div role="link" tabIndex={0} onClick={() => this.props.history.push('/forgot')}>Quên mật khẩu?</div>
-                              </label>
-                            </Col>
-                          </Row>
-                        </Container>
-                        <Button
-                          type="submit"
-                          disabled={isLoggingIn}
-                          className="login-button w-100"
-                        >
-                          {isLoggingIn ? (<div style={{ padding: '5px 0 5px 0' }}><Loading /></div>) : 'Đăng nhập'}
-                        </Button>
-                      </form>
-                    </Col>
-                  </Row>
-                  <Row className="justify-content-md-center" style={{ marginBottom: '10%' }}>
-                    <Col
-                      xs
-                      lg="5"
-                      className="form login-div shadow-sm"
-                      style={{ textAlign: 'center', marginTop: '20px', backgroundColor: 'white' }}
-                    >
-                      {'Lần đầu đến với Big-O Coder? '}
-                      <label
-                        className="to-register"
-                      >
-                        <div role="link" tabIndex={0} onClick={() => this.props.history.push('/register')}>Tạo ngay tài khoản.</div>
-                      </label>
-                      <div className="mt-1">
-                        {'Hoặc đăng nhập với '}
-                      </div>
-                      {
-                        socialLoginError
-                        && (
-                        <div className="login-error">
-                          <label>{socialLoginError}</label>
-                        </div>
-                        )
-                      }
-                    </Col>
-                  </Row>
-                </Container>
+                        label="Remember me"
+                        labelPlacement="end"
+                      />
+                    </Box>
+                  </Box>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    fullWidth disabled={isLoggingIn}
+                    onClick={this.onSubmitLogin}
+                  >
+                    {
+                      isLoggingIn && <Loading />
+                    }
+                    &nbsp;
+                    Login
+                  </Button>
+                  <Box mt={2} display="flex" flexDirection="row" justifyContent="space-between">
+                    <Link href="/forget-password" underline="none">Reset passwored</Link>
+                    <Link href="/register" underline="none">Create new account</Link>
+                  </Box>
+                </Box>
               </Body>
             </div>
           );

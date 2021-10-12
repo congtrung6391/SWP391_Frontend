@@ -48,12 +48,14 @@ export class APIService {
     this.method = method;
     this.headers = {
       accept: 'application/json',
-      'Content-Type': 'application/json',
       ...headers,
     };
+    if (!!!headers['Content-Type']) {
+      this.headers['Content-Type'] = 'application/json';
+    }
 
     if (auth) {
-      this.headers.Authorization = getUserInformation('AuthToken');
+      this.headers.Authorization = `Bearer ${getUserInformation('AuthToken')}`;
     }
 
     if (cancelToken) {

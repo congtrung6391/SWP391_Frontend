@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Dashboard from '../components/administrator/Dashboard/Dashboard';
 import ToastProvider from '../context/toast.context';
-import UserPage from '../components/administrator/Users/UserPage';
 import { AuthenticationContext } from '../context/authentication.context';
+import AdminUserRoute from './AdministrationRoute/AdminUserRoute';
+import AdminCourseRoute from './AdministrationRoute/AdminCourseRoute';
 
 const AdministratorRoute = () => {
-  const { verifyModerator } = useContext(AuthenticationContext);
-  if (!verifyModerator()) {
+  const { verifyTutor } = useContext(AuthenticationContext);
+  if (!verifyTutor()) {
     return <Redirect to="/" />;
   }
 
@@ -17,7 +18,8 @@ const AdministratorRoute = () => {
         <ToastProvider>
           <Switch>
             <Route exact path="/admin" component={Dashboard} />
-            <Route exact path="/admin/users" component={UserPage} />
+            <Route exact path="/admin/users" component={AdminUserRoute} />
+            <Route path = "/admin/courses" component={AdminCourseRoute} />
           </Switch>
         </ToastProvider>
       </div>

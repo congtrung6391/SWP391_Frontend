@@ -10,6 +10,7 @@ import ThemeWrapper from './context/theme.context';
 import Footer from './components/common/Footer';
 import Page404 from './components/common/404';
 import AuthenticationProvider from './context/authentication.context';
+import SubjectProvider from './context/subject.context';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,15 +25,17 @@ class App extends React.Component {
       <ThemeWrapper>
         <LanguageWrapper>
           <AuthenticationProvider>
-            <Router history={history}>
-              <Header />
-              <Switch>
-                <Route path="/admin" component={AdministratorRoute} />
-                <Route path="/" component={UserRoute} />
-                <Route component={Page404} />
-              </Switch>
-              <Footer />
-            </Router>
+            <SubjectProvider>
+              <Router history={history}>
+                <Header />
+                <Switch>
+                  <Route path="/admin" component={AdministratorRoute} />
+                  <Route path="/" component={UserRoute} />
+                  <Route component={Page404} />
+                </Switch>
+                <Footer />
+              </Router>
+            </SubjectProvider>
           </AuthenticationProvider>
         </LanguageWrapper>
       </ThemeWrapper>

@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import UserProfile from '../../components/user/UserProfile/UserProfile';
-import SubmissionDetails from '../../components/common/Submission/SubmissionDetails';
+// import UserProfile from '../../components/user/UserProfile/UserProfile';
+import EditUserProfile from '../../components/user/UserProfile/Edit/EditUserProfile';
 import { AuthenticationContext } from '../../context/authentication.context';
 import Page404 from '../../components/common/404';
-import Certificate from '../../components/user/UserProfile/Certificate';
+import UserProfile from '../../components/user/UserProfile/View/UserProfile';
+import UserProvider from '../../context/user.context';
 
 const UserProfileRoute = () => {
   const { verifyUser } = useContext(AuthenticationContext);
@@ -12,13 +13,13 @@ const UserProfileRoute = () => {
     return <Redirect to="/" />;
   }
   return (
-    <Switch>
-      <Route exact path="/users/:uid" component={UserProfile} />
-      <Route exact path="/users/:uid/:view" component={UserProfile} />
-      <Route exact path="/users/:uid/submissions/:submissionId" component={SubmissionDetails} />
-      <Route exact path="/users/:uid/certificates/:certId" component={Certificate} />
-      <Route component={Page404} />
-    </Switch>
+    <UserProvider>
+      <Switch>
+        <Route path="/users/:uid/edit" component={EditUserProfile} />
+        <Route path="/userS/:uid/profile" component={UserProfile} />
+        <Route component={Page404} />
+      </Switch>
+    </UserProvider>
   );
 };
 

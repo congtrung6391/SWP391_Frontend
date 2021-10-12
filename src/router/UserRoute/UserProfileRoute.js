@@ -16,7 +16,7 @@ const UserProfileRoute = () => {
     <UserProvider>
       <Switch>
         <Route path="/users/:uid/edit" component={EditUserProfile} />
-        <Route path="/userS/:uid/profile" component={UserProfile} />
+        <Route path="/users/:uid/profile" component={UserProfile} />
         <Route component={Page404} />
       </Switch>
     </UserProvider>

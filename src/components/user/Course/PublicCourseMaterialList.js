@@ -96,7 +96,7 @@ const PublicCourseMaterialList = ({ course }) => {
               </Typography>
               <IconButton
                 color="primary"
-                disabled={material.linkSharing}
+                disabled={!material.linkSharing}
               >
                 <Link
                   href={material.linkSharing && material.linkSharing.replace('https://www.dropbox.com/', 'https://dl.dropboxusercontent.com/')}

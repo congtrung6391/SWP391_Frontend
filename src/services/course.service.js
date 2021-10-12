@@ -67,6 +67,8 @@ class AdminCourseService {
         'get',
         COURSE_INFO,
         { id },
+        null,
+        true,
       ).request();
       console.log(response);
       return response;

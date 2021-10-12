@@ -14,6 +14,7 @@ import {
 import React, { useContext, useEffect, useState } from 'react';
 import { CourseContext } from '../../../context/course.context';
 import { ToastContext } from '../../../context/toast.context';
+import { AuthenticationContext } from '../../../context/authentication.context';
 import Body, { Main, SideBar } from '../../basic/Body';
 import Page404 from '../../common/404';
 import { Loading, LoadingPage } from '../../common/Loading';
@@ -40,6 +41,7 @@ const TabPanel = (props) => {
 }
 
 const PublicCoursePage = (props) => {
+  const { verifyUser } = useContext(AuthenticationContext);
   const courseContext = useContext(CourseContext);
   const [fetched, setFetched] = useState(false); 
   const [course, setCourse] = useState({});
@@ -73,9 +75,9 @@ const PublicCoursePage = (props) => {
   useEffect(() => {
     const fetchCourse = async () => {
       setFetched(false);
-      console.log(props);
+      const auth = verifyUser();
       const id = props.match.params['cid'];
-      const newCourse = await courseContext.getCourse(id);
+      const newCourse = await courseContext.getCourse(id, auth);
       setCourse(newCourse);
       setFetched(true);
     }

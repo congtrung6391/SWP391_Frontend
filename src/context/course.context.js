@@ -28,8 +28,13 @@ class CourseProvider extends React.Component {
     }
   }
 
-  getCourse = async (id) => {
-    const newCourse = await CourseService.getCourse(id);
+  getCourse = async (id, auth = false) => {
+    let newCourse = null;
+    if (auth) {
+      newCourse = await AdminCourseService.getCourse(id);
+    } else {
+      newCourse = await CourseService.getCourse(id);
+    }
     if (typeof newCourse === 'string') {
       return null;
     }

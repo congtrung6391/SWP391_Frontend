@@ -14,7 +14,8 @@ class ImageService {
       },
       data: form,
     })
-    console.log(response);
+    // return 'https://i.imgur.com/iYu5zig.png';
+    return response.data.link;
   }
 }
 

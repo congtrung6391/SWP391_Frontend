@@ -28,21 +28,20 @@ const UserAvatar = () => {
         try {
           // eslint-disable-next-line no-await-in-loop
           const url = await ImageService.uploadImage(image);
-          // console.log(url);
           const newAvatar = {
-            Id: getUserInformation('Id'),
-            Avatar: url,
+            id: getUserInformation('id'),
+            avatar: url,
           };
 
           await new APIService(
             'put',
-            `users/${getUserInformation('Username')}`,
+            `users/${getUserInformation('id')}`,
             null,
             newAvatar,
             true,
           ).request();
 
-          user.Avatar = url;
+          user.avatar = url;
           saveUser(user);
           setUser(user);
           return;
@@ -74,7 +73,7 @@ const UserAvatar = () => {
         <div
           className="avatar"
           style={{
-            backgroundImage: `url(${user.Avatar || './image/user.png'})`,
+            backgroundImage: `url(${user.avatar || './image/user.png'})`,
           }}
         />
         <Button
@@ -102,13 +101,13 @@ const UserAvatar = () => {
           fontSize="h6.fontSize"
           mt={2}
         >
-          {user.Fullname || '#Full name'}
+          {user.username || '#username'}
         </Box>
         <Box
           fontStyle="italic"
           fontSize="subtitle1.fontSize"
         >
-          {user.Email || '#email'}
+          {user.email || '#email'}
         </Box>
       </Typography>
     </Paper>

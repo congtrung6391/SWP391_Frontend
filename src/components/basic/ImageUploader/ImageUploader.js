@@ -1,16 +1,20 @@
 import React from 'react';
-import Image from 'react-bootstrap/Image';
-import Alert from 'react-bootstrap/Alert';
 import PropTypes from 'prop-types';
-import Modal from '../Modal';
-import LanguageService from '../../../services/language.service';
-import imageUploaderLang from './imageUploader.lang';
-import { LanguageContext } from '../../../context/language.context';
 import { Loading } from '../../common/Loading';
-import Button from '../Button';
-
-const LS = new LanguageService();
-LS.import(imageUploaderLang);
+import {
+  Card,
+  Modal,
+  Typography,
+  Button,
+  IconButton,
+  Box,
+  CardHeader,
+  CardContent,
+  CardActionArea,
+  Divider,
+} from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 class ImageUploader extends React.Component {
   constructor(props) {
@@ -49,7 +53,7 @@ class ImageUploader extends React.Component {
 
   render() {
     const { onHide, multiple, show } = this.props;
-    const { uploading, files } = this.state;
+    const { uploading, files, title } = this.state;
     // console.log(this.props.multiple,
     // this.state.files.length,
     // (
@@ -57,82 +61,119 @@ class ImageUploader extends React.Component {
     //     || (!this.props.multiple && this.state.files.length == 0))
     // );
     return (
-      <LanguageContext.Consumer>
-        {
-          ({ language }) => {
-            LS.use(language);
-            return (
-              <Modal
-                onHide={onHide}
-                show={show}
-                title={LS.get('Upload image')}
-                closebutton={1}
-                footer={(
-                  <div className="py-2 px-3 w-100 d-flex justify-content-between align-items-center">
-                    <Alert variant="warning" className="m-0 p-2 mr-auto">
-                      <span className="fas fa-exclamation-circle" />
-                      &nbsp;
-                      {LS.get('Picture size must be less than 5MB')}
-                    </Alert>
-                    {
-                      uploading
-                        ? <Loading />
-                        : (
-                          <>
-                            <Button onClick={this.onUpload} className="bg-light-blue mr-2 p-2">
-                              {LS.get('Ok')}
-                            </Button>
-                            <Button onClick={onHide} className="bg-light-blue p-2">
-                              {LS.get('Cancel')}
-                            </Button>
-                          </>
-                        )
-                    }
-                  </div>
-                )}
+      <Modal
+        onClose={onHide}
+        open={show}
+        title='Upload image'
+      >
+        <Card
+          sx={{
+            width: '20rem',
+            p: 1,
+            borderRadius: 3,
+            position: 'absolute',
+            top: '40%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <CardHeader
+            title={(
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                textAlign="center"
               >
-                <div className="p-3">
-                  {
-                    files.map((file, index) => {
-                      const src = URL.createObjectURL(file);
-                      return (
-                        // eslint-disable-next-line react/no-array-index-key
-                        <div className="review-img" key={index}>
-                          <Image
-                            // eslint-disable-next-line react/no-array-index-key
-                            key={index}
-                            src={src}
-                            rounded
-                          />
-                          <button type="button" title={LS.get('remove')} onClick={() => this.onRemove(index)}>
-                            <span className="fas fa-times" />
-                          </button>
-                        </div>
-                      );
-                    })
-                  }
-                  <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    id="image-uploader"
-                    multiple={!!multiple}
-                    onChange={this.onChange}
-                  />
-                  {
-                    (multiple || (!multiple && files.length === 0))
-                    && (
-                    <button type="button" className="upload-image-btn" onClick={this.toggleFileUpload}>
-                      <span className="fas fa-plus" />
-                    </button>
-                    )
-                  }
-                </div>
-              </Modal>
-            );
-          }
-        }
-      </LanguageContext.Consumer>
+                <Typography
+                  variant="h6"
+                >
+                  {title || 'Select Image'}
+                </Typography>
+                <IconButton onClick={onHide}>
+                  <HighlightOffIcon color="error" />
+                </IconButton>
+              </Box>
+            )}
+            sx={{ p: 1 }}
+          />
+          <Divider />
+          <CardContent>
+            {
+              files.map((file, index) => {
+                const src = URL.createObjectURL(file);
+                return (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <Box className="review-img" key={index}>
+                    <img
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={index}
+                      src={src}
+                      alt="img-upload"
+                    />
+                    <IconButton 
+                      onClick={() => this.onRemove(index)}
+                      color="error"
+                    >
+                      <HighlightOffIcon color="error" />
+                    </IconButton>
+                  </Box>
+                );
+              })
+            }
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              id="image-uploader"
+              multiple={!!multiple}
+              onChange={this.onChange}
+            />
+            {
+              (multiple || (!multiple && files.length === 0))
+              && (
+              <IconButton 
+                onClick={this.toggleFileUpload}
+              >
+                <AddCircleOutlineIcon color="primary" />
+              </IconButton>
+              )
+            }
+          </CardContent>
+          <CardActionArea
+            sx={{
+              p: 1,
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
+            <Button
+              color="primary"
+              variant="contained"
+              sx={{
+                ml: 'auto',
+                mr: 1,
+              }}
+              disabled={uploading}
+              onClick={this.onUpload}
+            >
+              Save
+              {
+                uploading && (
+                  <Loading />
+                )
+              }
+            </Button>
+            <Button
+              color="error"
+              onClick={onHide}
+              variant="contained"
+            >
+              Cancel
+            </Button>
+          </CardActionArea>
+        </Card>
+      </Modal>
     );
   }
 }

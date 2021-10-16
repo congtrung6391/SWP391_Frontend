@@ -44,9 +44,6 @@ const CustomMuiInput = withStyles((theme) => ({
 const UserPassword = () => {
   const theme = useTheme();
 
-  const [username, setUsername] = useState();
-  const [email, setEmail] = useState();
-
   const [fullname, setFullname] = useState('');
   const [errorFullname, setErrorFullname] = useState('');
   const validateFullname = () => {
@@ -58,7 +55,7 @@ const UserPassword = () => {
   };
   useEffect(() => {
     validateFullname();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fullname]);
   const onChangeFullname = (event) => {
     setFullname(event.target.value);
@@ -75,30 +72,30 @@ const UserPassword = () => {
   };
   useEffect(() => {
     validateAffiliation();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [affiliation]);
   const onChangeAffiliation = (event) => {
     setAffiliation(event.target.value);
   }
 
-  const [mobile, setMobile] = useState('');
-  const [errorMobile, setErrorMobile] = useState('');
-  const validateMobile = () => {
-    if (!mobile) {
-      setErrorMobile('Phone cannot be empty.');
-    } else if (mobile.length !== 10 || isNaN(parseInt(mobile, 10))) {
-      setErrorMobile('Invalid phone number.');
+  const [phone, setPhone] = useState('');
+  const [errorPhone, setErrorPhone] = useState('');
+  const validatePhone = () => {
+    if (!phone) {
+      setErrorPhone('Phone cannot be empty.');
+    } else if (phone.length !== 10 || isNaN(parseInt(phone, 10))) {
+      setErrorPhone('Invalid phone number.');
     } else {
-      setErrorMobile('');
+      setErrorPhone('');
     }
   }
   useEffect(() => {
-    validateMobile()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mobile]);
-  const onChangeMobile = (event) => {
-    setMobile(event.target.value);
-  } 
+    validatePhone()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phone]);
+  const onChangePhone = (event) => {
+    setPhone(event.target.value);
+  }
 
   const [address, setAddress] = useState('');
   const [errorAddress, setErrorAddress] = useState('');
@@ -106,12 +103,12 @@ const UserPassword = () => {
     if (address && address.length > 100) {
       setErrorAddress('Address cannot have length greater than 100.');
     } else {
-      setErrorMobile('');
+      setErrorPhone('');
     }
   }
   useEffect(() => {
     validateAddress()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address]);
   const onChangeAddress = (event) => {
     setAddress(event.target.value);
@@ -139,7 +136,7 @@ const UserPassword = () => {
   })
   const onChangeJobTitle = (event) => {
     setJobTitle(event.target.value);
-  } 
+  }
 
   const [gpa, setGpa] = useState('');
   const [errorGpa, setErrorGpa] = useState('');
@@ -152,6 +149,7 @@ const UserPassword = () => {
   const onChangeGpa = (event) => {
     setGpa(event.target.value);
   }
+
   const [birthday, setBirthday] = useState();
   const onBirthdayChange = (date) => {
     setBirthday(date.valueOf());
@@ -171,16 +169,17 @@ const UserPassword = () => {
 
   useEffect(() => {
     const currentUser = getUserInformation();
-    setUsername(currentUser.username);
-    setEmail(currentUser.email);
-    setFullname(currentUser.fullname);
+    console.log(currentUser);
+    setFullname(currentUser.fullName);
     setAffiliation(currentUser.affiliation);
     setAddress(currentUser.address);
-    setMobile(currentUser.Mobile);
+    setPhone(currentUser.phone);
     setFacebookUrl(currentUser.facebookUrl);
     setJobTitle(currentUser.jobTitle);
-    setGpa(currentUser.gpa);
-    setBirthday(currentUser.birthday);
+    setGpa(currentUser.gpa || 0);
+    setBirthday(currentUser.birthday || undefined);
+    setGender(currentUser.gender || 'Other');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -190,32 +189,43 @@ const UserPassword = () => {
     if (error) {
       toastContext.addNotification('Error', error, 'error');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [message, error]);
 
   const packUpdateData = () => {
-    const currentUser = getUserInformation();
     const updateInfo = {};
-    if (fullname && currentUser.Fullname !== fullname.trim()) {
-      updateInfo.Fullname = fullname.trim();
-    }
-    if (email && currentUser.Email !== email.trim()) {
-      updateInfo.Email = email.trim();
-    }
-    if (username && currentUser.Username !== username.trim()) {
-      updateInfo.Username = username.trim();
+    const user = getUserInformation();
+
+    if (user.fullName !== fullname.trim()) {
+      updateInfo.fullName = fullname.trim();
     }
 
-    if (birthday && parseInt(currentUser.Birthday, 10) !== parseInt(birthday, 10)) {
+    if (address && user.address !== address) {
+      updateInfo.address = address;
+    }
+
+    if (affiliation && user.afffiliation !== affiliation) {
+      updateInfo.affiliation = affiliation;
+    }
+
+    if (facebookUrl && user.facebookUrl !== facebookUrl) {
+      updateInfo.facebookUrl = facebookUrl;
+    }
+
+    if (gender && user.gender !== gender) {
+      updateInfo.gender = gender;
+    }
+
+    if (gpa && user.gpa !== gpa) {
+      updateInfo.gpa = gpa;
+    }
+
+    if (phone && user.phone !== phone) {
+      updateInfo.phone = phone;
+    }
+
+    if (birthday && parseInt(user.birthday, 10) !== parseInt(birthday, 10)) {
       updateInfo.Birthday = parseInt(birthday, 10);
-    }
-
-    if (affiliation && currentUser.Affiliation !== affiliation) {
-      updateInfo.Affiliation = affiliation;
-    }
-
-    if (username !== currentUser.Username) {
-      updateInfo.UpdatedUsername = true;
     }
 
     return updateInfo;
@@ -223,34 +233,22 @@ const UserPassword = () => {
 
   const saveUpdatedInfo = (updateInfo) => {
     const currentUser = getUserInformation();
-    if (updateInfo.Fullname) {
-      currentUser.Fullname = updateInfo.Fullname;
-    }
-    if (updateInfo.Username) {
-      currentUser.Username = updateInfo.Username;
-    }
-    if (updateInfo.Email) {
-      currentUser.Email = updateInfo.Email;
-    }
-    if (updateInfo.Birthday) {
-      currentUser.Birthday = updateInfo.Birthday;
-    }
-    if (updateInfo.Affiliation) {
-      currentUser.Affiliation = updateInfo.Affiliation;
-    }
-    if (updateInfo.Country) {
-      currentUser.Country = updateInfo.Country;
-    }
+    Object.keys(updateInfo).forEach((key) => {
+      currentUser[key] = updateInfo[key];
+    })
     saveUser(currentUser);
   };
 
   const onSaveInfor = async (event) => {
     event.preventDefault();
-    const currentUser = getUserInformation();
 
-    // pre-check
     if (errorFullname
       || errorAffiliation
+      || errorAddress
+      || errorFacebookUrl
+      || errorJobTitle
+      || errorGpa
+      || errorPhone
       || error) {
       return;
     }
@@ -263,26 +261,21 @@ const UserPassword = () => {
       if (Object.keys(updateInfo).length > 0) {
         setIsSaving(true);
         await new APIService(
-          'put',
-          `users/${getUserInformation('Id')}`,
+          'post',
+          `user/${getUserInformation('id')}`,
           null,
           updateInfo,
           true,
         ).request();
         // Save to local
-        if (updateInfo.UpdatedPassword) {
-          currentUser.UpdatedPassword = updateInfo.UpdatedPassword;
-        }
         saveUpdatedInfo(updateInfo);
-        setMessage('Thông tin đã được cập nhập thành công');
+        setMessage('Save information success');
         setIsSaving(false);
       }
     } catch (err) {
       if (!err.message) return;
       const msg = err.message.toLowerCase();
-      if (msg.includes('deny')) {
-        setError('Cập nhập tài khoản bị từ chối');
-      }
+      setError(msg);
       setIsSaving(false);
     }
     setTimeout(() => {
@@ -303,12 +296,12 @@ const UserPassword = () => {
     },
     {
       label: 'Phone number',
-      name: 'mobile',
-      value: mobile || '',
-      onChange: onChangeMobile,
-      helperText: errorMobile,
+      name: 'phone',
+      value: phone || '',
+      onChange: onChangePhone,
+      helperText: errorPhone,
       disabled: false,
-      error: !!errorMobile,
+      error: !!errorPhone,
     },
     {
       label: 'Address',
@@ -368,7 +361,7 @@ const UserPassword = () => {
       >
         {
           inputItemList.map((item) => (
-            <Box my={2}>
+            <Box my={2} key={item.label}>
               <CustomMuiInput
                 fullWidth
                 label={item.label}
@@ -445,7 +438,7 @@ const UserPassword = () => {
             {
               isSaving
                 ? <Loading />
-                : 'Lưu'
+                : 'Save'
             }
           </Button>
         </Box>

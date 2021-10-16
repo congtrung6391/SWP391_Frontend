@@ -140,6 +140,7 @@ const UserPassword = () => {
     if (errorPassword || errorResetPassword || errorConfirmPassword) {
       return;
     }
+
     if (!resetPassword) {
       setErrorResetPassword('You have not entered a new password');
       return;
@@ -151,50 +152,31 @@ const UserPassword = () => {
 
     // packing update data
     const updateInfo = {};
-    if (resetPassword) {
-      if (currentUser.UpdatedPassword) {
-        updateInfo.Password = password;
-      }
-      updateInfo.resetPassword = resetPassword;
-    }
-    if (resetPassword && !password) {
-      updateInfo.UpdatedPassword = true;
-    }
+    updateInfo.password = password;
+    updateInfo.resetPassword = resetPassword;
 
     // Fetch API to save in server
     try {
-      if (Object.keys(updateInfo).length > 0) {
-        setIsSaving(true);
-        await new APIService(
-          'put',
-          `users/${getUserInformation('Id')}`,
-          null,
-          updateInfo,
-          true,
-        ).request();
-        // Save to local
-        if (updateInfo.UpdatedPassword) {
-          currentUser.UpdatedPassword = updateInfo.UpdatedPassword;
-        }
-        currentUser.Password = password;
-        saveUser(currentUser);
-        resetPasswordField();
-        setMessage('Password is changed successfully.');
-        setIsSaving(false);
-      }
+      setIsSaving(true);
+      await new APIService(
+        'put',
+        `users/${getUserInformation('Id')}`,
+        null,
+        updateInfo,
+        true,
+      ).request();
+
+      currentUser.password = resetPassword;
+      saveUser(currentUser);
+
+      resetPasswordField();
+      setMessage('Password is changed successfully.');
+      setIsSaving(false);
+
     } catch (err) {
       if (!err.message) return;
       const msg = err.message.toLowerCase();
-      if (msg.includes('password')) {
-        if (msg.includes('invalid')) {
-          setErrorPassword('Wrong password');
-        } else if (msg.includes('missing')) {
-          setErrorPassword('Bạn chưa nhập mật khẩu hiện tại');
-        }
-      }
-      if (msg.includes('deny')) {
-        setError('Cập nhập tài khoản bị từ chối');
-      }
+      setError(msg);
       setIsSaving(false);
     }
   };
@@ -208,7 +190,7 @@ const UserPassword = () => {
     >
       <Typography component={Box}>
         <Box fontSize="h6.fontSize" fontWeight="fontWeightBold">
-          Đổi mật khẩu
+          Change password
         </Box>
       </Typography>
       <Box

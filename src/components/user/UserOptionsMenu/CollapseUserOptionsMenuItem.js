@@ -2,7 +2,11 @@ import React, { useContext } from 'react';
 import {
   ListItemText,
   ListItem,
+  ListItemIcon,
 } from '@mui/material';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BallotIcon from '@mui/icons-material/Ballot';
 
 import { Link } from 'react-router-dom';
 import uniqid from 'uniqid';
@@ -12,7 +16,7 @@ import { AuthenticationContext } from '../../../context/authentication.context';
 
 const CollapseUserOptionsMenuItem = ({ onClick }) => {
   const { logout, user } = useContext(AuthenticationContext);
-  const { Id } = user;
+  const { id } = user;
 
   const handleClose = () => {
     onClick();
@@ -25,14 +29,21 @@ const CollapseUserOptionsMenuItem = ({ onClick }) => {
   const MenuOptions = [
     {
       Id: uniqid(),
-      Icon: <span className="fas fa-user-circle mr-2 fa-fw" />,
-      Content: 'Your profile',
-      Link: `/users/${Id}/edit`,
+      Icon: <BallotIcon fontSize="small" />,
+      Content: 'Your course',
+      Link: `/users/${id}/edit`,
       EventHandler: handleClose,
     },
     {
       Id: uniqid(),
-      Icon: <span className="fas fa-sign-out-alt mr-2 fa-fw" />,
+      Icon: <AccountCircleIcon fontSize="small" />,
+      Content: 'Profile',
+      Link: `/users/${id}/edit`,
+      EventHandler: handleClose,
+    },
+    {
+      Id: uniqid(),
+      Icon: <ExitToAppIcon fontSize="small" />,
       Content: 'Logout',
       Link: '/',
       EventHandler: handleLogout,
@@ -45,6 +56,7 @@ const CollapseUserOptionsMenuItem = ({ onClick }) => {
           <ListItem
             onClick={op.EventHandler}
           >
+            <ListItemIcon>{op.Icon}</ListItemIcon>
             <ListItemText>{op.Content}</ListItemText>
           </ListItem>
         </Link>

@@ -1,26 +1,43 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import history from '../../../BrowserHistory';
 import {
   Box,
   Button,
   Avatar,
   Typography,
   useTheme,
-  IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
 } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BallotIcon from '@mui/icons-material/Ballot';
 
 import { AuthenticationContext } from '../../../context/authentication.context';
 
 const UserOptionsMenu = () => {
   const theme = useTheme();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const { logout, user } = useContext(AuthenticationContext);
   const {
     avatar: avatarImg, username, id,
   } = user;
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
+    history.push('/');
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openMenu = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
   return (
@@ -29,15 +46,19 @@ const UserOptionsMenu = () => {
         aria-label="user-avatar"
         aria-controls="user-options-menu"
         aria-haspopup="true"
-        sx = {{ color: 'primary.main', marginRight: 1 }}
         variant="text"
-        style={{
+        sx={{
+          color: 'primary.main',
+          mr: 1,
           textTransform: 'unset',
           borderRadius: '2rem',
-          padding: '0.2rem',
+          p: '0.2rem',
+          pr: '0.6rem',
+          border: 2,
         }}
-        component={Link}
-        to={`/users/${id}/edit`}
+        onClick={openMenu}
+        // component={Link}
+        // to={`/users/${id}/edit`}
       >
         <Avatar
           border={1}
@@ -54,9 +75,45 @@ const UserOptionsMenu = () => {
           <Typography noWrap style={{ maxWidth: '8rem' }}>{user.username}</Typography>
         </Box>
       </Button>
-      <IconButton sx={{ color: 'error.main' }} onClick={handleLogout}>
+      <Menu
+        id="profile-menu"
+        anchorEl={anchorEl}
+        open={!!anchorEl}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <BallotIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            Your course
+          </ListItemText>
+        </MenuItem>
+        <NavLink to={`/users/${id}/edit`}>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <AccountCircleIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>
+              Profile
+            </ListItemText>
+          </MenuItem>
+        </NavLink>
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <ExitToAppIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            Logout
+          </ListItemText>
+        </MenuItem>
+      </Menu>
+      {/* <IconButton sx={{ color: 'error.main' }} onClick={handleLogout}>
         <ExitToAppIcon />
-      </IconButton>
+      </IconButton> */}
     </div>
   );
 

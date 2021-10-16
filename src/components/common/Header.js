@@ -173,6 +173,7 @@ const Header = () => {
         {
           verifyUser() && (
             [
+              <Divider />,
               <CollapseUserOptionsMenuItem key={7} onClick={toggleDrawler} />,
             ]
           )
@@ -195,14 +196,21 @@ const Header = () => {
                     src="logo.png"
                   />
                 </IconButton>
-                <Box display={displayMobile}>
-                  <Typography variant="h6" color="primary">Online Tutor</Typography>
+                <Box>
+                  <Typography
+                    variant="button"
+                    color="primary"
+                  >
+                    Online Tutor
+                  </Typography>
                 </Box>
               </Box>
             </NavLink>
 
             {/* <div className={classes.grow} /> */}
             
+            <div className={classes.grow} />
+
             {renderNavMenu()}
 
             <div className={classes.grow} />

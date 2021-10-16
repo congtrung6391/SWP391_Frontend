@@ -15,8 +15,8 @@ class UserProvider extends React.Component {
     };
   }
 
-  getTutorList = async () => {
-    const list = await UsersService.getTutorList();
+  getTutorList = async (setting) => {
+    const list = await UsersService.getTutorList(setting);
     this.setState({
       userList: list.userList,
       totalUsers: list.totalUsers,

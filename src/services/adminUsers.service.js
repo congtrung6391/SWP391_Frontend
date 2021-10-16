@@ -8,12 +8,12 @@ import {
 class AdminUsersService {
   static async getUserList(setting) {
     try {
-      // eslint-disable-next-line no-param-reassign
-      setting = _(setting).omitBy(_.isEmpty).value();
+      if (!setting.page) setting.page = 1;
+      if (!setting.limit) setting.limit = 1;
       const queryString = URLService.stringify(setting);
       const response = await new AdminAPIService(
         'get',
-        USERS,
+        USERS + '?' + queryString,
         {
           queryString,
         },
@@ -74,23 +74,6 @@ class AdminUsersService {
       return error.message;
     }
   }
-
-  // static async changePassword(id, password) {
-  //   try {
-  //     await new AdminAPIService(
-  //       'put',
-  //       USER_PASSWORD,
-  //       null,
-  //       {
-  //         UserId: id,
-  //         Password: password,
-  //       },
-  //     ).request();
-  //     return null;
-  //   } catch (error) {
-  //     return error.message;
-  //   }
-  // }
 
   static async getUserTypes() {
     try {

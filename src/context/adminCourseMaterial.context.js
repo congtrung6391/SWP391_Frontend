@@ -15,8 +15,8 @@ class AdminCourseMaterialProvider extends React.Component {
     };
   }
 
-  getMaterialList = async (cid) => {
-    const materialList = await AdminCourseMaterialService.getMaterialList(cid);
+  getMaterialList = async (cid, setting) => {
+    const materialList = await AdminCourseMaterialService.getMaterialList(cid, setting);
     return materialList;
   }
 

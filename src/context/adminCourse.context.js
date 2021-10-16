@@ -21,8 +21,8 @@ class AdminCourseProvider extends React.Component {
     };
   }
 
-  getCourseList = async (name, page, limit) => {
-    const response = await AdminCourseService.getCourseList(name, page, limit);
+  getCourseList = async (name, setting) => {
+    const response = await AdminCourseService.getCourseList(name, setting);
     if (typeof response === 'string') {
         return;
     } else {

@@ -46,10 +46,10 @@ class AdminUserProvider extends React.Component {
     return null;
   }
 
-  getUserList = async () => {
+  getUserList = async (setting) => {
     const { userList } = this.state;
     if (userList.length === 0) {
-      const { users: newUserList, totalUsers } = await AdminUsersService.getUserList();
+      const { users: newUserList, totalUsers } = await AdminUsersService.getUserList(setting);
       this.setState({ userList: newUserList, totalUsers });
     }
   }

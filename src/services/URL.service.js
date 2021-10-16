@@ -1,4 +1,5 @@
 import queryString from 'query-string';
+import _ from 'lodash';
 import history from '../BrowserHistory';
 
 class URLService {
@@ -21,6 +22,7 @@ class URLService {
   }
 
   static stringify(parsed) {
+    parsed = _(parsed).omitBy(_.isEmpty).value();
     return queryString.stringify(parsed);
   }
 }

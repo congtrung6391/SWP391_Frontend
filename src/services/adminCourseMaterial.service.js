@@ -2,14 +2,18 @@ import AdminAPIService from './adminAPI.service';
 import {
   COURSE_MATERIAL, COURSE_MATERIAL_ID,
 } from '../config/route';
+import URLService from './URL.service';
 
 class AdminCourseService {
 
-  static async getMaterialList(cid) {
+  static async getMaterialList(cid, setting) {
     try {
+      if (!setting.page) setting.page = 1;
+      if (!setting.limit) setting.limit = 1;
+      const queryString = URLService.stringify(setting);
       const response = await new AdminAPIService(
         'get',
-        COURSE_MATERIAL,
+        COURSE_MATERIAL + '?' + queryString,
         {
           cid,
         },

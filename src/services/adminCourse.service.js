@@ -8,11 +8,14 @@ import { APIService } from './api.service';
 
 class AdminCourseService {
 
-  static async getCourseList(name = "", page = 1, limit = 20) {
+  static async getCourseList(setting) {
     try {
+      if (!setting.page) setting.page = 1;
+      if (!setting.limit) setting.limit = 1;
+      const queryString = URLService.stringify(setting);
       const response = await new AdminAPIService(
         'get',
-        COURSES,
+        COURSES + '?' + queryString,
         null,
       ).request();
       return {
@@ -93,34 +96,6 @@ class AdminCourseService {
       return response;
     } catch (error) {
       return error.message;
-    }
-  }
-
-  static async getUserList(setting) {
-    try {
-      // eslint-disable-next-line no-param-reassign
-      setting = _(setting).omitBy(_.isEmpty).value();
-      const queryString = URLService.stringify(setting);
-      const response = await new AdminAPIService(
-        'get',
-        USERS,
-        {
-          queryString,
-        },
-      ).request();
-      return {
-        users: response,
-        totalUsers: response.length,
-      }
-      // return {
-      //   users: response.users,
-      //   totalUsers: response.totalUsers,
-      // };
-    } catch (error) {
-      return {
-        users: [],
-        totalUsers: 0,
-      };
     }
   }
 }

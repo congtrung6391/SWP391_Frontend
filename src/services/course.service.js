@@ -9,9 +9,12 @@ class AdminCourseService {
 
   static async getCourseList(setting) {
     try {
+      if (!setting.page) setting.page = 1;
+      if (!setting.limit) setting.limit = 1;
+      const queryString = URLService.stringify(setting);
       const response = await new APIService(
         'get',
-        COURSES,
+        COURSES + '?' + queryString,
         null,
       ).request();
       return {

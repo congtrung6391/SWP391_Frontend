@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import AdminAPIService from './adminAPI.service';
 import URLService from './URL.service';
 import {
@@ -9,12 +8,10 @@ import { APIService } from './api.service';
 class UserService {
   static async getTutorList(setting) {
     try {
-      // eslint-disable-next-line no-param-reassign
-      setting = _(setting).omitBy(_.isEmpty).value();
       const queryString = URLService.stringify(setting);
       const response = await new APIService(
         'get',
-        TUTORS,
+        TUTORS + '?' + queryString,
         {
           queryString,
         },
@@ -23,10 +20,6 @@ class UserService {
         userList: response.tutorList,
         totalUsers: response.totalUser,
       }
-      // return {
-      //   users: response.users,
-      //   totalUsers: response.totalUsers,
-      // };
     } catch (error) {
       return {
         users: [],

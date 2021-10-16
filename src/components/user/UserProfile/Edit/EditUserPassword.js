@@ -6,7 +6,6 @@ import {
   withStyles,
   useTheme,
 } from '@mui/styles';
-import SHA256 from 'crypto-js/sha256';
 import { getUserInformation, saveUser } from '../../../../utils/cookies';
 import { APIService } from '../../../../services/api.service';
 import { Loading } from '../../../common/Loading';
@@ -85,6 +84,7 @@ const UserPassword = () => {
     }
     setErrorConfirmPassword('Confrim password is not correct.');
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(validateConfirmPassword, [confirmPassword]);
 
   const validateNewPassword = () => {

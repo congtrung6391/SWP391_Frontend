@@ -1,24 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AdminCourseMaterialContext } from '../../../context/adminCourseMaterial.context';
+import React from 'react';
 import {
   Box, Typography,
   Divider,
-  IconButton,
-  Link,
   TableContainer,
   TableCell,
   TableRow,
   Paper,
 } from '@mui/material';
-import {
-  useTheme,
-  alpha,
-} from '@mui/material/styles';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { Table } from 'react-bootstrap';
 
 const PublicCourseInfor = ({ course }) => {
-  const theme = useTheme();
 
   return (
     <Box

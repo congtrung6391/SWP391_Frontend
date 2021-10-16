@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 // import UserProfile from '../../components/user/UserProfile/UserProfile';
 import EditUserProfile from '../../components/user/UserProfile/Edit/EditUserProfile';
 // import { AuthenticationContext } from '../../context/authentication.context';

@@ -1,9 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import {
   Box,
-  Typography,
-  Button,
-  Divider,
   Rating,
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';

@@ -1,4 +1,3 @@
-import AdminAPIService from './adminAPI.service';
 import URLService from './URL.service';
 import {
   TUTORS, USER_PROFILE,

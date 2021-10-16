@@ -3,7 +3,7 @@ import { CourseContext } from '../../../context/course.context';
 import {
   Grid,
 } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import PublicCourseSingleList from './PublicCourseSingleList';
 
 const PublicCourseList = (props) => {

@@ -110,7 +110,7 @@ const PublicCourseSingleList = ({ course }) => {
             fontStyle="italic"
             textAling="center"
           >
-            {`${Math.floor(parseInt(course.cost, 10)/1000)}K/${course.length}\'`}
+            {`${Math.floor(parseInt(course.cost, 10)/1000)}K/${course.length}'`}
           </Typography>
           <Box>
             <Button

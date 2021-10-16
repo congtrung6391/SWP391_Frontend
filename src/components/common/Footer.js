@@ -3,10 +3,6 @@ import React from 'react';
 import {
   Avatar,
   Box,
-  List,
-  ListItem,
-  ListItemText,
-  Link,
   Toolbar,
 } from '@mui/material';
 

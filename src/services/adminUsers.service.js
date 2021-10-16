@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import AdminAPIService from './adminAPI.service';
 import URLService from './URL.service';
 import {

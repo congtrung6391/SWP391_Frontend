@@ -1,10 +1,8 @@
-import _ from 'lodash';
 import AdminAPIService from './adminAPI.service';
 import URLService from './URL.service';
 import {
-  COURSES, COURSE_ID, COURSE_INFO, USERS, USER, USER_TYPE, COURSE_REGISTER,
+  COURSES, COURSE_ID, COURSE_INFO, COURSE_REGISTER,
 } from '../config/route';
-import { APIService } from './api.service';
 
 class AdminCourseService {
 

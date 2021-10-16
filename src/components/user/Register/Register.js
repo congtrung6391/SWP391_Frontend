@@ -302,12 +302,10 @@ class Register extends React.Component {
       errorEmail,
       errorPassword,
       errorConfirmPassword,
-      passwordStrength,
-      errorPhone, 
-      errorRole,
+      // passwordStrength,
+      errorPhone,
       isRegistering,
     } = this.state;
-    const { history } = this.props;
 
     return (
       <AuthenticationContext.Consumer>
@@ -430,6 +428,7 @@ class Register extends React.Component {
                       defaultValue="STUDENT"
                       name="radio-buttons-group"
                       onChange={(event) => this.onChangeRole(event.target.value)}
+                      value={role}
                     >
                       <FormControlLabel value="STUDENT" control={<Radio color="primary" />} label="Student" />
                       <FormControlLabel value="TUTOR" control={<Radio color="primary" />} label="Tutor" />

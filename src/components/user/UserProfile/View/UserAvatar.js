@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-  Paper, Box, Typography, Button,
+  Paper, Box, Typography
 } from '@mui/material';
-import { saveUser, getUserInformation } from '../../../../utils/cookies';
-import { APIService } from '../../../../services/api.service';
-import ImageService from '../../../../services/image.service';
-import ImageUploader from '../../../basic/ImageUploader/ImageUploader';
 
 const UserAvatar = ({ user }) => {
   return (

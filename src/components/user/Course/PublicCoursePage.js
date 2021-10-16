@@ -15,7 +15,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CourseContext } from '../../../context/course.context';
 import { ToastContext } from '../../../context/toast.context';
 import { AuthenticationContext } from '../../../context/authentication.context';
-import Body, { Main, SideBar } from '../../basic/Body';
+import Body from '../../basic/Body';
 import Page404 from '../../common/404';
 import { Loading, LoadingPage } from '../../common/Loading';
 import NavigationBar from '../../common/NavigationBar';

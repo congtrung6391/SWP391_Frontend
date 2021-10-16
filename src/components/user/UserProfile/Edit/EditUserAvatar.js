@@ -8,6 +8,7 @@ import ImageService from '../../../../services/image.service';
 import ImageUploader from '../../../basic/ImageUploader/ImageUploader';
 
 const UserAvatar = () => {
+  const [avatar, setAvatar] = useState(undefined);
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
   const [showImageUploader, setShowImageUploader] = useState(false);
@@ -15,6 +16,7 @@ const UserAvatar = () => {
   useEffect(() => {
     const inCookieeUser = getUserInformation();
     setUser(inCookieeUser);
+    setAvatar(inCookieeUser.avatar);
   }, []);
 
   const toggleImageUploader = () => {
@@ -28,22 +30,24 @@ const UserAvatar = () => {
         try {
           // eslint-disable-next-line no-await-in-loop
           const url = await ImageService.uploadImage(image);
+          console.log(url);
+
           const newAvatar = {
-            id: getUserInformation('id'),
             avatar: url,
           };
 
-          await new APIService(
-            'put',
-            `users/${getUserInformation('id')}`,
-            null,
-            newAvatar,
-            true,
-          ).request();
+          // await new APIService(
+          //   'put',
+          //   `users/${getUserInformation('id')}`,
+          //   null,
+          //   newAvatar,
+          //   true,
+          // ).request();
 
           user.avatar = url;
           saveUser(user);
           setUser(user);
+          setAvatar(url);
           return;
         } catch (err) {
           // console.log(error);
@@ -73,7 +77,7 @@ const UserAvatar = () => {
         <div
           className="avatar"
           style={{
-            backgroundImage: `url(${user.avatar || './image/user.png'})`,
+            backgroundImage: `url(${avatar || './image/user.png'})`,
           }}
         />
         <Button

@@ -7,7 +7,7 @@ class ImageService {
     console.log(image);
     const response = await axios({
       method: 'post',
-      url: '	https://api.imgur.com/3/upload',
+      url: '	https://api.imgur.com/3/image',
       headers: {
         'Authorization': 'Client-ID db4e3952d43c6bb',
         'Content-Type': 'multipart/form-data',

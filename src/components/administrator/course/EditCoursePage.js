@@ -16,6 +16,7 @@ import SideTabControl from '../../basic/SideTabControl/SideTabControl';
 import SideTabContent from '../../basic/SideTabControl/SideTabContent';
 import EditCourseInformation from './EditCourseInformation';
 import EditCourseMaterial from './EditCourseMaterial';
+import EditCourseTimetable from './EditCourseTimetable';
 
 const EditCoursePage = (props) => {
   const [fetched, setFetched] = useState(false);
@@ -93,6 +94,11 @@ const EditCoursePage = (props) => {
               </Box>
               <Box route="material" flexGrow={1}>
                 <EditCourseMaterial
+                  course={course}
+                />
+              </Box>
+              <Box route="time" flexGrow={1}>
+                <EditCourseTimetable
                   course={course}
                 />
               </Box>

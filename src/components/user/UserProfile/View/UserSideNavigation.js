@@ -5,13 +5,14 @@ import {
 import {
   AccountCircle as AccountCircleIcon,
 } from '@mui/icons-material';
+import StarsIcon from '@mui/icons-material/Stars';
 import SideTabControl from '../../../basic/SideTabControl/SideTabControl';
 
 const UserSideNavigation = () => (
   <Paper
     component={Box}
-    mb={2}
-    p={3}
+    p={2}
+    px={1}
     boxShadow={2}
     display="flex"
     flexDirection="column"
@@ -26,7 +27,12 @@ const UserSideNavigation = () => (
       <ListItem route="info" key="info">
         <AccountCircleIcon />
         &nbsp;
-        <ListItemText>Thông tin cơ bản</ListItemText>
+        <ListItemText>Basic information</ListItemText>
+      </ListItem>
+      <ListItem route="rating" key="rating">
+        <StarsIcon />
+        &nbsp;
+        <ListItemText>Rating</ListItemText>
       </ListItem>
     </SideTabControl>
   </Paper>

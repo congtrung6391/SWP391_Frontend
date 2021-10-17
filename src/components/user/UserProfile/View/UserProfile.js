@@ -8,6 +8,8 @@ import UserAvater from './UserAvatar';
 import UserSideNavigation from './UserSideNavigation';
 import { UserContext } from '../../../../context/user.context';
 import { LoadingDNA3X } from '../../../common/Loading';
+import UserRating from './UserRating';
+import RatingProvider from '../../../../context/rating.context';
 
 const UserProfile = (props) => {
   const { match } = props;
@@ -23,6 +25,7 @@ const UserProfile = (props) => {
       }
       const uid = parseInt(match.params.uid, 10)
       const newUser = await userContext.getUserProfile(uid);
+      newUser.id = uid;
       setUser(newUser);
       setFetched(true);
     }
@@ -56,6 +59,11 @@ const UserProfile = (props) => {
                 user={user}
               />
             </div>
+            <RatingProvider route="rating">
+              <UserRating
+                user={user}
+              />
+            </RatingProvider>
           </SideTabContent>
         </Main>
       </Body>

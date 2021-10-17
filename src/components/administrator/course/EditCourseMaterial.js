@@ -19,7 +19,6 @@ const EditCourseMaterial = ({ course }) => {
     const fetchMatrialList = async () => {
       setFetched(false);
       const { materialList: material } = await materialContext.getMaterialList(course.id)
-      console.log(material);
       setMaterialList(material);
       setFetched(true);
     }

@@ -5,16 +5,19 @@ import CoursePage from '../../components/administrator/course/CoursePage';
 import EditCoursePage from '../../components/administrator/course/EditCoursePage';
 import AdminCourseProvider from '../../context/adminCourse.context';
 import AdminCourseMaterialProvider from '../../context/adminCourseMaterial.context';
+import AdminCourseTimetableProvider from '../../context/adminCourseTimetable.context';
 
 const AdminUserRoute = () => {
   return (
     <AdminCourseProvider>
       <AdminCourseMaterialProvider>
-        <Switch>
-            <Route path="/admin/courses/add" component={AddCoursePage} />
-            <Route path="/admin/courses/edit/:id" component={EditCoursePage} />
-            <Route path="/admin/courses" component={CoursePage} />
-        </Switch>
+        <AdminCourseTimetableProvider>
+          <Switch>
+              <Route path="/admin/courses/add" component={AddCoursePage} />
+              <Route path="/admin/courses/edit/:id" component={EditCoursePage} />
+              <Route path="/admin/courses" component={CoursePage} />
+          </Switch>
+        </AdminCourseTimetableProvider>
       </AdminCourseMaterialProvider>
     </AdminCourseProvider>
   );

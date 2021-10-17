@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Box, Button, Dialog, DialogTitle, Typography, withStyles,
-} from '@material-ui/core';
-import { Rating as MulRating } from '@material-ui/lab';
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  Typography,
+  Rating as MuiRating,
+} from '@mui/material';
+import {
+  withStyles
+} from '@mui/styles';
 
 const AddRatingButton = withStyles(() => ({
   root: {
@@ -20,11 +27,25 @@ const AddRatingButton = withStyles(() => ({
   },
 }))(Button);
 
+const addDiaglogContent = (rating) => (
+  <Box display="flex" justifyContent="center" pb="1rem">
+    <MuiRating
+      name="rating-article"
+      value={rating || 0}
+    />
+  </Box>
+);
+
 const Rating = (props) => {
   const [addingRating, setAddingRating] = useState(false);
 
   const {
-    rating, ratingCount, size, onAddRating,
+    rating,
+    ratingCount,
+    size,
+    onAddRating,
+    addTitle,
+    addDiaglogContent,
   } = props;
 
   const toggleDialog = () => {
@@ -35,11 +56,16 @@ const Rating = (props) => {
     }
   };
 
+  const addRating = async () => {
+    await onAddRating();
+    setAddingRating(false);
+  }
+
   return (
     <Box>
       <Box display="flex">
         <Box alignItems="center">
-          <MulRating
+          <MuiRating
             name="rating-article"
             size={size}
             value={rating || 0}
@@ -52,7 +78,13 @@ const Rating = (props) => {
       </Box>
       {
         onAddRating && (
-          <AddRatingButton disableRipple onClick={toggleDialog}>Thêm đánh giá</AddRatingButton>
+          <AddRatingButton
+            disableRipple
+            onClick={toggleDialog}
+            variant="outlined"
+          >
+            Add your rating
+          </AddRatingButton>
         )
       }
       <Dialog
@@ -61,12 +93,17 @@ const Rating = (props) => {
         maxWidth="xs"
         fullWidth
       >
-        <DialogTitle>How do you feel?</DialogTitle>
-        <Box display="flex" justifyContent="center" pb="1rem">
-          <MulRating
-            name="rating-article"
-            value={rating || 0}
-          />
+        <DialogTitle>{addTitle}</DialogTitle>
+        {addDiaglogContent(rating)}
+        <Box
+          sx={{ p: 2, pt: 0 }}
+        >
+          <Button
+            variant="outlined"
+            onClick={addRating}
+          >
+            save
+          </Button>
         </Box>
       </Dialog>
     </Box>
@@ -77,6 +114,8 @@ Rating.propTypes = {
   rating: PropTypes.number,
   ratingCount: PropTypes.number,
   size: PropTypes.string,
+  addTitle: PropTypes.string,
+  addDiaglogContent: PropTypes.func,
   onAddRating: PropTypes.func,
 };
 
@@ -84,7 +123,8 @@ Rating.defaultProps = {
   rating: 0,
   ratingCount: 0,
   size: 'small',
-  onAddRating: null,
+  addTitle: 'How do you feel?',
+  addDiaglogContent: addDiaglogContent,
 };
 
 export default Rating;

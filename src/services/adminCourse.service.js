@@ -13,7 +13,7 @@ class AdminCourseService {
       const queryString = URLService.stringify(setting);
       const response = await new AdminAPIService(
         'get',
-        COURSES + '?' + queryString,
+        COURSES,
         null,
       ).request();
       return {

@@ -16,6 +16,10 @@ export const TUTORS = 'tutor';
 export const USER_PROFILE = 'user/:id/profile';
 export const USER_ROLE = "user/:id/change-role";
 
+// rating
+export const RATINGS = "tutor/:uid/rating";
+export const RATING_ID = "tutor/:uid/rating/:rid";
+
 // courses
 export const SUBJECTS = 'course/subject';
 export const COURSES = 'course';
@@ -24,6 +28,8 @@ export const COURSE_ID = 'course/:id';
 export const COURSE_MATERIAL = 'course/:cid/material';
 export const COURSE_MATERIAL_ID = 'course/:cid/material/:mid';
 export const COURSE_REGISTER = 'course/:id/register';
+export const COURSE_TIMETABLE = 'course/:cid/timetable';
+export const COURSE_TIMETABLE_ID = 'course/:cid/timetable/:tid';
 
 // material
 

@@ -47,7 +47,7 @@ const useStyles = makeStyles({
 });
 
 const Header = () => {
-  const { verifyUser, verifyTutor, user } = useContext(AuthenticationContext);
+  const { verifyUser, verifyAdministrator, user } = useContext(AuthenticationContext);
   const [navItems, setNavItems] = useState([]);
   const [openMobibleMenu, setOpenMobileMenu] = useState(false);
   const classes = useStyles();
@@ -173,7 +173,7 @@ const Header = () => {
         {
           verifyUser() && (
             [
-              <Divider />,
+              <Divider key={8} />,
               <CollapseUserOptionsMenuItem key={7} onClick={toggleDrawler} />,
             ]
           )
@@ -216,7 +216,7 @@ const Header = () => {
             <div className={classes.grow} />
 
             {
-              verifyTutor()
+              verifyAdministrator()
               && (
                 <List className={classes['nav-menu']}>
                   <ListItem button>

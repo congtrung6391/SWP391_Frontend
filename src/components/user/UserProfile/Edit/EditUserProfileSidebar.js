@@ -27,12 +27,12 @@ const UserSideNavigation = () => (
       <ListItem route="info" key="info">
         <AccountCircleIcon />
         &nbsp;
-        <ListItemText>Thông tin cơ bản</ListItemText>
+        <ListItemText>Basic information</ListItemText>
       </ListItem>
       <ListItem route="password" key="password">
         <VpnKeyIcon />
         &nbsp;
-        <ListItemText>Tài khoản & Mật khẩu</ListItemText>
+        <ListItemText>Password</ListItemText>
       </ListItem>
     </SideTabControl>
   </Paper>

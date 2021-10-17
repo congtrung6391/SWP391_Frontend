@@ -14,12 +14,12 @@ const PublicCourse = (props) => {
         ]}
       />
       <Body>
-        <Main>
-          <PublicCourseList />
-        </Main>
         <SideBar>
           <PublicCourseFilter />
         </SideBar>
+        <Main>
+          <PublicCourseList />
+        </Main>
       </Body>
     </>
   );

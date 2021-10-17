@@ -13,6 +13,7 @@ import {
   LocalizationProvider,
   DatePicker,
 } from '@mui/lab';
+import moment from 'moment';
 
 const UserInformation = ({ user }) => {
 
@@ -108,20 +109,9 @@ const UserInformation = ({ user }) => {
             </Typography>
           </TableCell>
           <TableCell>
-            <LocalizationProvider dateAdapter={MomentUtils}>
-              <DatePicker
-                disabled
-                inputVariant="outlined"
-                id="birthday-picker-dialog"
-                label="Ngày sinh"
-                format="DD/MM/YYYY"
-                value={user.birthday}
-                KeyboardButtonProps={{
-                  'aria-label': 'change birthday',
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
+            <Typography>
+              {/* {moment.parse(user.birthday)} */}
+            </Typography>
           </TableCell>
         </TableRow>
         <TableRow>

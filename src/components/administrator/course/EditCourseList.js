@@ -41,27 +41,29 @@ const ListUsers = () => {
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberofPages] = useState(1);
 
+  const fetchCourseList = async () => {
+    setFetched(false);
+    try {
+      const setting = URLService.getAllQueryString();
+      setting.key = setting.search;
+      await courseContext.getCourseList({ search, page, itemPerPage });
+      setFetched(true);
+      setNumberofPages(Math.ceil((courseContext.totalCourse || 0) / itemPerPage));
+    } catch (error) {
+      setFetched(true);
+    }
+  };
+
   useEffect(() => {
     const { page: pageUrl, search: searchUrl } = URLService.getAllQueryString();
     setPage(Number(pageUrl) || 1);
     setSearch(searchUrl);
+    fetchCourseList();
   }, [])
 
   const onPageChange = (event, value) => {
     setPage(value);
   }
-
-  const fetchCourseList = async () => {
-    try {
-      const setting = URLService.getAllQueryString();
-      setting.key = setting.search;
-      await courseContext.getCourseList(search, page, itemPerPage);
-      setFetched(true);
-      setNumberofPages(Math.ceil(courseContext.totalUsers / itemPerPage));
-    } catch (error) {
-      setFetched(true);
-    }
-  };
 
   const onDeleteCourse = async (id) => {
     if (window.confirm('This action cannot be undo, are you sure?')) {

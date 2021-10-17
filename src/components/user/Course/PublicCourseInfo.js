@@ -19,6 +19,23 @@ const PublicCourseInfor = ({ course }) => {
         borderColor: 'primary.main',
       }}
     >
+      <Box
+        sx={{ p: 2, px: 3 }}
+      >
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          textAlign="center"
+        >
+          {course.courseName}
+        </Typography>
+        <Typography
+          variant="body1"
+        >
+          {course.courseDescription}
+        </Typography>
+      </Box>
+      <Divider />
       <TableContainer
         component={Paper}
         elevation={0}
@@ -31,18 +48,6 @@ const PublicCourseInfor = ({ course }) => {
             <TableCell>
               <Typography variant="h6" colSpan={2}>
                 Basic information
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Typography>
-                Course Name:
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>
-                {course.courseName}
               </Typography>
             </TableCell>
           </TableRow>

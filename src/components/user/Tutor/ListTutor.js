@@ -33,9 +33,10 @@ const ListTutor = () => {
           <Grid
             key={tutor.id}
             md={3}
-            xs={4}
+            xs={6}
+            sm={4}
             sx={{
-              padding: '0.35rem',
+              padding: '0.45rem',
             }}
           >
             <SingleListTutor

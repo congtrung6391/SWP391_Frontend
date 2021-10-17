@@ -18,7 +18,7 @@ import { SubjectContext } from '../../../context/subject.context';
 import { ToastContext } from '../../../context/toast.context';
 
 const AddCoursePage = (props) => {
-  const [course, setCourse] = useState({});
+  const [course, setCourse] = useState({ subjectId: 1});
   const [costError, setCostError] = useState('');
   const [lengthError, setLengthError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -141,7 +141,7 @@ const AddCoursePage = (props) => {
                   name="cost"
                   value={course.cost || ''}
                   onChange={onChangeCost}
-                  helperText={costError}
+                  helperText={costError || 'Must be less than 2,000,000 VND'}
                   error={!!costError}
                 />
               </Box>
@@ -154,7 +154,7 @@ const AddCoursePage = (props) => {
                   name="legnth"
                   value={course.length || ''}
                   onChange={onChangeLength}
-                  helperText={lengthError}
+                  helperText={lengthError || 'Must be greater than 1 hour and less than 5 hours'}
                   error={!!lengthError}
                 />
               </Box>

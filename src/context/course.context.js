@@ -20,6 +20,7 @@ class CourseProvider extends React.Component {
 
   getCourseList = async (setting) => {
     const response = await CourseService.getCourseList(setting);
+    console.log(response);
     if (typeof response === 'string') {
         return;
     } else {
@@ -56,7 +57,7 @@ class CourseProvider extends React.Component {
   }
 
   componentDidMount() {
-    this.getCourseList();
+    this.getCourseList({});
     console.log(this.state.coursList);
   }
 

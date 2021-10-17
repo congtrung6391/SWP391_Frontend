@@ -21,10 +21,10 @@ class AdminCourseProvider extends React.Component {
     };
   }
 
-  getCourseList = async (name, setting) => {
-    const response = await AdminCourseService.getCourseList(name, setting);
+  getCourseList = async (setting) => {
+    const response = await AdminCourseService.getCourseList(setting);
     if (typeof response === 'string') {
-        return;
+        return [];
     } else {
         this.setState({ courseList: response.courseList, totalCourse: response.totalCourse });
     }
@@ -119,7 +119,6 @@ class AdminCourseProvider extends React.Component {
 
   componentDidMount() {
     this.getCourseList();
-    console.log(this.state.courseList);
   }
 
   render() {

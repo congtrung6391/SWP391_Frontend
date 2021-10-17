@@ -8,6 +8,7 @@ class AdminCourseService {
 
   static async getCourseList(setting) {
     try {
+      console.log(setting);
       if (!setting.page) setting.page = 1;
       if (!setting.limit) setting.limit = 1;
       const queryString = URLService.stringify(setting);
@@ -21,6 +22,7 @@ class AdminCourseService {
         totalCourse: response.totalCourse,
       };
     } catch (error) {
+      console.log(error);
       return {
         courseList: [],
         totalCourse: 0,

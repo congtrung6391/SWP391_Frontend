@@ -23,7 +23,10 @@ class AdminCourseService {
         totalMaterial: response.totalMaterial,
       };
     } catch (error) {
-      return [];
+      return {
+        materialList: [],
+        totalMaterial: 0,
+      };
     }
   }
 

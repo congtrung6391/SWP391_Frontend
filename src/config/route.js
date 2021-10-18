@@ -17,8 +17,8 @@ export const USER_PROFILE = 'user/:id/profile';
 export const USER_ROLE = "user/:id/change-role";
 
 // rating
-export const RATINGS = "tutor/:uid/rating";
-export const RATING_ID = "tutor/:uid/rating/:rid";
+export const RATINGS = "user/:uid/rating";
+export const RATING_ID = "user/:uid/rating/:rid";
 
 // courses
 export const SUBJECTS = 'course/subject';

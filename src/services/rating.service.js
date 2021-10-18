@@ -5,6 +5,8 @@ import URLService from './URL.service';
 class RatingService {
   static async getRatingList(uid, setting) {
     try {
+      if (!setting.page) setting.page = 1;
+      if (!setting.limit) setting.limit = 20;
       const queryString = URLService.stringify(setting);
       const response = await new APIService(
         'get',
@@ -13,9 +15,17 @@ class RatingService {
           uid,
         }
       ).request();
-      return response;
+      return {
+        totalRate: response.totalRate,
+        avgRate: response.avgRate,
+        rateList: response.rateList,
+      };
     } catch (error) {
-      return [];
+      return {
+        totalRate: 0,
+        avgRate: 0,
+        rateList: [],
+      };
     }
   }
 
@@ -54,18 +64,19 @@ class RatingService {
     }
   }
 
-  static async deleteRating(uid, data) {
+  static async deleteRating(uid, rid) {
     try {
-      const response = await new APIService(
+      await new APIService(
         'delete',
         RATING_ID,
         {
           uid,
+          rid,
         },
-        data,
+        null,
         true,
       ).request();
-      return response.rate;
+      return null;
     } catch (error) {
       return error.message;
     }

@@ -72,8 +72,9 @@ const Rating = (props) => {
             readOnly
           />
         </Box>
+        &nbsp;
         <Box display="flex" flexDirection="column" justifyContent="center">
-          <Typography variant="caption">{`(${ratingCount})`}</Typography>
+          <Typography variant={size==='small' ? 'caption' : 'body1'}>{`(${ratingCount})`}</Typography>
         </Box>
       </Box>
       {

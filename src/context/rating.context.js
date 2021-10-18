@@ -15,8 +15,8 @@ class RatingProvider extends React.Component {
     };
   }
   
-  getRatingList = async (uid) => {
-    const response = await RatingService.getRatingList(uid);
+  getRatingList = async (uid, setting = { page: 1, limit: 20}) => {
+    const response = await RatingService.getRatingList(uid, setting);
     return response;
   }
 

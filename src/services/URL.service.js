@@ -22,7 +22,10 @@ class URLService {
   }
 
   static stringify(parsed) {
-    parsed = _(parsed).omitBy(_.isEmpty).value();
+    // console.log( _(parsed).omitBy(_.isEmpty).value());
+    // parsed = _(parsed).omitBy(_.isEmpty).value();
+    // console.log(parsed);
+    // console.log(queryString.stringify({ page: 1 }));
     return queryString.stringify(parsed);
   }
 }

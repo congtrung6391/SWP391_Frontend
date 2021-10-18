@@ -36,9 +36,11 @@ const ListUsers = () => {
   const toastContext = useContext(ToastContext);
   const subjectContext = useContext(SubjectContext);
   const [fetched, setFetched] = useState(false);
-  const [search, setSearch] = useState('');
+  const [searchName, setSearchName] = useState('');
   const [searchSubjectId, setSearchSubjectId] = useState('');
+
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(1);
   const [numberOfPages, setNumberofPages] = useState(1);
 
   const fetchCourseList = async () => {
@@ -46,19 +48,17 @@ const ListUsers = () => {
     try {
       const setting = URLService.getAllQueryString();
       setting.key = setting.search;
-      await courseContext.getCourseList({ search, page, itemPerPage });
+      await courseContext.getCourseList({ name: searchName, page, limit });
       setFetched(true);
-      setNumberofPages(Math.ceil((courseContext.totalCourse || 0) / itemPerPage));
+      setNumberofPages(Math.ceil((courseContext.totalCourse || 0) / limit));
     } catch (error) {
       setFetched(true);
     }
   };
 
   useEffect(() => {
-    const { page: pageUrl, search: searchUrl } = URLService.getAllQueryString();
-    setPage(Number(pageUrl) || 1);
-    setSearch(searchUrl);
     fetchCourseList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onPageChange = (event, value) => {
@@ -97,7 +97,7 @@ const ListUsers = () => {
   useEffect(() => {
     fetchCourseList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, search])
+  }, [page])
 
   // const refresh = async () => {
   //   setFetched(true);

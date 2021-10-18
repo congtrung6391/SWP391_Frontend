@@ -23,8 +23,6 @@ import {
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { LoadingDNA3X } from '../../common/Loading';
 // import PaginationList from '../../basic/PaginationList';
-import URLService from '../../../services/URL.service';
-import AdminUsersService from '../../../services/adminUsers.service';
 // import SingleUser from './SingleUser';
 // import UserTypeProvider, { UserTypeContext } from '../../../context/usertype.context';
 import { AdminUserContext } from '../../../context/adminUser.context';
@@ -32,36 +30,40 @@ import { ToastContext } from '../../../context/toast.context';
 import MuiSearch from '../../common/MuiSearch';
 
 const ListUsers = () => {
-  const itemPerPage = 20;
+
   const userContext = useContext(AdminUserContext);
   // const userTypeContext = useContext(UserTypeContext);
   const toastContext = useContext(ToastContext);
   const [fetched, setFetched] = useState(false);
-  const [search, setSearch] = useState('');
+  const [searchName, setSearchName] = useState('');
+  const [searchId, setSearchId] = useState(null);
   const [page, setPage] = useState(1);
-  const [numberOfPages, setNumberofPages] = useState(1);
 
-  useEffect(() => {
-    const { page: pageUrl, search: searchUrl } = URLService.getAllQueryString();
-    setPage(Number(pageUrl) || 1);
-    setSearch(searchUrl);
-  }, [])
+  const fetchUsers = async () => {
+    try {
+      await userContext.getUserList({ userId: searchId, name: searchName, page, limit: userContext.limit });
+      setFetched(true);
+    } catch (error) {
+      setFetched(true);
+    }
+  };
+
+  const onSearch = async () => {
+    setPage(1);
+    await fetchUsers();
+  }
 
   const onPageChange = (event, value) => {
     setPage(value);
   }
 
-  const fetchUsers = async () => {
-    try {
-      const setting = URLService.getAllQueryString();
-      setting.key = setting.search;
-      await AdminUsersService.getUserList(setting);
-      setFetched(true);
-      setNumberofPages(Math.ceil(userContext.totalUsers / itemPerPage));
-    } catch (error) {
-      setFetched(true);
-    }
-  };
+  const onChangeSearchName = (event) => {
+    setSearchName(event.target.value);
+  }
+
+  const onChangeSearchId = (event) => {
+    setSearchId(event.target.value);
+  }
 
   const onChangeUserRole = async (event, username) => {
     const response = await userContext.changeUserRole(event.target.value, username);
@@ -87,7 +89,7 @@ const ListUsers = () => {
   useEffect(() => {
     fetchUsers();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, search])
+  }, [page])
 
   // const refresh = async () => {
   //   setFetched(true);
@@ -102,17 +104,42 @@ const ListUsers = () => {
   return (
     <Box>
       <Box mb={1} display="flex" flexDirection="row">
-        <Box flexGrow={1}>
-          <MuiSearch />
-        </Box>
         <Button
           disableFocusRipple
           disableRipple
           disableElevation
           variant="contained"
           color="primary"
+          sx={{ mr: 1 }}
         >
           {`Total users: ${userContext.totalUsers}`}
+        </Button>
+        <Box
+          sx={{ mr: 1, maxWidth: '11rem' }}
+        >
+          <MuiSearch
+            placeholder='Search Id'
+            value={searchId}
+            onChange={onChangeSearchId}
+            onSearch={onSearch}
+          />
+        </Box>
+        <Box flexGrow={1}
+          sx={{ mr: 1 }}
+        >
+          <MuiSearch
+            placeholder='Search Fullname/Email/Username'
+            value={searchName}
+            onChange={onChangeSearchName}
+            onSearch={onSearch}
+          />
+        </Box>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={onSearch}
+        >
+          Search
         </Button>
       </Box>
       <TableContainer component={Paper}>
@@ -168,7 +195,7 @@ const ListUsers = () => {
         </Table>
         <Box py={1} display="flex" flexDirection="row" justifyContent="center">
           <Pagination
-            count={numberOfPages}
+            count={Math.ceil(userContext.totalUsers / userContext.limit)}
             page={page}
             onChange={onPageChange}
             variant="outlined"

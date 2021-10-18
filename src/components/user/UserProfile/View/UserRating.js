@@ -83,6 +83,7 @@ const UserRating = ({ user }) => {
 
   const onChangeSubject = (event) => {
     setSuibjectId(event.target.value);
+    setPage(1);
   }
 
   const onChangePage = (event, newValue) => {

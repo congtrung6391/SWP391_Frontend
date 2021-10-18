@@ -5,10 +5,8 @@ import {
 } from '../config/route';
 
 class AdminUsersService {
-  static async getUserList(setting) {
+  static async getUserList(setting = { page: 1, limit: 20 }) {
     try {
-      if (!setting.page) setting.page = 1;
-      if (!setting.limit) setting.limit = 1;
       const queryString = URLService.stringify(setting);
       const response = await new AdminAPIService(
         'get',
@@ -18,8 +16,8 @@ class AdminUsersService {
         },
       ).request();
       return {
-        users: response.userList,
-        totalUsers: response.totalUser,
+        users: response.userList || [],
+        totalUsers: response.totalUser || 0,
       }
       // return {
       //   users: response.users,

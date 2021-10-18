@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import _ from 'lodash';
+// import _ from 'lodash';
 import history from '../BrowserHistory';
 
 class URLService {
@@ -26,7 +26,15 @@ class URLService {
     // parsed = _(parsed).omitBy(_.isEmpty).value();
     // console.log(parsed);
     // console.log(queryString.stringify({ page: 1 }));
-    return queryString.stringify(parsed);
+    // return queryString.stringify(parsed);
+
+    const paramList = Object.keys(parsed).map((key) => {
+      if (parsed[key]) return `${key}=${parsed[key]}`;
+      return null;
+    }).filter((value) => value !== null);
+    const paramsString = paramList.join('&');
+    console.log(paramsString);
+    return paramsString;
   }
 }
 

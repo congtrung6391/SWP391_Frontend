@@ -36,6 +36,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
+    border: '2px solid',
+    borderColor: theme.palette.primary.main,
+    borderRadius: '5px',
     [theme.breakpoints.up('sm')]: {
       // width: '12ch',
       // '&:focus': {
@@ -45,18 +48,29 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBar = () => (
-  <Search>
-    <SearchIconWrapper>
-      <SearchIcon />
-    </SearchIconWrapper>
-    <StyledInputBase
-      fullWidth
-      placeholder="Search…"
-      inputProps={{ 'aria-label': 'search' }}
-    />
-  </Search>
-);
+const SearchBar = ({ value, placeholder, onChange, onSearch }) => {
+  const onKeyPress = (event) => {
+    if (event.code === 'Enter') {
+      onSearch();
+    }
+  }
+
+  return (
+    <Search>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInputBase
+        fullWidth
+        placeholder={ placeholder || "Search…" }
+        inputProps={{ 'aria-label': 'search' }}
+        onChange={onChange}
+        value={value || ''}
+        onKeyPress={onKeyPress}
+      />
+    </Search>
+  );
+}
 
 export default SearchBar;
 

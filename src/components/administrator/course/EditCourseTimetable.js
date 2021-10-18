@@ -122,22 +122,24 @@ const EditCourseTimetable = ({ course }) => {
         display="flex"
         flexDirection="row"
       >
-        <FormControl sx={{ pr: 1 }}>
-          <InputLabel id="select-day">Day</InputLabel>
-          <Select
-            id="select-day"
-            label="Grade"
-            value={day || 2}
-            onChange={onChangeDay}
-            sx={{ minWidth: '8.5rem' }}
-          >
-            {
-              timetableContext.dayInWeek.map((d) => (
-                <MenuItem key={d.name} value={d.id}>{d.name}</MenuItem>
-              ))
-            }
-          </Select>
-        </FormControl>
+        <Box flexGrow={1} sx={{ pr: 1 }}>
+          <FormControl fullWidth>
+            <InputLabel id="select-day">Day</InputLabel>
+            <Select
+              id="select-day"
+              label="Grade"
+              value={day || 2}
+              onChange={onChangeDay}
+              sx={{ minWidth: '8.5rem' }}
+            >
+              {
+                timetableContext.dayInWeek.map((d) => (
+                  <MenuItem key={d.name} value={d.id}>{d.name}</MenuItem>
+                ))
+              }
+            </Select>
+          </FormControl>
+        </Box>
         <LocalizationProvider dateAdapter={MomentUtils}>
           <TimePicker
             label="Start"

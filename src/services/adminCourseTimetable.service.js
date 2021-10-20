@@ -2,7 +2,6 @@ import AdminAPIService from './adminAPI.service';
 import {
   COURSE_TIMETABLE, COURSE_TIMETABLE_ID,
 } from '../config/route';
-import URLService from './URL.service';
 import { APIService } from './api.service';
 
 class AdminCourseService {

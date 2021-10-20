@@ -26,8 +26,8 @@ class AdminCourseTimetableProvider extends React.Component {
     };
   }
 
-  getTimetableList = async (cid, setting = {}) => {
-    let timetableList = await AdminCourseTimetableService.getTimetableList(cid, setting);
+  getTimetableList = async (cid) => {
+    let timetableList = await AdminCourseTimetableService.getTimetableList(cid);
     timetableList = timetableList.sort((a, b) => new moment(a).subtract(new moment(b)));
     this.setState({ timetableList });
     return timetableList;

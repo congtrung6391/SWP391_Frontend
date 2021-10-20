@@ -1,0 +1,11 @@
+.admin-timetable-single-list {
+  .control-button {
+    display: none;
+  }
+
+  &:hover {
+    .control-button {
+      display: inline-block;
+    }
+  }
+}

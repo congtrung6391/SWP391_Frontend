@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unused-state */
+import moment from 'moment';
 import React from 'react';
 import AdminCourseTimetableService from '../services/adminCourseTimetable.service';
 
@@ -8,6 +9,7 @@ class AdminCourseTimetableProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      timetableList: [],
       getTimetableList: this.getTimetableList,
       addTimetable: this.addTimetable,
       updateTimetable: this.updateTimetable,
@@ -25,12 +27,19 @@ class AdminCourseTimetableProvider extends React.Component {
   }
 
   getTimetableList = async (cid, setting = {}) => {
-    const TimetableList = await AdminCourseTimetableService.getTimetableList(cid, setting);
-    return TimetableList;
+    let timetableList = await AdminCourseTimetableService.getTimetableList(cid, setting);
+    timetableList = timetableList.sort((a, b) => new moment(a).subtract(new moment(b)));
+    this.setState({ timetableList });
+    return timetableList;
   }
 
   addTimetable = async (cid, data) => {
     const response = await AdminCourseTimetableService.addTimetable(cid, data);
+    const { timetableList } = this.state;
+    if (typeof response !== 'string') {
+      timetableList.push(response);
+      this.setState({ timetableList });
+    }
     return response;
   }
 

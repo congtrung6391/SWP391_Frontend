@@ -12,14 +12,15 @@ import {
 } from '@mui/material';
 import { AdminCourseTimetableContext } from '../../../context/adminCourseTimetable.context';
 import { ToastContext } from '../../../context/toast.context';
-import { LoadingDNA3X } from '../../common/Loading';
+import { LoadingDNA3X, Loading } from '../../common/Loading';
 import { LocalizationProvider, TimePicker } from '@mui/lab';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
+import EditCourseTimetableList from './EditCourseTimetableList';
 
 const EditCourseTimetable = ({ course }) => {
-  const [timetableList, setTimetableList] = useState([]);
   const [fetched, setFetched] = useState(false);
+  const [adding, setAdding] = useState(false);
 
   const timetableContext = useContext(AdminCourseTimetableContext);
   const toastContext = useContext(ToastContext);
@@ -42,8 +43,7 @@ const EditCourseTimetable = ({ course }) => {
   useEffect(() => {
     const fetchMatrialList = async () => {
       setFetched(false);
-      const { timetableList: Timetable } = await timetableContext.getTimetableList(course.id)
-      setTimetableList(Timetable);
+      await timetableContext.getTimetableList(course.id);
       setFetched(true);
     }
     fetchMatrialList();
@@ -51,8 +51,16 @@ const EditCourseTimetable = ({ course }) => {
   }, [])
 
   const onAddTimetable = async () => {
+    setAdding(true);
+    if (!start || !end) {
+      toastContext.addNotification('Error', 'Please select start time and end time.', 'error');
+      setAdding(false);
+      return;
+    }
+
     if (moment.duration(new moment(end).subtract(start)).asHours() < 1) {
       toastContext.addNotification('Error', 'Duration must be at least 1 hour.', 'error');
+      setAdding(false);
       return;
     }
 
@@ -65,31 +73,10 @@ const EditCourseTimetable = ({ course }) => {
     if (typeof response === 'string') {
       toastContext.addNotification('Failed', 'Add Timetable failed', 'error');
     } else {
-      timetableList.push(response);
-      setTimetableList(timetableList);
       toastContext.addNotification('Success', 'Add Timetable success');
     }
-  }
 
-  const onUpdateTimetable = async (mid, data) => {
-    const response = await timetableContext.updateTimetable(course.id, mid, data);
-    if (typeof response === 'string') {
-      toastContext.addNotification('Failed', 'Update Timetable failed', 'error');
-    } else {
-      toastContext.addNotification('Success', 'Update Timetable success');
-    }
-  }
-
-  const onDeleteTimetable = async (mid) => {
-    const response = await timetableContext.deleteTimetable(course.id, mid);
-    if (typeof response === 'string') {
-      toastContext.addNotification('Failed', 'Delete Timetable failed', 'error');
-    } else {
-      const index = timetableList.findIndex((m) => m.id === mid);
-      timetableList.splice(index, 1);
-      setTimetableList(timetableList);
-      toastContext.addNotification('Success', 'Delete Timetable success');
-    }
+    setAdding(false);
   }
 
   if (!fetched) {
@@ -115,7 +102,7 @@ const EditCourseTimetable = ({ course }) => {
         <Typography
           variant="h6"
         >
-          Available Time
+          Add New Available Time
         </Typography>
       </Box>
       <Box
@@ -142,12 +129,14 @@ const EditCourseTimetable = ({ course }) => {
         </Box>
         <LocalizationProvider dateAdapter={MomentUtils}>
           <TimePicker
+            ampm={false}
             label="Start"
             value={start}
             onChange={onChangeStart}
             renderInput={(params) => <TextField {...params} sx={{ pr: 1 }} />}
           />
           <TimePicker
+            ampm={false}
             label="End"
             value={end}
             onChange={onChangeEnd}
@@ -157,10 +146,22 @@ const EditCourseTimetable = ({ course }) => {
         <Button
           variant="contained"
           onClick={onAddTimetable}
+          disabled={adding}
         >
           Add
+          {
+            adding && (<Loading />)
+          }
         </Button>
       </Box>
+      {
+        timetableContext.dayInWeek.map((d) => (
+          <EditCourseTimetableList
+            day={d}
+            courseId={course.id}
+          />
+        ))
+      }
     </Paper>
   );
 }

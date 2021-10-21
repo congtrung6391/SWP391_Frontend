@@ -1,50 +1,73 @@
 import React from 'react';
-import BootstrapModal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
-import Button from './Button';
+import {
+  Dialog,
+  DialogTitle,
+  Box,
+  DialogContent,
+  DialogActions,
+  Typography,
+  IconButton,
+  Divider,
+} from '@mui/material';
 
 const Modal = (props) => {
   const {
-    title, closebutton, error, footer, onHide, children,
+    title, closebutton, footer, onClose, children,
   } = props;
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <BootstrapModal dialogClassName="shadow-lg" {...props} size="lg">
-      <BootstrapModal.Header className="py-2 px-3 d-flex align-items-center">
-        <BootstrapModal.Title className="flex-grow-1">
-          <h4 className="m-0 font-semi-bold" style={{ lineHeight: 'inherit' }}>{title}</h4>
-        </BootstrapModal.Title>
-        {
-          closebutton === 1
-          && (
-            <Button
-              onClick={() => onHide()}
-              className={`rounded-circle ${error ? 'bg-danger' : 'bg-light-blue'}`}
-            >
-              <span className="fas fa-times" />
-            </Button>
-          )
-        }
-      </BootstrapModal.Header>
-      <BootstrapModal.Body className="p-0">
+    <Dialog
+      {...props}
+      sx={{
+        maxWidth: 'md'
+      }}
+      fullWidth
+    >
+      <DialogTitle
+        sx={{ pb: 0 }}
+      >
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+        >
+          <Typography variant="h6">
+            {title}
+          </Typography>
+          {
+            closebutton === 1
+            && (
+              <IconButton
+                onClick={() => onClose()}
+                color='error'
+              >
+                <span className="fas fa-times" />
+              </IconButton>
+            )
+          }
+        </Box>
+        <Divider />
+      </DialogTitle>
+      <DialogContent>
         {children}
-      </BootstrapModal.Body>
+      </DialogContent>
       {
         footer
         && (
-        <BootstrapModal.Footer className="p-0">
+        <DialogActions>
           {footer}
-        </BootstrapModal.Footer>
+        </DialogActions>
         )
       }
-    </BootstrapModal>
+    </Dialog>
   );
 };
 
 Modal.propTypes = {
   title: PropTypes.string.isRequired,
-  onHide: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   closebutton: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   footer: PropTypes.object,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),

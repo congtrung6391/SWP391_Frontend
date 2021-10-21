@@ -4,6 +4,7 @@ import Toolbar from './Toolbar';
 import CodeMirror from './CodeMirror';
 import Modal from '../Modal';
 import FormatText from '../FormatText';
+import { Box, Divider } from '@mui/material';
 
 class Editor extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Editor extends React.Component {
     } = this.props;
 
     return (
-      <div className="editor border">
+      <Box className="editor border">
         {
           showToolbar
           && (
@@ -55,31 +56,38 @@ class Editor extends React.Component {
           />
           )
         }
-        <hr className="m-0" />
-        <CodeMirror
-          readOnly={readOnly}
-          mode={mode}
-          theme={theme}
-          value={value}
-          name={name}
-          lineNumbers={lineNumbers}
-          ref={this.EditorRef}
-          onSelectionChange={this.onSelectionChange}
-          onChange={onChange}
-        />
+        <Box
+          sx={{
+            border: 2,
+            borderColor: 'rgba(0, 0, 0, 0.4)',
+            borderRadius: 1,
+            mt: '0.15rem',
+            p: 1,
+          }}
+        >
+          <CodeMirror
+            readOnly={readOnly}
+            mode={mode}
+            theme={theme}
+            value={value}
+            name={name}
+            lineNumbers={lineNumbers}
+            ref={this.EditorRef}
+            onSelectionChange={this.onSelectionChange}
+            onChange={onChange}
+          />
+        </Box>
         <Modal
-          show={showPreview}
+          open={showPreview}
           title="Preview"
-          onHide={this.togglePreview}
+          onClose={this.togglePreview}
           closebutton={1}
         >
-          <div className="p-3">
-            <FormatText
-              value={value}
-            />
-          </div>
+          <FormatText
+            value={value}
+          />
         </Modal>
-      </div>
+      </Box>
     );
   }
 }

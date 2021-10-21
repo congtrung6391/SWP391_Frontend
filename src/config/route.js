@@ -25,14 +25,18 @@ export const SUBJECTS = 'course/subject';
 export const COURSES = 'course';
 export const COURSE_INFO = 'course/:id/info';
 export const COURSE_ID = 'course/:id';
+export const COURSE_REGISTER = 'course/:id/register';
+
+// material
 export const COURSE_MATERIAL = 'course/:cid/material';
 export const COURSE_MATERIAL_ID = 'course/:cid/material/:mid';
-export const COURSE_REGISTER = 'course/:id/register';
+
+// timetable
 export const COURSE_TIMETABLE = 'course/:cid/timetable';
 export const COURSE_TIMETABLE_ID = 'course/:cid/timetable/:tid';
 
-// material
-
-// timetable
-
-// post
+// forum
+export const QUESTION = 'forum/question';
+export const QUESTION_ID = 'forum/question/:qid';
+export const ANSWER = 'forum/question/:qid/answer';
+export const ANSWER_ID = 'forum/question/:qid/answer/:aid';

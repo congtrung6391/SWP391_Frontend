@@ -10,6 +10,7 @@ class ForumProvider extends React.Component {
     this.state = {
       questionList: [],
       totalQuestion: 0,
+      limit: 20,
       answerList: [],
       totalAnswer: 0,
       getQuestionList: this.getQuestionList,
@@ -24,14 +25,19 @@ class ForumProvider extends React.Component {
     };
   }
 
-  getQuestionList = async (setting = {page: 1, limit: 20}) => {
-    const response = await ForumService.getQuestionList(setting);
+  getQuestionList = async (setting) => {
+    const response = await ForumService.getQuestionList({ ...setting, limit: this.state.limit });
     this.setState({ questionList: response.questionList, totalQuestion: response.totalQuestion });
     return response;
   }
 
   addQuestion = async (data) => {
     const response = await ForumService.addQuestion(data);
+    if (typeof response !== 'string') {
+      const { questionList } = this.state;
+      questionList.splice(0, 0, response);
+      this.setState({ questionList });
+    }
     return response;
   }
 
@@ -42,16 +48,16 @@ class ForumProvider extends React.Component {
 
   deleteQuestion = async (qid) => {
     const response = await ForumService.deleteQuestion(qid);
+    if (!response) {
+      const { questionList } = this.state;
+      const index = questionList.findIndex((q) => q.id === qid);
+      questionList.splice(index, 1);
+      this.setState({ questionList });
+    }
     return response;
   }
 
   getQuestion = async (qid) => {
-    const { questionList } = this.state;
-    const question = questionList.find((q) => q.id === qid);
-    if (question) {
-      return question;
-    }
-
     const response = await ForumService.getQuestion(qid);
     return response;
   }

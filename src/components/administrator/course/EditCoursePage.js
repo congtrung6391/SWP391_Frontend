@@ -50,7 +50,7 @@ const EditCoursePage = (props) => {
       <NavigationBar
         nav={[
           ['admin', '/admin'],
-          ['courses', '/admin/course'],
+          ['courses', '/admin/courses'],
           [course.courseName || ''],
         ]}
       />

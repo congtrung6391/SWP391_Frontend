@@ -3,8 +3,12 @@ import NavigationBar from '../../common/NavigationBar';
 import Body, { Main, SideBar } from '../../basic/Body';
 import QuestionList from './QuestionList';
 import TopQuestionList from './TopQuestionList';
+import QuestionPage from './QuestionPage';
 
 const ForumPage = (props) => {
+  const { match } = props;
+  const { qid } = match.params;
+
   return (
     <>
       <NavigationBar
@@ -15,7 +19,11 @@ const ForumPage = (props) => {
       />
       <Body>
         <Main>
-          <QuestionList />
+          {
+            qid
+              ? <QuestionPage qid={qid}  />
+              : <QuestionList />
+          }
         </Main>
         <SideBar>
           <TopQuestionList />

@@ -49,7 +49,7 @@ class AdminCourseService {
         },
         data,
       ).request();
-      return response;
+      return response.timetable;
     } catch (error) {
       return error.message;
     }

@@ -121,6 +121,7 @@ class Toolbar extends React.Component {
           {
             this.getToolList().map((tool) => (
               <Button
+                key={tool.ariaLabel}
                 aria-label={tool.ariaLabel}
                 onClick={tool.onClick}
                 disabled={disabled}

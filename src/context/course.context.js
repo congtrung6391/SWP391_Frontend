@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unused-state */
+import { touchRippleClasses } from '@mui/material';
 import React from 'react';
 import AdminCourseService from '../services/adminCourse.service';
 import CourseService from '../services/course.service';
@@ -12,6 +13,7 @@ class CourseProvider extends React.Component {
       courseList: [],
       totalCouse: 0,
       course: {},
+      limit: 10,
       getCourseList: this.getCourseList,
       getCourse: this.getCourse,
       register: this.register,
@@ -19,7 +21,7 @@ class CourseProvider extends React.Component {
   }
 
   getCourseList = async (setting) => {
-    const response = await CourseService.getCourseList(setting);
+    const response = await CourseService.getCourseList({ ...setting, limit: this.state.limit });
     console.log(response);
     if (typeof response === 'string') {
         return;
@@ -58,7 +60,6 @@ class CourseProvider extends React.Component {
 
   componentDidMount() {
     this.getCourseList({});
-    console.log(this.state.coursList);
   }
 
   render() {

@@ -2,19 +2,36 @@ import React, { useContext, useEffect, useState } from 'react';
 import MuiSearch from '../../common/MuiSearch';
 import { SubjectContext } from '../../../context/subject.context';
 import { ForumContext } from '../../../context/forum.context';
+import { AuthenticationContext } from '../../../context/authentication.context';
 import {
   Box,
   FormControl,
   MenuItem,
   Select,
   Button,
+  Pagination,
 } from '@mui/material';
 import QuestionSingleList from './QuestionSingleList';
 import QuestionAddPage from './QuestionAddPage';
+import { ToastContext } from '../../../context/toast.context';
+import { NavLink } from 'react-router-dom';
 
 const QuestionList = (props) => {
   const subjectContext = useContext(SubjectContext);
   const forumContext = useContext(ForumContext);
+  const toastContext = useContext(ToastContext);
+  const { verifyUser } = useContext(AuthenticationContext);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+
+  useEffect(() => {
+    forumContext.getQuestionList();
+  }, [])
+
+  useEffect(() => {
+    setTotalPage(Math.ceil(forumContext.totalQuestion/forumContext.limit));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [forumContext.totalQuestion])
 
   const [subjectId, setSubjectId] = useState(null);
   const onChangeSubject = (event) => {
@@ -31,11 +48,21 @@ const QuestionList = (props) => {
 
   const [showAddForm, setShowAddForm] = useState(false);
   const toggleShowAddForm = () => {
+    if (!showAddForm) {
+      if (!verifyUser()) {
+        toastContext.addNotification('Error', 'You have to login first.', 'error');
+        return;
+      }
+    }
     setShowAddForm(!showAddForm);
   }
 
   const onCloseAddForm = () => {
     setShowAddForm(false);
+  }
+
+  const onChangePage = (event, newValue) => {
+    setPage(newValue);
   }
 
   return (
@@ -100,13 +127,31 @@ const QuestionList = (props) => {
         )
       }
       {
-        forumContext.questionList.map((question) => {
-          <QuestionSingleList
+        forumContext.questionList.map((question, index) => (
+          <NavLink
             key={question.id}
-            question={question}
-          />
-        })
+            to={`/forum/question/${question.id}`}
+          >
+            <QuestionSingleList
+              question={question}
+              divider={index !== 0}
+            />
+          </NavLink>
+        ))
       }
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="center"
+        sx={{ mb: 2 }}
+      >
+        <Pagination
+          color="primary"
+          count={totalPage}
+          page={page}
+          onChange={onChangePage}
+        />
+      </Box>
     </Box>
   );
 };

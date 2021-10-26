@@ -3,12 +3,19 @@ import {
   Box, FormControl, MenuItem, Select, TextField, Button,
 } from '@mui/material';
 import { SubjectContext } from '../../../context/subject.context';
+import { ToastContext } from '../../../context/toast.context';
+import { ForumContext } from '../../../context/forum.context';
 import Editor from '../../basic/Editor/Editor';
+import { Loading } from '../../common/Loading';
 
 const QuestionAddPage = (props) => {
   const { closeAddForm } = props;
 
+  const [adding, setAdding] = useState(false);
+
   const subjectContext = useContext(SubjectContext);
+  const toastContext = useContext(ToastContext);
+  const forumContext = useContext(ForumContext);
 
   const [subjectId, setSubjectId] = useState(null);
   const onChangeSubject = (event) => {
@@ -30,6 +37,37 @@ const QuestionAddPage = (props) => {
     setSubjectId(null);
     setDesciption('');
     closeAddForm();
+  }
+
+  const onAddForm = async () => {
+    setAdding(true);
+    
+    if (title === '') {
+      toastContext.addNotification('Error', 'You must enter the Title of question.', 'error');
+      setAdding(false);
+      return;
+    }    
+    if (subjectId === 0 || subjectId === null) {
+      toastContext.addNotification('Failed', 'You must select a subject.', 'error');
+      setAdding(false);
+      return;
+    }
+
+    const data = {};
+
+    data.subjectId = subjectId;
+    data.title = title;
+    data.description = description;
+
+    const response = await forumContext.addQuestion(data);
+    if (typeof response === 'string') {
+      toastContext.addNotification('Failed', 'Cannot post question', 'error');
+      setAdding(false);
+    } else {
+      toastContext.addNotification('Success', 'Question is posted');
+      setAdding(false);
+      onCloseForm();
+    }
   }
 
   return (
@@ -80,7 +118,7 @@ const QuestionAddPage = (props) => {
             }}
             variant="standard"
           >
-            <MenuItem key={0} value={0}>All subject</MenuItem>
+            {/* <MenuItem key={0} value={0}>All subject</MenuItem> */}
             {
               subjectContext.subjects.map((subject) => (
                 <MenuItem
@@ -110,8 +148,13 @@ const QuestionAddPage = (props) => {
         <Button
           variant="contained"
           sx={{ mr: 2 }}
+          onClick={onAddForm}
+          disabled={adding}
         >
           Post
+          {
+            adding && <Loading />
+          }
         </Button>
         <Button
           variant="outlined"

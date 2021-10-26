@@ -4,7 +4,7 @@ import Toolbar from './Toolbar';
 import CodeMirror from './CodeMirror';
 import Modal from '../Modal';
 import FormatText from '../FormatText';
-import { Box, Divider } from '@mui/material';
+import { Box } from '@mui/material';
 
 class Editor extends React.Component {
   constructor(props) {

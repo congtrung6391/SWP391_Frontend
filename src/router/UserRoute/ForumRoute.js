@@ -8,7 +8,7 @@ const ForumRoute = () => {
   return (
     <ForumProvider>
       <Switch>
-        <Route exact path="/forum/question/:qid" component={QuestionPage} />
+        <Route exact path="/forum/question/:qid" component={ForumPage} />
         <Route exact path="/forum" component={ForumPage} />
       </Switch>
     </ForumProvider>

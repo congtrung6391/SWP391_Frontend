@@ -5,7 +5,7 @@ import {
 import { APIService } from './api.service';
 
 class UserService {
-  static async getTutorList(setting) {
+  static async getTutorList(setting = { page: 1, limit: 20 }) {
     try {
       const queryString = URLService.stringify(setting);
       const response = await new APIService(

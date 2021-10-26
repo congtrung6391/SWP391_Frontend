@@ -5,19 +5,45 @@ import {
 } from '../config/route';
 
 class ForumService {
-  static getQuestionList = async (setting = { page: 1, limit: 20 }) => {
-    return {
-      questionList: [],
-      totalQuestion: 0,
+  static getQuestionList = async (setting = {}) => {
+    try {
+      if (!setting.limit) setting.limit = 20;
+      if (!setting.page) setting.page = 1;
+      const queryString = URLService.stringify(setting);
+      const response = await new APIService(
+        'get',
+        QUESTION + '?' + queryString,
+      ).request();
+      return {
+        questionList: response.listQuestion,
+        totalQuestion: response.totalQuestion,
+      };
+    }catch (err) {
+      return {
+        questionList: [],
+        totalQuestion: 0,
+      };
     }
   }
 
   static addQuestion = async (data) => {
-    return {
-      id: 1,
-      title: data.title,
-      description: data.description,
+    try {
+      const response = await new APIService(
+        'post',
+        QUESTION,
+        {},
+        data,
+        true
+      ).request();
+      return response.questionResponse;
+    } catch (error) {
+      return error.message;
     }
+    // return {
+    //   id: 1,
+    //   title: data.title,
+    //   description: data.description,
+    // }
   }
 
   static updateQuestion = async (qid, data) => {
@@ -29,14 +55,32 @@ class ForumService {
   }
 
   static deleteQuestion = async (qid) => {
-    return null;
+    try {
+      await new APIService(
+        'delete',
+        QUESTION_ID,
+        { qid },
+        {},
+        true
+      ).request();
+      return null;
+    } catch (error) {
+      return error.message;
+    }
   }
 
   static getQuestion = async (qid) => {
-    return {
-      id: 1,
-      title: 'Mock title',
-      description: 'cdsc cd sc sdc sac werf e gert hyt j fw re wdw fe',
+    try {
+      const response = await new APIService(
+        'post',
+        QUESTION_ID,
+        {qid},
+        {},
+        true
+      ).request();
+      return response.questionResponse;
+    } catch (error) {
+      return null;
     }
   }
 

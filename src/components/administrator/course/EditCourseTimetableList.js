@@ -25,6 +25,7 @@ const EditCourseTimetableList = ({ day, courseId }) => {
         timetableContext.timetableList.map((timetable) => (
           timetable.day === day.id
             ? <EditCourseTimetableSingleList
+                key={timetable.id}
                 timetable={timetable}
                 courseId={courseId}
               />

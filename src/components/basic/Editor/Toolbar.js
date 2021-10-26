@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import ImageUploader from '../ImageUploader/ImageUploader';
 import ImageService from '../../../services/image.service';
 
+import {
+  ButtonGroup,
+  Button,
+  Box,
+} from '@mui/material';
+
 class Toolbar extends React.Component {
   constructor(props) {
     super(props);
@@ -55,30 +61,86 @@ class Toolbar extends React.Component {
     }
   }
 
+  getToolList = () => {
+    const { showPreview, insert } = this.props;
+    return [
+      {
+        ariaLabel: 'preview',
+        onClick: () => showPreview(),
+        name: [<span className="far fa-eye" />, ' ', 'Preview'],
+      },
+      {
+        ariaLabel: 'italic',
+        onClick: () => insert('*', '*'),
+        name: <span className="fas fa-italic" />,
+      },
+      {
+        ariaLabel: 'bold',
+        onClick: () => insert('**', '**'),
+        name: <span className="fas fa-bold" />,
+      },
+      {
+        ariaLabel: 'unoder list',
+        onClick: () => insert('\n- '),
+        name: <span className="fas fa-list-ul" />,
+      },
+      {
+        ariaLabel: 'order list',
+        onClick: () => insert('\n1. '),
+        name: <span className="fas fa-list-ol" />,
+      },
+      {
+        ariaLabel: 'quote',
+        onClick: () => insert('\n> '),
+        name: <span className="fas fa-quote-right" />,
+      },
+      {
+        ariaLabel: 'link',
+        onClick: () => insert('[Description](link)'),
+        name: <span className="fas fa-link" />,
+      },
+      {
+        ariaLabel: 'image',
+        onClick: this.toggleImageUploader,
+        name: <span className="fas fa-image" />,
+      },
+    ]
+  }
+
   render() {
-    const { showPreview, insert, disabled } = this.props;
+    const { disabled } = this.props;
     const { toggleImageUploader } = this.state;
     return (
-      <div className="toolbar m-1">
-        <button type="button" onClick={() => showPreview()}>
-          <span className="far fa-eye" />
-          {' '}
-          Preview
-        </button>
-        <button type="button" disabled={disabled} aria-label="italic" onClick={() => insert('*', '*')}><span className="fas fa-italic" /></button>
-        <button type="button" disabled={disabled} aria-label="bold" onClick={() => insert('**', '**')}><span className="fas fa-bold" /></button>
-        <button type="button" disabled={disabled} aria-label="unoder list" onClick={() => insert('\n- ')}><span className="fas fa-list-ul" /></button>
-        <button type="button" disabled={disabled} aria-label="order list" onClick={() => insert('\n1. ')}><span className="fas fa-list-ol" /></button>
-        <button type="button" disabled={disabled} aria-label="quote" onClick={() => insert('\n> ')}><span className="fas fa-quote-right" /></button>
-        <button type="button" disabled={disabled} aria-label="link" onClick={() => insert('[Description](link)')}><span className="fas fa-link" /></button>
-        <button type="button" disabled={disabled} aria-label="image" onClick={this.toggleImageUploader}><span className="fas fa-image" /></button>
+      <Box>
+        <ButtonGroup
+          size="small"
+          sx={{
+            borderRadius: 0,
+          }}
+        >
+          {
+            this.getToolList().map((tool) => (
+              <Button
+                key={tool.ariaLabel}
+                aria-label={tool.ariaLabel}
+                onClick={tool.onClick}
+                disabled={disabled}
+                color="inherit"
+              >
+                {
+                  tool.name
+                }
+              </Button>
+            ))
+          }
+        </ButtonGroup>
         <ImageUploader
           show={toggleImageUploader}
           onHide={this.toggleImageUploader}
           multiple
           uploadImage={this.onUploadImage}
         />
-      </div>
+      </Box>
     );
   }
 }

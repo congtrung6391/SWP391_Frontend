@@ -21,6 +21,7 @@ import { SubjectContext } from '../../../../context/subject.context';
 import { RatingContext } from '../../../../context/rating.context';
 import { ToastContext } from '../../../../context/toast.context';
 import { getUserInformation } from '../../../../utils/cookies';
+import { Loading } from '../../../common/Loading';
 
 const UserSingleRating = ({ user, rate }) => {
 
@@ -33,8 +34,12 @@ const UserSingleRating = ({ user, rate }) => {
   const [subjectId, setSubjectId] = useState(rate.subject.id);
 
   const [editting, setEditting] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const onUpdateRating = async () => {
+    setUpdating(true);
+
     const data = {
       value: rateValue,
       description: description,
@@ -49,9 +54,11 @@ const UserSingleRating = ({ user, rate }) => {
     }
 
     setEditting(false);
+    setUpdating(false);
   }
 
   const onDeleteRating = async () => {
+    setDeleting(true);
     if (window.confirm('This action cannot be undo. Are you sure?')) {
       const response = await ratingContext.deleteRating(user.id, rate.id);
       if (typeof response === 'string') {
@@ -60,6 +67,7 @@ const UserSingleRating = ({ user, rate }) => {
         toastContext.addNotification('Success', 'Delete success, please reload page');
       }
     }
+    setDeleting(false);
   }
 
   const updateDiaglogContent = () => (
@@ -164,8 +172,13 @@ const UserSingleRating = ({ user, rate }) => {
                 size="small"
                 color="error"
                 onClick={onDeleteRating}
+                disabled={deleting}
               >
-                <DeleteIcon fontSize="small" />
+                {
+                  deleting
+                    ? <Loading />
+                    : <DeleteIcon fontSize="small" />
+                }
               </IconButton>
             </Box>
           )
@@ -200,8 +213,12 @@ const UserSingleRating = ({ user, rate }) => {
           <Button
             variant="outlined"
             onClick={onUpdateRating}
+            disabled={updating}
           >
             save
+            {
+              updating && ( <Loading /> )
+            }
           </Button>
         </Box>
       </Dialog>

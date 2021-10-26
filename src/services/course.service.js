@@ -6,11 +6,10 @@ import {
 
 class AdminCourseService {
 
-  static async getCourseList(setting) {
+  static async getCourseList(setting = {}) {
     try {
-      console.log(setting);
       if (!setting.page) setting.page = 1;
-      if (!setting.limit) setting.limit = 1;
+      if (!setting.limit) setting.limit = 20;
       const queryString = URLService.stringify(setting);
       const response = await new APIService(
         'get',
@@ -22,7 +21,6 @@ class AdminCourseService {
         totalCourse: response.totalCourse,
       };
     } catch (error) {
-      console.log(error);
       return {
         courseList: [],
         totalCourse: 0,

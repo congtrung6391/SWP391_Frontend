@@ -20,12 +20,15 @@ import { ToastContext } from '../../../context/toast.context';
 import { LocalizationProvider, TimePicker } from '@mui/lab';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
+import { Loading } from '../../common/Loading';
 
 const EditCourseTimetableSingleList = ({ timetable, courseId }) => {
   const timetableContext = useContext(AdminCourseTimetableContext);
   const toastContext = useContext(ToastContext);
 
   const [editting, setEditting]  = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const [day, setDay] = useState(2);
   const onChangeDay = (event) => {
@@ -43,6 +46,8 @@ const EditCourseTimetableSingleList = ({ timetable, courseId }) => {
   }
 
   const onUpdateTimetable = async (mid) => {
+    setSaving(true);
+
     const data = {};
     if (day && day !== timetable.day) {
       data.day = day;
@@ -54,6 +59,21 @@ const EditCourseTimetableSingleList = ({ timetable, courseId }) => {
       data.endTime = end.format('hh:mm:ss');
     }
 
+    let startMoment = new moment(timetable.startTime, 'hh:mm:ss');
+    if (start) {
+      startMoment = new moment(start);
+    }
+    let endMoment = new moment(timetable.endTime, 'hh:mm:ss');
+    if (end) {
+      endMoment = new moment(end);
+    }
+    if (moment.duration((endMoment).subtract(startMoment)).asHours() < 1) {
+      toastContext.addNotification('Error', 'Duration must be at greater than 1 hour.', 'error');
+      setEditting(false);
+      setSaving(false);
+      return;
+    }
+
     const response = await timetableContext.updateTimetable(courseId, mid, data);
     if (typeof response === 'string') {
       toastContext.addNotification('Failed', 'Update Timetable failed', 'error');
@@ -62,15 +82,18 @@ const EditCourseTimetableSingleList = ({ timetable, courseId }) => {
     }
 
     setEditting(false);
+    setSaving(false);
   }
 
   const onDeleteTimetable = async (mid) => {
+    setDeleting(true);
     const response = await timetableContext.deleteTimetable(courseId, mid);
     if (typeof response === 'string') {
       toastContext.addNotification('Failed', 'Delete Timetable failed', 'error');
     } else {
       toastContext.addNotification('Success', 'Delete Timetable success');
     }
+    setDeleting(false);
   }
 
   return (
@@ -93,29 +116,39 @@ const EditCourseTimetableSingleList = ({ timetable, courseId }) => {
           borderColor: 'primary.main',
         }}
       >
-        <Typography>
-          {`${moment(timetable.startTime, 'hh:mm:ss').format('hh:mm')} - ${moment(timetable.endTime, 'hh:mm:ss').format('hh:mm')}`}
-        </Typography>
-        <Box className="control-button">
-          <IconButton
-            sx={{
-              p: 0,
-              pl: 1,
-            }}
-            onClick={() => setEditting(true)}
-          >
-            <EditIcon color="secondary" fontSize="small" />
-          </IconButton>
-          <IconButton
-            sx={{
-              p: 0,
-              pl: 1,
-            }}
-            onClick={() => onDeleteTimetable(timetable.id)}
-          >
-            <DeleteIcon color="error" fontSize="small" />
-          </IconButton>
-        </Box>
+        {
+          deleting 
+            ? <Loading />
+            : (
+              <Typography>
+                {`${moment(timetable.startTime, 'hh:mm:ss').format('hh:mm')} - ${moment(timetable.endTime, 'hh:mm:ss').format('hh:mm')}`}
+              </Typography>
+            )
+        }
+        {
+          !deleting && (
+            <Box className="control-button">
+              <IconButton
+                sx={{
+                  p: 0,
+                  pl: 1,
+                }}
+                onClick={() => setEditting(true)}
+              >
+                <EditIcon color="secondary" fontSize="small" />
+              </IconButton>
+              <IconButton
+                sx={{
+                  p: 0,
+                  pl: 1,
+                }}
+                onClick={() => onDeleteTimetable(timetable.id)}
+              >
+                <DeleteIcon color="error" fontSize="small" />
+              </IconButton>
+            </Box>
+          )
+        }
       </Box>
       <Dialog
         onClose={() => setEditting(false)}
@@ -171,6 +204,7 @@ const EditCourseTimetableSingleList = ({ timetable, courseId }) => {
             variant="contained"
             onClick={() => onUpdateTimetable(timetable.id)}
             sx={{ mt: 2 }}
+            disabled={saving}
           >
             Save
           </Button>

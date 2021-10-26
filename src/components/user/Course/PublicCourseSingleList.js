@@ -108,7 +108,7 @@ const PublicCourseSingleList = ({ course }) => {
             typography="body1"
             fontWeight="bold"
             fontStyle="italic"
-            textAling="center"
+            textAlign="center"
           >
             {`${Math.floor(parseInt(course.cost, 10)/1000)}K/${course.length}'`}
           </Typography>

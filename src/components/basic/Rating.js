@@ -11,6 +11,7 @@ import {
 import {
   withStyles
 } from '@mui/styles';
+import { Loading } from '../common/Loading';
 
 const AddRatingButton = withStyles(() => ({
   root: {
@@ -38,6 +39,7 @@ const addDiaglogContent = (rating) => (
 
 const Rating = (props) => {
   const [addingRating, setAddingRating] = useState(false);
+  const [adding, setAdding] = useState(false);
 
   const {
     rating,
@@ -57,7 +59,9 @@ const Rating = (props) => {
   };
 
   const addRating = async () => {
+    setAdding(true);
     await onAddRating();
+    setAdding(false);
     setAddingRating(false);
   }
 
@@ -101,9 +105,13 @@ const Rating = (props) => {
         >
           <Button
             variant="outlined"
+            disabled={adding}
             onClick={addRating}
           >
             save
+            {
+              adding && ( <Loading /> )
+            }
           </Button>
         </Box>
       </Dialog>

@@ -103,7 +103,8 @@ const UserRating = ({ user }) => {
     if (typeof response === 'string') {
       toastContext.addNotification('Error', response, 'error');
     } else {
-      response.subject = { id: subjectIdAdd };
+      const subject = subjectContext.subjects.find((s) => s.id === subjectIdAdd);
+      response.subject = subject;
       rateList.splice(0, 0, response);
       setRateList(rateList);
     }

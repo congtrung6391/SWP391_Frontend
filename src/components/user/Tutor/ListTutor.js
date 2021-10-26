@@ -13,7 +13,7 @@ const ListTutor = () => {
 
   const [searchName, setSearchName] = useState('');
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(20);
+  const limit = 20;
   const [numberOfPage, setNumberOfPage] = useState(1);
 
   const fetchTutor = async () => {

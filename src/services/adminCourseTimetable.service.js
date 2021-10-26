@@ -2,28 +2,22 @@ import AdminAPIService from './adminAPI.service';
 import {
   COURSE_TIMETABLE, COURSE_TIMETABLE_ID,
 } from '../config/route';
-import URLService from './URL.service';
+import { APIService } from './api.service';
 
 class AdminCourseService {
 
   static async getTimetableList(cid) {
     try {
-      const response = await new AdminAPIService(
+      const response = await new APIService(
         'get',
         COURSE_TIMETABLE,
         {
           cid,
         },
       ).request();
-      return {
-        TimetableList: response.TimetableList,
-        totalTimetable: response.totalTimetable,
-      };
+      return response.timeTableList;
     } catch (error) {
-      return {
-        TimetableList: [],
-        totalTimetable: 0,
-      };
+      return [];
     }
   }
 
@@ -55,7 +49,7 @@ class AdminCourseService {
         },
         data,
       ).request();
-      return response;
+      return response.timetable;
     } catch (error) {
       return error.message;
     }

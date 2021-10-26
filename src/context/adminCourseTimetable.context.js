@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unused-state */
+import moment from 'moment';
 import React from 'react';
 import AdminCourseTimetableService from '../services/adminCourseTimetable.service';
 
@@ -8,6 +9,7 @@ class AdminCourseTimetableProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      timetableList: [],
       getTimetableList: this.getTimetableList,
       addTimetable: this.addTimetable,
       updateTimetable: this.updateTimetable,
@@ -24,23 +26,42 @@ class AdminCourseTimetableProvider extends React.Component {
     };
   }
 
-  getTimetableList = async (cid, setting = {}) => {
-    const TimetableList = await AdminCourseTimetableService.getTimetableList(cid, setting);
-    return TimetableList;
+  getTimetableList = async (cid) => {
+    let timetableList = await AdminCourseTimetableService.getTimetableList(cid);
+    timetableList = timetableList.sort((a, b) => new moment(a).subtract(new moment(b)));
+    this.setState({ timetableList });
+    return timetableList;
   }
 
   addTimetable = async (cid, data) => {
     const response = await AdminCourseTimetableService.addTimetable(cid, data);
+    const { timetableList } = this.state;
+    if (typeof response !== 'string') {
+      timetableList.push(response);
+      this.setState({ timetableList });
+    }
     return response;
   }
 
   updateTimetable = async (cid, tid, data) => {
     const response = await AdminCourseTimetableService.updateTimetable(cid, tid, data);
+    if (response) {
+      const { timetableList } = this.state;
+      const index = timetableList.findIndex((t) => t.id === tid);
+      timetableList.splice(index, 1, response);
+      this.setState({ timetableList });
+    }
     return response;
   }
 
   deleteTimetable = async (cid, tid) => {
     const response = await AdminCourseTimetableService.deleteTimetable(cid, tid);
+    if (response === null) {
+      const { timetableList } = this.state;
+      const index = timetableList.findIndex((t) => t.id === tid);
+      timetableList.splice(index, 1);
+      this.setState({ timetableList });
+    }
     return response;
   }
 

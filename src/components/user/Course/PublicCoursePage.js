@@ -21,6 +21,7 @@ import { Loading, LoadingPage } from '../../common/Loading';
 import NavigationBar from '../../common/NavigationBar';
 import PublicCourseInfor from './PublicCourseInfo';
 import PublicCourseMaterialList from './PublicCourseMaterialList';
+import PublicCourseTimetable from './PublicCourseTimetable';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -247,7 +248,9 @@ const PublicCoursePage = (props) => {
               />
             </TabPanel>
             <TabPanel value={tab} index={2}>
-              Available TIme will coming soon
+              <PublicCourseTimetable
+                course={course}
+              />
             </TabPanel>
           </Box>
         </Grid>

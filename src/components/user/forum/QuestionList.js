@@ -23,6 +23,7 @@ const QuestionList = (props) => {
   const { verifyUser } = useContext(AuthenticationContext);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const [subjectId, setSubjectId] = useState(null);
 
   useEffect(() => {
     forumContext.getQuestionList();
@@ -33,7 +34,11 @@ const QuestionList = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forumContext.totalQuestion])
 
-  const [subjectId, setSubjectId] = useState(null);
+  useEffect(() => {
+    forumContext.getQuestionList({ page, subjectId });
+  }, [subjectId, page]);
+
+
   const onChangeSubject = (event) => {
     setSubjectId(event.target.value);
   }
@@ -42,9 +47,6 @@ const QuestionList = (props) => {
   const onChangeSearchName = (event) => {
     setSearchName(event.target.value);
   }
-  useEffect(() => {
-
-  }, [subjectId]);
 
   const [showAddForm, setShowAddForm] = useState(false);
   const toggleShowAddForm = () => {
@@ -128,15 +130,11 @@ const QuestionList = (props) => {
       }
       {
         forumContext.questionList.map((question, index) => (
-          <NavLink
+          <QuestionSingleList
+            question={question}
+            divider={index !== 0}
             key={question.id}
-            to={`/forum/question/${question.id}`}
-          >
-            <QuestionSingleList
-              question={question}
-              divider={index !== 0}
-            />
-          </NavLink>
+          />
         ))
       }
       <Box

@@ -27,9 +27,13 @@ class ForumProvider extends React.Component {
   }
 
   getQuestionList = async (setting) => {
-    const response = await ForumService.getQuestionList({ ...setting, limit: this.state.limit });
-    this.setState({ questionList: response.questionList, totalQuestion: response.totalQuestion });
-    return response;
+    let { questionList, totalQuestion } = await ForumService.getQuestionList({ ...setting, limit: this.state.limit });
+    questionList = questionList.map((q) => {
+      q.description = Base64.decode(q.description);
+      return q;
+    });
+    this.setState({ questionList: questionList, totalQuestion: totalQuestion });
+    return { questionList, totalQuestion };
   }
 
   addQuestion = async (data) => {
@@ -40,6 +44,7 @@ class ForumProvider extends React.Component {
     const response = await ForumService.addQuestion(data);
     if (typeof response !== 'string') {
       const { questionList } = this.state;
+      response.description = Base64.decode(response.description);
       questionList.splice(0, 0, response);
       this.setState({ questionList });
     }
@@ -48,10 +53,20 @@ class ForumProvider extends React.Component {
 
   updateQuestion = async (qid, data) => {
     const { description } = data;
-    const encryptedDescription = Base64.encode(description);
-    data.description = encryptedDescription;
+    if (description) {
+      const encryptedDescription = Base64.encode(description);
+      data.description = encryptedDescription;
+    }
 
     const response = await ForumService.updateQuestion(qid, data);
+    if (typeof response !== 'string') {
+      const { questionList } = this.state;
+      const index = questionList.findIndex((q) => q.id === qid);
+      response.description = Base64.decode(response.description);
+      questionList.splice(index, 1, response);
+      this.setState({ questionList });
+    }
+
     return response;
   }
 

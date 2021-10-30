@@ -47,10 +47,19 @@ class ForumService {
   }
 
   static updateQuestion = async (qid, data) => {
-    return {
-      id: 1,
-      title: data.title,
-      description: data.description,
+    try {
+      const response = await new APIService(
+        'put',
+        QUESTION_ID,
+        {
+          qid,
+        },
+        data,
+        true
+      ).request();
+      return response.questionResponse;
+    } catch (error) {
+      return error.message;
     }
   }
 

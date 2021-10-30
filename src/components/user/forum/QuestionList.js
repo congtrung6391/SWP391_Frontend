@@ -15,6 +15,7 @@ import QuestionSingleList from './QuestionSingleList';
 import QuestionAddPage from './QuestionAddPage';
 import { ToastContext } from '../../../context/toast.context';
 import { NavLink } from 'react-router-dom';
+import { LoadingDNA3X } from '../../common/Loading';
 
 const QuestionList = (props) => {
   const subjectContext = useContext(SubjectContext);
@@ -23,9 +24,17 @@ const QuestionList = (props) => {
   const { verifyUser } = useContext(AuthenticationContext);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const [subjectId, setSubjectId] = useState(null);
+  const [fetched, setFetched] = useState(false);
+
+  const fetchQuestionList = async () => {
+    setFetched(false);
+    await forumContext.getQuestionList({ page, subjectId, name: searchName });
+    setFetched(true);
+  }
 
   useEffect(() => {
-    forumContext.getQuestionList();
+    fetchQuestionList();
   }, [])
 
   useEffect(() => {
@@ -33,7 +42,11 @@ const QuestionList = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forumContext.totalQuestion])
 
-  const [subjectId, setSubjectId] = useState(null);
+  useEffect(() => {
+    fetchQuestionList();
+  }, [subjectId, page]);
+
+
   const onChangeSubject = (event) => {
     setSubjectId(event.target.value);
   }
@@ -41,10 +54,8 @@ const QuestionList = (props) => {
   const [searchName, setSearchName] = useState(null);
   const onChangeSearchName = (event) => {
     setSearchName(event.target.value);
+    setPage(1);
   }
-  useEffect(() => {
-
-  }, [subjectId]);
 
   const [showAddForm, setShowAddForm] = useState(false);
   const toggleShowAddForm = () => {
@@ -112,6 +123,7 @@ const QuestionList = (props) => {
           <MuiSearch
             value={searchName || ''}
             onChange={onChangeSearchName}
+            onSearch={fetchQuestionList}
           />
         </Box>
         <Button
@@ -127,17 +139,19 @@ const QuestionList = (props) => {
         )
       }
       {
-        forumContext.questionList.map((question, index) => (
-          <NavLink
-            key={question.id}
-            to={`/forum/question/${question.id}`}
-          >
-            <QuestionSingleList
-              question={question}
-              divider={index !== 0}
-            />
-          </NavLink>
-        ))
+        !fetched
+          ? (
+            <LoadingDNA3X />
+          )
+          : (
+            forumContext.questionList.map((question, index) => (
+              <QuestionSingleList
+                question={question}
+                divider={index !== 0}
+                key={question.id}
+              />
+            ))
+          )
       }
       <Box
         display="flex"

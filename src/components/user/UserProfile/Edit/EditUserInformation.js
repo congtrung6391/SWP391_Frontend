@@ -61,21 +61,21 @@ const UserPassword = () => {
     setFullname(event.target.value);
   }
 
-  const [affiliation, setAffiliation] = useState('');
-  const [errorAffiliation, setErrorAffiliation] = useState('');
-  const validateAffiliation = () => {
-    if (affiliation && affiliation.trim().length > 255) {
-      setErrorAffiliation('Nơi công tác không được dài quá 255 kí tự');
+  const [affiliate, setAffiliate] = useState('');
+  const [errorAffiliate, setErrorAffiliate] = useState('');
+  const validateaffiliate = () => {
+    if (affiliate && affiliate.trim().length > 255) {
+      setErrorAffiliate('Nơi công tác không được dài quá 255 kí tự');
       return;
     }
-    setErrorAffiliation('');
+    setErrorAffiliate('');
   };
   useEffect(() => {
-    validateAffiliation();
+    validateaffiliate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [affiliation]);
-  const onChangeAffiliation = (event) => {
-    setAffiliation(event.target.value);
+  }, [affiliate]);
+  const onChangeaffiliate = (event) => {
+    setAffiliate(event.target.value);
   }
 
   const [phone, setPhone] = useState('');
@@ -155,7 +155,7 @@ const UserPassword = () => {
     setBirthday(date.valueOf());
   };
 
-  const [gender, setGender] = useState('');
+  const [gender, setGender] = useState(null);
   const onChangeGender = (event) => {
     setGender(event.target.value);
   }
@@ -169,16 +169,16 @@ const UserPassword = () => {
 
   useEffect(() => {
     const currentUser = getUserInformation();
-    console.log(currentUser);
     setFullname(currentUser.fullName);
-    setAffiliation(currentUser.affiliation);
+    setAffiliate(currentUser.affiliate);
     setAddress(currentUser.address);
     setPhone(currentUser.phone);
     setFacebookUrl(currentUser.facebookUrl);
     setJobTitle(currentUser.jobTitle);
     setGpa(currentUser.gpa || 0);
     setBirthday(currentUser.birthday || undefined);
-    setGender(currentUser.gender || 'Other');
+    setGender(currentUser.gender || null);
+    console.log(currentUser.Birthday);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -200,15 +200,19 @@ const UserPassword = () => {
       updateInfo.fullName = fullname.trim();
     }
 
-    if (address && user.address !== address) {
+    if (user.address !== address) {
       updateInfo.address = address;
     }
 
-    if (affiliation && user.afffiliation !== affiliation) {
-      updateInfo.affiliation = affiliation;
+    if (jobTitle !== user.jobTitle) {
+      updateInfo.jobTitle = jobTitle;
     }
 
-    if (facebookUrl && user.facebookUrl !== facebookUrl) {
+    if (user.afffiliate !== affiliate) {
+      updateInfo.affiliate = affiliate;
+    }
+
+    if (user.facebookUrl !== facebookUrl) {
       updateInfo.facebookUrl = facebookUrl;
     }
 
@@ -216,17 +220,19 @@ const UserPassword = () => {
       updateInfo.gender = gender;
     }
 
-    if (gpa && user.gpa !== gpa) {
+    if (user.gpa !== gpa) {
       updateInfo.gpa = gpa;
     }
 
-    if (phone && user.phone !== phone) {
+    if (user.phone !== phone) {
       updateInfo.phone = phone;
     }
 
     if (birthday && parseInt(user.birthday, 10) !== parseInt(birthday, 10)) {
       updateInfo.Birthday = parseInt(birthday, 10);
     }
+    
+    console.log(updateInfo);
 
     return updateInfo;
   };
@@ -235,7 +241,8 @@ const UserPassword = () => {
     const currentUser = getUserInformation();
     Object.keys(updateInfo).forEach((key) => {
       currentUser[key] = updateInfo[key];
-    })
+    });
+    console.log(currentUser);
     saveUser(currentUser);
   };
 
@@ -243,7 +250,7 @@ const UserPassword = () => {
     event.preventDefault();
 
     if (errorFullname
-      || errorAffiliation
+      || errorAffiliate
       || errorAddress
       || errorFacebookUrl
       || errorJobTitle
@@ -261,7 +268,7 @@ const UserPassword = () => {
       if (Object.keys(updateInfo).length > 0) {
         setIsSaving(true);
         await new APIService(
-          'post',
+          'put',
           `user/${getUserInformation('id')}`,
           null,
           updateInfo,
@@ -332,12 +339,12 @@ const UserPassword = () => {
     },
     {
       label: 'Affiliation',
-      name: 'affiliation',
-      value: affiliation || '',
-      onChange: onChangeAffiliation,
-      helperText: errorAffiliation,
+      name: 'affiliate',
+      value: affiliate || '',
+      onChange: onChangeaffiliate,
+      helperText: errorAffiliate,
       disabled: false,
-      error: !!errorAffiliation,
+      error: !!errorAffiliate,
     },
   ]
 
@@ -383,7 +390,7 @@ const UserPassword = () => {
               id="birthday-picker-dialog"
               label="Ngày sinh"
               format="DD/MM/YYYY"
-              value={birthday}
+              value={birthday || null}
               onChange={onBirthdayChange}
               KeyboardButtonProps={{
                 'aria-label': 'change birthday',
@@ -397,7 +404,7 @@ const UserPassword = () => {
               label='GPA'
               name='gpa'
               variant="outlined"
-              type="text"
+              type="number"
               value={gpa || ''}
               onChange={onChangeGpa}
               error={!!errorGpa}
@@ -410,20 +417,20 @@ const UserPassword = () => {
               <Select
                 labelId="profile-gender-select"
                 id="demo-simple-select"
-                value={gender}
+                value={gender || 'other'}
                 label="Gender"
                 onChange={onChangeGender}
               >
-                <MenuItem value='Male'>Male</MenuItem>
-                <MenuItem value='Female'>Female</MenuItem>
-                <MenuItem value='Other'>Prefer not to say</MenuItem>
+                <MenuItem value='male'>Male</MenuItem>
+                <MenuItem value='female'>Female</MenuItem>
+                <MenuItem value='other'>Prefer not to say</MenuItem>
               </Select>
             </FormControl>
           </Box>
         </Box>
         <Box mt={2}>
           <Button
-            disabled={!!isSaving}
+            disabled={isSaving}
             variant="contained"
             type="submit"
             onClick={onSaveInfor}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
   Grid,
+  Icon,
   Typography,
 } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -64,26 +65,33 @@ const EditCoursePage = (props) => {
           >
             {course.courseName}
           </Typography>
-          <Box display="flex" flexDirection="row">
+          <Box display="flex" flexDirection="column">
             <SideTabControl
               childClassName="edit-course-sidetab"
               activeClassName="active-tab"
               controlKey="editcourse-view"
+              direction="row"
             >
-              <Typography className="text-vertical" route="info" key="info">
+              <Typography className="text-vertical" variant="h6" route="info" key="info">
                 Infromation
                 &nbsp;
-                <AssignmentIcon fontSize="small" />
+                <Icon>
+                  <AssignmentIcon />
+                </Icon>
               </Typography>
-              <Typography className="text-vertical" route="time" key="time">
+              <Typography className="text-vertical"  variant="h6" route="time" key="time">
                 Available Time
                 &nbsp;
-                <TimelapseIcon fontSize="small" />
+                <Icon>
+                  <TimelapseIcon />
+                </Icon>
               </Typography>
-              <Typography className="text-vertical" route="material" key="material">
+              <Typography className="text-vertical" variant="h6" route="material" key="material">
                 Material
                 &nbsp;
-                <CloudDownloadIcon fontSize="small" />
+                <Icon>
+                  <CloudDownloadIcon />
+                </Icon>
               </Typography>
             </SideTabControl>
             <SideTabContent controlKey="editcourse-view">

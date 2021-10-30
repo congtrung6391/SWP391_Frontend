@@ -1,0 +1,102 @@
+.container-loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-loading {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  background: #DC8EFF;
+  grid-area: 2/2/3/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.circle-loading {
+  border-radius: 50%;
+  background: white;
+  animation: cr 1s ease-in-out none infinite alternate-reverse;
+}
+@keyframes cr {
+  from{
+      width: 0px;
+      height: 0px;
+  }
+  to{
+      width: 35px;
+      height: 35px;
+  }
+}
+.common-loading {
+  width: 150px;
+  height: 150px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+}
+.wrap-loading{
+  display: grid;
+  grid-template-columns: repeat(3,max-content);
+  animation: wr 5s linear none infinite ;
+}
+@keyframes wr {
+  from{
+      transform: rotate(0deg);
+  }
+  to{
+      transform: rotate(360deg);
+  }
+}
+.one-loading{
+grid-area: 1/2/2/3;
+animation: one 1s ease-in-out none infinite alternate-reverse;
+}
+@keyframes one {
+  from{
+      transform: translateY(0px);
+  }
+  to{
+      transform: translateY(35px);
+  }
+}
+.two-loading{
+  grid-area: 2/3/3/4;
+  animation: two 1s ease-in-out none infinite alternate-reverse;
+}
+@keyframes two {
+  from{
+      transform: translateX(0px);
+  }
+  to{
+      transform: translateX(-35px);
+  }
+}
+.three-loading{
+  grid-area: 2/1/3/2;
+  animation: three 1s ease-in-out none infinite alternate-reverse;
+ 
+}
+@keyframes three {
+  from{
+      transform: translateX(0px);
+  }
+  to{
+      transform: translateX(35px);
+  }
+}
+.four-loading{
+  grid-area: 3/2/4/3;
+  animation: four 1s ease-in-out none infinite alternate-reverse;
+  
+}
+@keyframes four {
+  from{
+      transform: translateY(0px);
+  }
+  to{
+      transform: translateY(-35px);
+  }
+}

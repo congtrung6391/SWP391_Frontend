@@ -13,15 +13,14 @@ const ListTutor = () => {
 
   const [searchName, setSearchName] = useState('');
   const [page, setPage] = useState(1);
-  const limit = 20;
   const [numberOfPage, setNumberOfPage] = useState(1);
 
   const fetchTutor = async () => {
     setFetched(false);
-    const list = await userContext.getTutorList({ name: searchName, page, limit });
-    setTutorList(list);
+    const list = await userContext.getTutorList({ name: searchName, page });
+    setTutorList(list.userList);
+    setNumberOfPage(Math.ceil(list.totalUsers/userContext.limit));
     setFetched(true);
-    setNumberOfPage(Math.ceil(userContext.totalUsers/limit));
   };
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const ListTutor = () => {
   useEffect(() => {
     fetchTutor();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, limit])
+  }, [page])
 
   const onChangePage = (event, newValue) => {
     setPage(newValue);
@@ -45,10 +44,6 @@ const ListTutor = () => {
   const onSearch = async () => {
     setPage(1);
     await fetchTutor();
-  }
-
-  if (!fetched) {
-    return <LoadingDNA3X />
   }
 
   return ([
@@ -65,22 +60,37 @@ const ListTutor = () => {
         container
       >
         {
-          tutorList.map((tutor) => (
-            <Grid
-              item
-              key={tutor.id}
-              md={3}
-              xs={6}
-              sm={4}
-              sx={{
-                padding: 1,
-              }}
-            >
-              <SingleListTutor
-                tutor={tutor}
-              />
-            </Grid>
-          ))
+          fetched
+            ? tutorList.map((tutor) => (
+                <Grid
+                  item
+                  key={tutor.id}
+                  md={3}
+                  xs={6}
+                  sm={4}
+                  sx={{
+                    padding: 1,
+                  }}
+                >
+                  <SingleListTutor
+                    tutor={tutor}
+                  />
+                </Grid>
+              ))
+            : (
+              <Grid
+                item
+                md={12}
+                xs={12}
+                sm={12}
+                sx={{
+                  padding: 1,
+                  alignItems: 'center',
+                }}
+              >
+                <LoadingDNA3X />
+              </Grid>
+            )
         }
       </Grid>
     ), (
@@ -93,7 +103,7 @@ const ListTutor = () => {
       >
         <Pagination
           color="primary"
-          count={numberOfPage}
+          count={numberOfPage || 1}
           page={page || 1}
           onChange={onChangePage}
         />

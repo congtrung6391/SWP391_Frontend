@@ -112,7 +112,7 @@ const ListUsers = () => {
   return (
     <Box>
       <Box mb={1} display="flex" flexDirection="row">
-        <ButtonGroup>
+        <ButtonGroup sx={{ mr: 1 }}>
           <Button
             disableFocusRipple
             disableRipple
@@ -134,7 +134,7 @@ const ListUsers = () => {
             {`Total courses: ${courseContext.totalCourse}`}
           </Button>
         </ButtonGroup>
-        <Box flexGrow={1}>
+        <Box flexGrow={1} sx={{ mr: 1 }}>
           <MuiSearch />
         </Box>
         <FormControl>

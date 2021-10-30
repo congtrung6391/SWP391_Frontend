@@ -10,14 +10,20 @@ import EditUserPassword from './EditUserPassword';
 import { LoadingDNA3X } from '../../../common/Loading';
 import { UserContext } from '../../../../context/user.context';
 import { getUserInformation, saveUser } from '../../../../utils/cookies';
+import { AuthenticationContext } from '../../../../context/authentication.context';
+import history from '../../../../BrowserHistory';
 
 const UserProfile = (props) => {
   const { match } = props;
   const [fetched, setFetched] = useState(false);
   const userContext = useContext(UserContext)
+  const { verifyUser } = useContext(AuthenticationContext);
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!verifyUser()) {
+        history.push('/');
+      }
       setFetched(false);
       if (!Number.isInteger(parseInt(match.params.uid, 10))) {
         return <Redirect to="/" />;

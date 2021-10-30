@@ -45,10 +45,10 @@ const UserPassword = () => {
 
   useEffect(() => {
     if (message) {
-      toastContext.addNotification('Thành công', message);
+      toastContext.addNotification('Success', message);
     }
     if (error) {
-      toastContext.addNotification('Lỗi', error, 'error');
+      toastContext.addNotification('Error', error, 'error');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [message, error]);
@@ -152,7 +152,7 @@ const UserPassword = () => {
 
     // packing update data
     const updateInfo = {};
-    updateInfo.password = password;
+    updateInfo.oldPassword = password;
     updateInfo.resetPassword = resetPassword;
 
     // Fetch API to save in server
@@ -160,7 +160,7 @@ const UserPassword = () => {
       setIsSaving(true);
       await new APIService(
         'put',
-        `users/${getUserInformation('Id')}`,
+        `user/${getUserInformation('id')}/change-password`,
         null,
         updateInfo,
         true,

@@ -7,10 +7,10 @@ import AdminUserRoute from './AdministrationRoute/AdminUserRoute';
 import AdminCourseRoute from './AdministrationRoute/AdminCourseRoute';
 
 const AdministratorRoute = () => {
-  const { verifyTutor } = useContext(AuthenticationContext);
-  if (!verifyTutor()) {
-    return <Redirect to="/" />;
-  }
+  // const { verifyTutor } = useContext(AuthenticationContext);
+  // if (!verifyTutor()) {
+  //   return <Redirect to="/" />;
+  // }
 
   return (
     <div className="d-flex">

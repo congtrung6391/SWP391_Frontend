@@ -169,3 +169,32 @@ const QuestionAddPage = (props) => {
 };
 
 export default QuestionAddPage;
+
+/*
+
+**Bold text**
+
+*Italic text*
+
+***Bold and Italic text***
+
+- Buller
+- Bullet
+
+1. Frist
+2. Second
+
+[Link to youtube](https://www.youtube.com/)
+
+
+
+<figure>
+  <img
+    src="https://i.imgur.com/iYu5zig.png"
+    style="min-width: 40%; max-width: 95%; display: block; margin-left: auto; margin-right: auto; border-radius: 5px"
+  />
+  <!-- Insert the caption of picture here -->
+  <figcaption style="text-align: center"><em></em></figcaption>
+</figure>
+
+*/

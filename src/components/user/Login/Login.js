@@ -10,6 +10,7 @@ import { Loading } from '../../common/Loading';
 import Body from '../../basic/Body';
 import NavigationBar from '../../common/NavigationBar';
 import { AuthenticationContext } from '../../../context/authentication.context';
+import history from '../../../BrowserHistory';
 
 class Login extends React.Component {
   constructor(props) {
@@ -89,7 +90,7 @@ class Login extends React.Component {
         isLoggingIn: false,
       }));
     } else {
-      // history.push('/');
+      history.goBack();
     }
   }
 

@@ -55,7 +55,7 @@ const QuestionSingleList = (props) => {
       >
         <Typography variant="h6">{question.title}</Typography>
         {
-          (getUserInformation('id') === question.user.id || verifyAdministrator()) && (
+          (getUserInformation('id') === question.author.id || verifyAdministrator()) && (
             <ButtonGroup
               variant="text"
               size="small"
@@ -81,7 +81,7 @@ const QuestionSingleList = (props) => {
         flexDirection='row'
       >
         <Box sx={{ mr: 1 }}>
-          <Typography variant="subtitle2">{question.user.fullName}</Typography>
+          <Typography variant="subtitle2">{question.author.fullName}</Typography>
         </Box>
         <Typography
           variant="subtitle2"

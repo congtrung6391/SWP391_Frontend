@@ -45,7 +45,10 @@ const stripScripts = (s) => {
 
 const FormatText = ({ value }) => (
   <div
-    className="m-0 p-0 text-justify"
+    style={{
+      margin: 0,
+      padding: 0,
+    }}
     // eslint-disable-next-line react/no-danger
     dangerouslySetInnerHTML={{
       __html: stripScripts(md.render(value || '')),

@@ -40,6 +40,7 @@ const ListUsers = () => {
   const [page, setPage] = useState(1);
 
   const fetchUsers = async () => {
+    setFetched(false);
     try {
       await userContext.getUserList({ userId: searchId, name: searchName, page, limit: userContext.limit });
       setFetched(true);
@@ -97,10 +98,6 @@ const ListUsers = () => {
   //   await fetchUsers();
   // }
 
-  if (!fetched) {
-    return <LoadingDNA3X />;
-  }
-
   return (
     <Box>
       <Box mb={1} display="flex" flexDirection="row">
@@ -156,40 +153,50 @@ const ListUsers = () => {
           </TableHead>
           <TableBody>
             {
-              userContext.userList.map((user, index) => (
-                <TableRow key={user.username}>
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.username}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.fullName}</TableCell>
-                  <TableCell>
-                    <FormControl>
-                      <Select
-                        id="demo-simple-select"
-                        value={user.role[0].userRole}
-                        onChange={(event) => onChangeUserRole(event, user.username)}
-                        sx={{ minWidth: '8.5rem', height: '1.4rem' }}
-                        variant="standard"
-                      >
-                        <MenuItem value='SUPER_ADMIN'>Super Admin</MenuItem>
-                        <MenuItem value='ADMIN'>Admin</MenuItem>
-                        <MenuItem value='TUTOR'>Tutor</MenuItem>
-                        <MenuItem value='STUDENT'>Student</MenuItem>
-                        {/* {
-                          userTypeContext.usertypes.map((type) => (
-                            <MenuItem value={type.name}>{type.name}</MenuItem>
-                          ))
-                        } */}
-                      </Select>
-                    </FormControl>
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton onClick={() => onDeleteUser(user.id)}>
-                      <DeleteForeverIcon color="error" />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
+              fetched
+                ? (
+                  userContext.userList.map((user, index) => (
+                    <TableRow key={user.username}>
+                      <TableCell>{user.id}</TableCell>
+                      <TableCell>{user.username}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{user.fullName}</TableCell>
+                      <TableCell>
+                        <FormControl>
+                          <Select
+                            id="demo-simple-select"
+                            value={user.role[0].userRole}
+                            onChange={(event) => onChangeUserRole(event, user.username)}
+                            sx={{ minWidth: '8.5rem', height: '1.4rem' }}
+                            variant="standard"
+                          >
+                            <MenuItem value='SUPER_ADMIN'>Super Admin</MenuItem>
+                            <MenuItem value='ADMIN'>Admin</MenuItem>
+                            <MenuItem value='TUTOR'>Tutor</MenuItem>
+                            <MenuItem value='STUDENT'>Student</MenuItem>
+                            {/* {
+                              userTypeContext.usertypes.map((type) => (
+                                <MenuItem value={type.name}>{type.name}</MenuItem>
+                              ))
+                            } */}
+                          </Select>
+                        </FormControl>
+                      </TableCell>
+                      <TableCell align="center">
+                        <IconButton onClick={() => onDeleteUser(user.id)}>
+                          <DeleteForeverIcon color="error" />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )
+                : (
+                  <TableRow style={{ overflow: 'hidden' }}>
+                    <TableCell colSpan={6} style={{  overflow: 'hidden' }}>
+                      <LoadingDNA3X />
+                    </TableCell>
+                  </TableRow>
+                )
             }
           </TableBody>
         </Table>

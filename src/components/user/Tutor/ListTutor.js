@@ -77,7 +77,20 @@ const ListTutor = () => {
                   />
                 </Grid>
               ))
-            : <LoadingDNA3X />
+            : (
+              <Grid
+                item
+                md={12}
+                xs={12}
+                sm={12}
+                sx={{
+                  padding: 1,
+                  alignItems: 'center',
+                }}
+              >
+                <LoadingDNA3X />
+              </Grid>
+            )
         }
       </Grid>
     ), (

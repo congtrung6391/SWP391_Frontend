@@ -30,7 +30,7 @@ const QuestionPage = (props) => {
   }, [])
 
   if (!fetched) {
-    <LoadingDNA3X />
+    return <LoadingDNA3X />
   }
 
   return (

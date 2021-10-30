@@ -15,6 +15,7 @@ import QuestionSingleList from './QuestionSingleList';
 import QuestionAddPage from './QuestionAddPage';
 import { ToastContext } from '../../../context/toast.context';
 import { NavLink } from 'react-router-dom';
+import { LoadingDNA3X } from '../../common/Loading';
 
 const QuestionList = (props) => {
   const subjectContext = useContext(SubjectContext);
@@ -24,9 +25,12 @@ const QuestionList = (props) => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [subjectId, setSubjectId] = useState(null);
+  const [fetched, setFetched] = useState(false);
 
   const fetchQuestionList = async () => {
+    setFetched(false);
     await forumContext.getQuestionList({ page, subjectId, name: searchName });
+    setFetched(true);
   }
 
   useEffect(() => {
@@ -135,13 +139,19 @@ const QuestionList = (props) => {
         )
       }
       {
-        forumContext.questionList.map((question, index) => (
-          <QuestionSingleList
-            question={question}
-            divider={index !== 0}
-            key={question.id}
-          />
-        ))
+        !fetched
+          ? (
+            <LoadingDNA3X />
+          )
+          : (
+            forumContext.questionList.map((question, index) => (
+              <QuestionSingleList
+                question={question}
+                divider={index !== 0}
+                key={question.id}
+              />
+            ))
+          )
       }
       <Box
         display="flex"

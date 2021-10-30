@@ -11,6 +11,7 @@ import {
   alpha,
 } from '@mui/material/styles';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { LoadingDNA3X } from '../../common/Loading';
 
 const PublicCourseMaterialList = ({ course }) => {
   const materialContext = useContext(AdminCourseMaterialContext);
@@ -74,46 +75,52 @@ const PublicCourseMaterialList = ({ course }) => {
       }}
     >
       {
-        materialList.map((material) => [(
-          <Box
-          sx={{
-            mx: 2,
-            p: 2,
-            borderRadius: 2,
-            bgcolor: alpha(theme.palette.secondary.main, 0.1),
-          }}
-          >
-            <Box
-              display="flex"
-              flexDirection="row"
-              justifyContent="space-between"
-              pb={1}
-            >
-              <Typography
-                variant="h6"
+        fetched
+          ? (
+            materialList.map((material) => [(
+              <Box
+              sx={{
+                mx: 2,
+                p: 2,
+                borderRadius: 2,
+                bgcolor: alpha(theme.palette.secondary.main, 0.1),
+              }}
               >
-                {material.title}
-              </Typography>
-              <IconButton
-                color="primary"
-                disabled={!material.linkSharing}
-              >
-                <Link
-                  href={material.linkSharing && material.linkSharing.replace('https://www.dropbox.com/', 'https://dl.dropboxusercontent.com/')}
-                  target="_blank"
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  pb={1}
                 >
-                  <FileDownloadIcon />
-                </Link>
-              </IconButton>
-            </Box>
-            <Divider />
-            <Typography>
-              {material.description}
-            </Typography>
-          </Box>
-        ), (
-          <Divider sx={{ my: 2 }} />
-        )])
+                  <Typography
+                    variant="h6"
+                  >
+                    {material.title}
+                  </Typography>
+                  <IconButton
+                    color="primary"
+                    disabled={!material.linkSharing}
+                  >
+                    <Link
+                      href={material.linkSharing && material.linkSharing.replace('https://www.dropbox.com/', 'https://dl.dropboxusercontent.com/')}
+                      target="_blank"
+                    >
+                      <FileDownloadIcon />
+                    </Link>
+                  </IconButton>
+                </Box>
+                <Divider />
+                <Typography>
+                  {material.description}
+                </Typography>
+              </Box>
+            ), (
+              <Divider sx={{ my: 2 }} />
+            )])
+          )
+          : (
+            <LoadingDNA3X />
+          )
       }
     </Box>
   )

@@ -4,6 +4,8 @@ import CenterContainer from '../basic/CenterContainer';
 import HorizontalContainer from '../basic/HorizontalContainer';
 import Body from '../basic/Body';
 import NavigationBar from './NavigationBar';
+import { Box } from '@mui/system';
+import { Typography } from '@mui/material';
 
 export const LoadingInterwind = () => (
   <div class="loadingio-spinner-interwind-kf4315nhojd"><div class="ldio-h51982wfzh">
@@ -36,14 +38,23 @@ Loading3X.defaultProps = {
 };
 
 export const LoadingDNA3X = () => (
-  <CenterContainer>
-    <HorizontalContainer>
-      <img alt="loading..." src="./loading-dna.svg" style={{ height: '150px' }} />
-      <CenterContainer>
-        LOADING...
-      </CenterContainer>
-    </HorizontalContainer>
-  </CenterContainer>
+  <Box
+    display="flex"
+    flexDirection="row"
+    justifyContent="center"
+    alginItems="center"
+  >
+    {/* <Typography>Loading...</Typography> */}
+    <div class="wrap-loading">
+      <div class="one-loading common-loading"></div>
+      <div class="two-loading common-loading"></div>
+      <div class="three-loading common-loading"></div>
+      <div class="four-loading common-loading"></div>
+      <div class="box-loading">
+          <div class="circle-loading"></div>
+      </div>
+    </div>
+  </Box>
 );
 
 export const LoadingDNA = () => (

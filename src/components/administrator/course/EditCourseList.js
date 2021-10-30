@@ -256,7 +256,11 @@ const ListUsers = () => {
                   ))
                 )
                 : (
-                  <LoadingDNA3X />
+                  <TableRow style={{ overflow: 'hidden' }}>
+                    <TableCell colSpan={9} style={{  overflow: 'hidden' }}>
+                      <LoadingDNA3X />
+                    </TableCell>
+                  </TableRow>
                 )
             }
           </TableBody>

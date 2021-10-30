@@ -46,7 +46,19 @@ const UserProfile = (props) => {
   }, [])
 
   if (!fetched) {
-    return <LoadingDNA3X />
+    return (
+      <div style={{ minHeight: '100vh' }}>
+        <NavigationBar
+          nav={[
+            ['Home', '/'],
+            ['Profile'],
+          ]}
+        />
+        <Body>
+          <LoadingDNA3X />
+        </Body>
+      </div>
+    );
   }
 
   return (

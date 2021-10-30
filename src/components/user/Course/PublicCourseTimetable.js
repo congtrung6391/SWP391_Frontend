@@ -23,10 +23,6 @@ const PublicCourseTimetable = ({ course }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!fetched) {
-    return <LoadingDNA3X />
-  }
-
 
   return (
     <Box
@@ -39,13 +35,19 @@ const PublicCourseTimetable = ({ course }) => {
       }}
     >
       {
-        timetableContext.dayInWeek.map((day, index) => (
-          <PublicCourseTimetableList
-            timetableList={timetableList}
-            day={day}
-            divider={index !== 0}
-          />
-        ))
+        fetched
+          ? (
+            timetableContext.dayInWeek.map((day, index) => (
+              <PublicCourseTimetableList
+                timetableList={timetableList}
+                day={day}
+                divider={index !== 0}
+              />
+            ))
+          )
+          : (
+            <LoadingDNA3X />
+          )
       }
     </Box>
   )

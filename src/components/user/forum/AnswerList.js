@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { AuthenticationContext } from '../../../context/authentication.context';
 import Editor from '../../basic/Editor/Editor';
-import { Loading } from '../../common/Loading';
+import { Loading, LoadingDNA3X } from '../../common/Loading';
 import AnswerSingleList from './AnswerSingleList';
 
 const AnswerList = ({ questionId }) => {
@@ -26,8 +26,12 @@ const AnswerList = ({ questionId }) => {
   const [addContent, setAddContent] = useState('');
   const [adding, setAdding] = useState(false);
 
+  const [fetched, setFetched] = useState(false);
+
   const fetchAnswerList = async () => {
+    setFetched(false);
     await forumContext.getAnswerList(questionId, { page });
+    setFetched(true);
   }
 
   useEffect(() => {
@@ -120,9 +124,15 @@ const AnswerList = ({ questionId }) => {
         </Box>
       </Box>
       {
-        forumContext.answerList.map((ans) => (
-          <AnswerSingleList key={ans.id} answer={ans} qid={questionId} />
-        ))
+        fetched
+          ? (
+            forumContext.answerList.map((ans) => (
+              <AnswerSingleList key={ans.id} answer={ans} qid={questionId} />
+            ))
+          )
+          : (
+            <LoadingDNA3X />
+          )
       }
       <Box
         display="flex"

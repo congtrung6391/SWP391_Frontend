@@ -146,7 +146,7 @@ const ListUsers = () => {
         <Table>
           <TableHead sx={{ bgcolor: 'primary.main' }}>
             <TableRow>
-              <TableCell sx={{ color: 'primary.contrastText' }}>#</TableCell>
+              <TableCell sx={{ color: 'primary.contrastText' }}>UserId</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Username</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Email</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Fullname</TableCell>
@@ -158,7 +158,7 @@ const ListUsers = () => {
             {
               userContext.userList.map((user, index) => (
                 <TableRow key={user.username}>
-                  <TableCell>{index+1}</TableCell>
+                  <TableCell>{user.id}</TableCell>
                   <TableCell>{user.username}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.fullName}</TableCell>
@@ -198,7 +198,6 @@ const ListUsers = () => {
             count={Math.ceil(userContext.totalUsers / userContext.limit)}
             page={page}
             onChange={onPageChange}
-            variant="outlined"
             color="primary"
             sx={{ justifyContent: 'center' }}
           />

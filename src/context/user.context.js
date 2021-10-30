@@ -10,19 +10,20 @@ class UserProvider extends React.Component {
     this.state = {
       userList: [],
       totalUsers: 0,
+      limit: 2,
       getTutorList: this.getTutorList,
       getUserProfile: this.getUserProfile,
     };
   }
 
   getTutorList = async (setting) => {
-    const list = await UsersService.getTutorList(setting);
-    this.setState({
+    const { limit } = this.state;
+    const list = await UsersService.getTutorList({ ...setting, limit });
+    await this.setState({
       userList: list.userList,
       totalUsers: list.totalUsers,
     });
-    console.log(list);
-    return list.userList;
+    return list;
   }
 
   getUserProfile = async (id) => {

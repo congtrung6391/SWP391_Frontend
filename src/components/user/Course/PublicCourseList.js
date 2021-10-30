@@ -15,12 +15,16 @@ const PublicCourseList = (props) => {
     setPage(newValue);
   };
 
+  const fetchCourseList = async () => {
+    await courseContext.getCourseList({ page });
+  }
+
   useEffect(() => {
     setTotalPage(Math.ceil(courseContext.totalCourse/courseContext.limit));
   }, [courseContext]);
 
   useEffect(() => {
-
+    fetchCourseList();
   }, [page])
 
   return (

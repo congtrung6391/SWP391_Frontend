@@ -28,6 +28,7 @@ import { ToastContext } from '../../../context/toast.context';
 import MuiSearch from '../../common/MuiSearch';
 import { AdminCourseContext } from '../../../context/adminCourse.context';
 import { SubjectContext } from '../../../context/subject.context';
+import { AuthenticationContext } from '../../../context/authentication.context';
 import { NavLink } from 'react-router-dom';
 
 const ListUsers = () => {
@@ -35,12 +36,12 @@ const ListUsers = () => {
   const courseContext = useContext(AdminCourseContext);
   const toastContext = useContext(ToastContext);
   const subjectContext = useContext(SubjectContext);
+  const { verifdyAdministrator } = useContext(AuthenticationContext);
   const [fetched, setFetched] = useState(false);
   const [searchName, setSearchName] = useState('');
   const [searchSubjectId, setSearchSubjectId] = useState('');
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(1);
   const [numberOfPages, setNumberofPages] = useState(1);
 
   const fetchCourseList = async () => {
@@ -48,9 +49,9 @@ const ListUsers = () => {
     try {
       const setting = URLService.getAllQueryString();
       setting.key = setting.search;
-      await courseContext.getCourseList({ name: searchName, page, limit });
+      const { totalCourse } = await courseContext.getCourseList({ name: searchName, page });
       setFetched(true);
-      setNumberofPages(Math.ceil((courseContext.totalCourse || 0) / limit));
+      setNumberofPages(Math.ceil((totalCourse) / courseContext.limit));
     } catch (error) {
       setFetched(true);
     }
@@ -104,10 +105,6 @@ const ListUsers = () => {
   //   URLService.setQueryString('page', this.state.page);
   //   await fetchUsers();
   // }
-
-  if (!fetched) {
-    return <LoadingDNA3X />;
-  }
 
   return (
     <Box>
@@ -172,7 +169,7 @@ const ListUsers = () => {
         <Table>
           <TableHead sx={{ bgcolor: 'primary.main' }}>
             <TableRow>
-              <TableCell sx={{ color: 'primary.contrastText' }}>#</TableCell>
+              <TableCell sx={{ color: 'primary.contrastText' }}>Id</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Title</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Tutor</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Student</TableCell>
@@ -185,76 +182,82 @@ const ListUsers = () => {
           </TableHead>
           <TableBody>
             {
-              courseContext.courseList.map((course, index) => (
-                <TableRow compnent={NavLink} key={course.id}>
-                  <TableCell>
-                    <NavLink to={`/admin/courses/edit/${course.id}`}>
-                      {index + 1}
-                    </NavLink>
-                  </TableCell>
-                  <TableCell>
-                    <NavLink to={`/admin/courses/edit/${course.id}`}>
-                      {course.courseName}
-                    </NavLink>
-                  </TableCell>
-                  <TableCell>
-                    <NavLink to={`/admin/courses/edit/${course.id}`}>
-                      <Typography
-                        noWrap
-                        sx={{ maxWidth: '8rem' }}
-                      >
-                        {course.tutor.email}
-                      </Typography>
-                    </NavLink>
-                  </TableCell>
-                  <TableCell>
-                    <NavLink to={`/admin/courses/edit/${course.id}`}>
-                      <Typography
-                        noWrap
-                        sx={{ maxWidth: '8rem' }}
-                      >
-                        {course.student ? course.student.email : 'No student'}
-                      </Typography>
-                    </NavLink>
-                  </TableCell>
-                  <TableCell>
-                    <NavLink to={`/admin/courses/edit/${course.id}`}>
-                      {course.subject.subjectName}
-                    </NavLink>
-                  </TableCell>
-                  <TableCell align="center">
-                    <MenuBookIcon
-                      color={course.courseStatus ? 'error' : 'success'}
-                    />
-                  </TableCell>
-                  <TableCell align="center">
-                    <ButtonGroup variant="contained" size="small">
-                      <Button
-                        color="success"
-                        onClick={() => onReplyRegister(course, true, course)}
-                      >
-                        <CheckCircleOutlineIcon />
-                      </Button>
-                      <Button
-                        color="error"
-                        onClick={() => onReplyRegister(course, false, course)}
-                      >
-                        <HighlightOffIcon />
-                      </Button>
-                    </ButtonGroup>
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton onClick={() => onPublicCourse(course)}>
-                      <PublicIcon color={course.courseStatus ? 'success' : 'warning'} />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton onClick={() => onDeleteCourse(course.id)}>
-                      <DeleteForeverIcon color="error" />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
+              fetched
+                ? (
+                  courseContext.courseList.map((course, index) => (
+                    <TableRow compnent={NavLink} key={course.id}>
+                      <TableCell>
+                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                          {course.id}
+                        </NavLink>
+                      </TableCell>
+                      <TableCell>
+                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                          {course.courseName}
+                        </NavLink>
+                      </TableCell>
+                      <TableCell>
+                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                          <Typography
+                            noWrap
+                            sx={{ maxWidth: '8rem' }}
+                          >
+                            {course.tutor.email}
+                          </Typography>
+                        </NavLink>
+                      </TableCell>
+                      <TableCell>
+                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                          <Typography
+                            noWrap
+                            sx={{ maxWidth: '8rem' }}
+                          >
+                            {course.student ? course.student.email : 'No student'}
+                          </Typography>
+                        </NavLink>
+                      </TableCell>
+                      <TableCell>
+                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                          {course.subject.subjectName}
+                        </NavLink>
+                      </TableCell>
+                      <TableCell align="center">
+                        <MenuBookIcon
+                          color={course.courseStatus ? 'error' : 'success'}
+                        />
+                      </TableCell>
+                      <TableCell align="center">
+                        <ButtonGroup variant="contained" size="small">
+                          <Button
+                            color="success"
+                            onClick={() => onReplyRegister(course, true, course)}
+                          >
+                            <CheckCircleOutlineIcon />
+                          </Button>
+                          <Button
+                            color="error"
+                            onClick={() => onReplyRegister(course, false, course)}
+                          >
+                            <HighlightOffIcon />
+                          </Button>
+                        </ButtonGroup>
+                      </TableCell>
+                      <TableCell align="center">
+                        <IconButton onClick={() => onPublicCourse(course)}>
+                          <PublicIcon color={course.courseStatus ? 'success' : 'warning'} />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell align="center">
+                        <IconButton onClick={() => onDeleteCourse(course.id)}>
+                          <DeleteForeverIcon color="error" />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )
+                : (
+                  <LoadingDNA3X />
+                )
             }
           </TableBody>
         </Table>
@@ -263,7 +266,6 @@ const ListUsers = () => {
             count={numberOfPages}
             page={page}
             onChange={onPageChange}
-            variant="outlined"
             color="primary"
             sx={{ justifyContent: 'center' }}
           />

@@ -10,6 +10,7 @@ class AdminCourseProvider extends React.Component {
     this.state = {
       courseList: [],
       totalCouse: 0,
+      limit: 3,
       course: {},
       getCourseList: this.getCourseList,
       getCourse: this.getCourse,
@@ -22,11 +23,13 @@ class AdminCourseProvider extends React.Component {
   }
 
   getCourseList = async (setting) => {
-    const response = await AdminCourseService.getCourseList(setting);
+    const { limit } = this.state;
+    const response = await AdminCourseService.getCourseList({ ...setting, limit });
     if (typeof response === 'string') {
-        return [];
+        return response;
     } else {
         this.setState({ courseList: response.courseList, totalCourse: response.totalCourse });
+        return response;
     }
   }
 

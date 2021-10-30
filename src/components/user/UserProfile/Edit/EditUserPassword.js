@@ -41,17 +41,23 @@ const UserPassword = () => {
   const [error, setError] = useState();
   const [message, setMessage] = useState();
 
-  const toastContext = useContext(ToastContext);
+  // const toastContext = useContext(ToastContext);
 
-  useEffect(() => {
-    if (message) {
-      toastContext.addNotification('Success', message);
-    }
-    if (error) {
-      toastContext.addNotification('Error', error, 'error');
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [message, error]);
+  // useEffect(() => {
+  //   if (message) {
+  //     // toastContext.addNotification('Success', message);
+  //     setTimeout(() => {
+  //       setMessage('')
+  //     }, 10000);
+  //   }
+  //   if (error) {
+  //     // toastContext.addNotification('Error', error, 'error');
+  //     setTimeout(() => {
+  //       setError('')
+  //     }, 2000);
+  //   }
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [message, error]);
 
   const calculatePasswordStrength = (pw) => {
     const regexLower = /[a-z]/g;
@@ -153,7 +159,7 @@ const UserPassword = () => {
     // packing update data
     const updateInfo = {};
     updateInfo.oldPassword = password;
-    updateInfo.resetPassword = resetPassword;
+    updateInfo.newPassword = resetPassword;
 
     // Fetch API to save in server
     try {
@@ -169,14 +175,19 @@ const UserPassword = () => {
       currentUser.password = resetPassword;
       saveUser(currentUser);
 
-      resetPasswordField();
       setMessage('Password is changed successfully.');
+      setError('');
+      resetPasswordField();
       setIsSaving(false);
 
     } catch (err) {
       if (!err.message) return;
       const msg = err.message.toLowerCase();
+      if (err.message.includes('not correct')) {
+        setErrorPassword('Wrong password');
+      }
       setError(msg);
+      setMessage('');
       setIsSaving(false);
     }
   };
@@ -255,7 +266,7 @@ const UserPassword = () => {
         </Box>
         <Box mt={2}>
           <Button
-            disabled={!!isSaving}
+            disabled={isSaving}
             variant="contained"
             type="submit"
             onClick={onSavePassword}
@@ -270,9 +281,10 @@ const UserPassword = () => {
             {
               isSaving
                 ? <Loading />
-                : 'Lưu'
+                : 'Save'
             }
           </Button>
+          <Typography color={ message ? 'success.main' : 'error' }>{message || error}</Typography>
         </Box>
       </Box>
     </Paper>

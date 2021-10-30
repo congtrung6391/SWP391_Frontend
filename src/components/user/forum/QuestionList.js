@@ -25,8 +25,12 @@ const QuestionList = (props) => {
   const [totalPage, setTotalPage] = useState(1);
   const [subjectId, setSubjectId] = useState(null);
 
+  const fetchQuestionList = async () => {
+    await forumContext.getQuestionList({ page, subjectId, name: searchName });
+  }
+
   useEffect(() => {
-    forumContext.getQuestionList();
+    fetchQuestionList();
   }, [])
 
   useEffect(() => {
@@ -35,7 +39,7 @@ const QuestionList = (props) => {
   }, [forumContext.totalQuestion])
 
   useEffect(() => {
-    forumContext.getQuestionList({ page, subjectId });
+    fetchQuestionList();
   }, [subjectId, page]);
 
 
@@ -46,6 +50,7 @@ const QuestionList = (props) => {
   const [searchName, setSearchName] = useState(null);
   const onChangeSearchName = (event) => {
     setSearchName(event.target.value);
+    setPage(1);
   }
 
   const [showAddForm, setShowAddForm] = useState(false);
@@ -114,6 +119,7 @@ const QuestionList = (props) => {
           <MuiSearch
             value={searchName || ''}
             onChange={onChangeSearchName}
+            onSearch={fetchQuestionList}
           />
         </Box>
         <Button

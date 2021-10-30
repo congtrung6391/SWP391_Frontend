@@ -14,7 +14,7 @@ const ForumPage = (props) => {
       <NavigationBar
         nav={[
           ['Home', '/'],
-          ['Forum'],
+          ['Forum', '/forum'],
         ]}
       />
       <Body>

@@ -5,12 +5,13 @@ import ToastProvider from '../context/toast.context';
 import { AuthenticationContext } from '../context/authentication.context';
 import AdminUserRoute from './AdministrationRoute/AdminUserRoute';
 import AdminCourseRoute from './AdministrationRoute/AdminCourseRoute';
+import AdminForumRoute from './AdministrationRoute/AdminForumRoute';
 
 const AdministratorRoute = () => {
-  const { verifyTutor } = useContext(AuthenticationContext);
-  if (!verifyTutor()) {
-    return <Redirect to="/" />;
-  }
+  // const { verifyTutor } = useContext(AuthenticationContext);
+  // if (!verifyTutor()) {
+  //   return <Redirect to="/" />;
+  // }
 
   return (
     <div className="d-flex">
@@ -20,6 +21,7 @@ const AdministratorRoute = () => {
             <Route exact path="/admin" component={Dashboard} />
             <Route exact path="/admin/users" component={AdminUserRoute} />
             <Route path = "/admin/courses" component={AdminCourseRoute} />
+            <Route path ="/admin/forum" component={AdminForumRoute} />
           </Switch>
         </ToastProvider>
       </div>

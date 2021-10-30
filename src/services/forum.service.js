@@ -47,10 +47,19 @@ class ForumService {
   }
 
   static updateQuestion = async (qid, data) => {
-    return {
-      id: 1,
-      title: data.title,
-      description: data.description,
+    try {
+      const response = await new APIService(
+        'put',
+        QUESTION_ID,
+        {
+          qid,
+        },
+        data,
+        true
+      ).request();
+      return response.questionResponse;
+    } catch (error) {
+      return error.message;
     }
   }
 
@@ -72,12 +81,15 @@ class ForumService {
   static getQuestion = async (qid) => {
     try {
       const response = await new APIService(
-        'post',
+        'get',
         QUESTION_ID,
         {qid},
         {},
         true
       ).request();
+      if (response.userInformationResponse) {
+        response.user = response.userInformationResponse;
+      }
       return response.questionResponse;
     } catch (error) {
       return null;
@@ -85,26 +97,80 @@ class ForumService {
   }
 
   static getAnswerList = async (qid, setting) => {
-    return {
-      answerList: [],
-      totalAnswer: 0,
+    try {
+      if (!setting.limit) setting.limit = 20;
+      if (!setting.page) setting.page = 1;
+      const queryString = URLService.stringify(setting);
+      const response = await new APIService(
+        'get',
+        ANSWER + '?' + queryString,
+        {
+          qid
+        }
+      ).request();
+      return {
+        answerList: response.list,
+        totalAnswer: response.size,
+      };
+    }catch (err) {
+      return {
+        answerList: [],
+        totalAnswer: 0,
+      };
     }
   }
 
   static addAnswer = async (qid, data) => {
-    return {
-      id: 1,
-      content: 'Hahaha',
-      user: {},
+    try {
+      const response = await new APIService(
+        'post',
+        ANSWER,
+        {
+          qid
+        },
+        data,
+        true
+      ).request();
+      return response.answer;
+    } catch (err) {
+      return err.message;
     }
   }
 
   static updateAnswer = async (qid, aid, data) => {
-    return {};
+    try {
+      const response = await new APIService(
+        'put',
+        ANSWER_ID,
+        {
+          qid,
+          aid,
+        },
+        data,
+        true
+      ).request();
+      return response.answer;
+    } catch (err) {
+      return err.message;
+    }
   }
 
   static deleteAnswer = async (qid, aid) => {
-    return null;
+    try {
+      await new APIService(
+        'delete',
+        ANSWER_ID,
+        {
+          qid,
+          aid,
+        },
+        {},
+        true
+      ).request();
+      return null;
+    } catch (err) {
+      return err.message;
+    }
   }
 }
  

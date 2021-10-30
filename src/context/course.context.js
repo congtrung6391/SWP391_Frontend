@@ -13,7 +13,7 @@ class CourseProvider extends React.Component {
       courseList: [],
       totalCouse: 0,
       course: {},
-      limit: 10,
+      limit: 6,
       getCourseList: this.getCourseList,
       getCourse: this.getCourse,
       register: this.register,

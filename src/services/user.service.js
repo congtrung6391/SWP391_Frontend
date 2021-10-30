@@ -5,8 +5,10 @@ import {
 import { APIService } from './api.service';
 
 class UserService {
-  static async getTutorList(setting = { page: 1, limit: 20 }) {
+  static async getTutorList(setting = {}) {
     try {
+      if (!setting.page) setting.page = 1;
+      if (!setting.limit) setting.limit = 20;
       const queryString = URLService.stringify(setting);
       const response = await new APIService(
         'get',

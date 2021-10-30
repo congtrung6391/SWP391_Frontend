@@ -79,10 +79,6 @@ const EditCourseTimetable = ({ course }) => {
     setAdding(false);
   }
 
-  if (!fetched) {
-    return <LoadingDNA3X />;
-  }
-
   return (
     <Paper
       sx={{
@@ -155,12 +151,18 @@ const EditCourseTimetable = ({ course }) => {
         </Button>
       </Box>
       {
-        timetableContext.dayInWeek.map((d) => (
-          <EditCourseTimetableList
-            day={d}
-            courseId={course.id}
-          />
-        ))
+        fetched 
+          ? (
+            timetableContext.dayInWeek.map((d) => (
+              <EditCourseTimetableList
+                day={d}
+                courseId={course.id}
+              />
+            ))
+          )
+          : (
+            <LoadingDNA3X />
+          )
       }
     </Paper>
   );

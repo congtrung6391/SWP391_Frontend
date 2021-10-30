@@ -4,6 +4,7 @@ import { NavLink, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from '../../../BrowserHistory';
 import URLService from '../../../services/URL.service';
+import { Box } from '@mui/material';
 
 class SideTabControl extends React.Component {
   onChangeTabMobile = (event) => {
@@ -12,7 +13,7 @@ class SideTabControl extends React.Component {
 
   render() {
     const {
-      controlKey, activeClassName, childClassName,
+      controlKey, activeClassName, childClassName, direction,
     } = this.props;
     let { children } = this.props;
     const tab = URLService.getQueryString(controlKey);
@@ -37,7 +38,12 @@ class SideTabControl extends React.Component {
     }
 
     return (
-      <div>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: direction,
+        }}
+      >
         {
           children.map((child) => child && (
             <div
@@ -52,7 +58,7 @@ class SideTabControl extends React.Component {
             </div>
           ))
         }
-      </div>
+      </Box>
     );
   }
 }
@@ -61,11 +67,13 @@ SideTabControl.propTypes = {
   controlKey: PropTypes.string.isRequired,
   childClassName: PropTypes.string,
   activeClassName: PropTypes.string,
+  direction: PropTypes.string
 };
 
 SideTabControl.defaultProps = {
   childClassName: 'nav-tab',
   activeClassName: 'nav-tab-active',
+  direction: 'column',
 };
 
 export default SideTabControl;

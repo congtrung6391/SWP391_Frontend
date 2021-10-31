@@ -15,6 +15,7 @@ class ForumProvider extends React.Component {
       answerList: [],
       totalAnswer: 0,
       getQuestionList: this.getQuestionList,
+      getTopQuestionList: this.getTopQuestionList,
       addQuestion: this.addQuestion,
       updateQuestion: this.updateQuestion,
       deletQuestion: this.deleteQuestion,
@@ -34,6 +35,15 @@ class ForumProvider extends React.Component {
     });
     this.setState({ questionList: questionList, totalQuestion: totalQuestion });
     return { questionList, totalQuestion };
+  }
+
+  getTopQuestionList = async () => {
+    let { questionList } = await ForumService.getQuestionList({ page: 1, limit: 10, sortBy: 'top-trend' });
+    questionList = questionList.map((q) => {
+      q.description = Base64.decode(q.description);
+      return q;
+    });
+    return questionList;
   }
 
   addQuestion = async (data) => {

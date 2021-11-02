@@ -432,8 +432,8 @@ class Register extends React.Component {
                     >
                       <FormControlLabel value="STUDENT" control={<Radio color="primary" />} label="Student" />
                       <FormControlLabel value="TUTOR" control={<Radio color="primary" />} label="Tutor" />
-                      <FormControlLabel value="ADMIN" control={<Radio color="primary" />} label="Admin" />
-                      <FormControlLabel value="SUPER_ADMIN" control={<Radio color="primary" />} label="SuperAdmin" />
+                      {/* <FormControlLabel value="ADMIN" control={<Radio color="primary" />} label="Admin" />
+                      <FormControlLabel value="SUPER_ADMIN" control={<Radio color="primary" />} label="SuperAdmin" /> */}
                     </RadioGroup>
                     </Box>
                   </Box>

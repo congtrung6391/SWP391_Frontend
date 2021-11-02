@@ -8,7 +8,7 @@ import {
 import StarsIcon from '@mui/icons-material/Stars';
 import SideTabControl from '../../../basic/SideTabControl/SideTabControl';
 
-const UserSideNavigation = () => (
+const UserSideNavigation = ({ rating }) => (
   <Paper
     component={Box}
     p={2}
@@ -29,11 +29,15 @@ const UserSideNavigation = () => (
         &nbsp;
         <ListItemText>Basic information</ListItemText>
       </ListItem>
-      <ListItem route="rating" key="rating">
-        <StarsIcon />
-        &nbsp;
-        <ListItemText>Rating</ListItemText>
-      </ListItem>
+      {
+        rating && (
+          <ListItem route="rating" key="rating">
+            <StarsIcon />
+            &nbsp;
+            <ListItemText>Rating</ListItemText>
+          </ListItem>
+        )
+      }
     </SideTabControl>
   </Paper>
 );

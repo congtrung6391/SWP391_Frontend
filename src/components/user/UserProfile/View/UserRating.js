@@ -7,7 +7,6 @@ import {
   MenuItem,
   Rating as MuiRating,
   TextField,
-  Button,
   Pagination,
 } from '@mui/material';
 import { SubjectContext } from '../../../../context/subject.context';
@@ -16,6 +15,7 @@ import { ToastContext } from '../../../../context/toast.context';
 import { AuthenticationContext } from '../../../../context/authentication.context';
 import Rating from '../../../basic/Rating';
 import UserSingleRating from './UserSingleRating';
+import { LoadingDNA3X } from '../../../common/Loading';
 
 const UserRating = ({ user }) => {
   const [rateList, setRateList] = useState([]);
@@ -34,10 +34,12 @@ const UserRating = ({ user }) => {
   const [subjectIdAdd, setSubjectIdAdd] = useState(1);
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, ] = useState(10);
   const [numberOfPage, setNumberOfPage] = useState(1);
+  const [fetched, setFetched] = useState(false);
 
   const fetchRateList = async () => {
+    setFetched(false);
     const {
       rateList, avgRate, totalRate
     } = await ratingContext.getRatingList(
@@ -68,6 +70,7 @@ const UserRating = ({ user }) => {
     }
 
     setNumberOfPage(Math.ceil(totalRate/limit));
+    setFetched(true);
   }
 
   useEffect(() => {
@@ -217,13 +220,19 @@ const UserRating = ({ user }) => {
       </Box>
       <Box>
         {
-          rateList.map((rate) => (
-            <UserSingleRating
-              key={rate.id}
-              user={user}
-              rate={rate}
-            />
-          ))
+          fetched
+            ? (
+              rateList.map((rate) => (
+                <UserSingleRating
+                  key={rate.id}
+                  user={user}
+                  rate={rate}
+                />
+              ))
+            )
+            : (
+              <LoadingDNA3X />
+            )
         }
       </Box>
       <Box

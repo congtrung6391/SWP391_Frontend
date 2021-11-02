@@ -15,8 +15,7 @@ const UserProfile = (props) => {
   const { match } = props;
   const [user, setUser] = useState({});
   const [fetched, setFetched] = useState(false);
-  const userContext = useContext(UserContext)
-
+  const userContext = useContext(UserContext);
   useEffect(() => {
     const fetchUser = async () => {
       setFetched(false);
@@ -62,7 +61,9 @@ const UserProfile = (props) => {
           <UserAvater
             user={user}
           />
-          <UserSideNavigation />
+          <UserSideNavigation
+            rating={user.role && user.role[0].userRole === 'TUTOR'}
+          />
         </SideBar>
         <Main>
           <SideTabContent controlKey="userprofile-view">
@@ -71,11 +72,14 @@ const UserProfile = (props) => {
                 user={user}
               />
             </div>
-            <RatingProvider route="rating">
-              <UserRating
-                user={user}
-              />
-            </RatingProvider>
+            {
+              user.role && user.role[0].userRole === 'TUTOR' && 
+              <RatingProvider route="rating">
+                <UserRating
+                  user={user}
+                />
+              </RatingProvider>
+            }
           </SideTabContent>
         </Main>
       </Body>

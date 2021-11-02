@@ -38,6 +38,9 @@ const EditCourseTimetableSingleList = ({ timetable, courseId }) => {
   const [start, setStart] = useState();
   const onChangeStart = (newValue) => {
     setStart(newValue);
+    if (!end || moment.duration(new moment(end).subtract(newValue)).asHours() < 1) {
+      setEnd(new moment(newValue).add(1, 'hours'));
+    }
   }
 
   const [end, setEnd] = useState();

@@ -45,7 +45,7 @@ class AdminCourseTimetableProvider extends React.Component {
 
   updateTimetable = async (cid, tid, data) => {
     const response = await AdminCourseTimetableService.updateTimetable(cid, tid, data);
-    if (response) {
+    if (typeof response !== 'string') {
       const { timetableList } = this.state;
       const index = timetableList.findIndex((t) => t.id === tid);
       timetableList.splice(index, 1, response);

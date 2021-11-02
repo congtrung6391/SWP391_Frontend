@@ -265,7 +265,7 @@ const ListUsers = () => {
                         </NavLink>
                       </TableCell>
                       <TableCell>
-                        <NavLink to={`${verifyTutor() ? '/admin' : ''}/courses/${verifyTutor() ? 'edit/' : ''}${course.id}`}>
+                        <NavLink to={`/users/${course.tutor ? course.tutor.id : ''}/profile`}>
                           <Typography
                             noWrap
                             sx={{ maxWidth: '8rem' }}
@@ -275,10 +275,9 @@ const ListUsers = () => {
                         </NavLink>
                       </TableCell>
                       <TableCell>
-                        <NavLink to={`${verifyTutor() ? '/admin' : ''}/courses/${verifyTutor() ? 'edit/' : ''}${course.id}`}>
+                        <NavLink to={`/users/${course.student ? course.student.id : ''}/profile`}>
                           <Typography
                             noWrap
-                            sx={{ maxWidth: '8rem' }}
                           >
                             {course.student ? course.student.email : 'No student'}
                           </Typography>

@@ -102,7 +102,7 @@ const UserInformation = ({ user }) => {
             </Typography>
           </TableCell>
         </TableRow>
-        <TableRow>
+        {/* <TableRow>
           <TableCell>
             <Typography>
               Date of birth:
@@ -110,10 +110,10 @@ const UserInformation = ({ user }) => {
           </TableCell>
           <TableCell>
             <Typography>
-              {/* {moment.parse(user.birthday)} */}
+              {moment.parse(user.birthday)}
             </Typography>
           </TableCell>
-        </TableRow>
+        </TableRow> */}
         <TableRow>
           <TableCell>
             <Typography>

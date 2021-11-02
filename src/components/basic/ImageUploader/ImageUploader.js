@@ -35,6 +35,7 @@ class ImageUploader extends React.Component {
     const { onHide, uploadImage } = this.props;
     await this.setState({ uploading: true });
     await uploadImage(files);
+    console.log('uploaded');
     await this.setState({ uploading: false, files: [] });
     onHide();
   }

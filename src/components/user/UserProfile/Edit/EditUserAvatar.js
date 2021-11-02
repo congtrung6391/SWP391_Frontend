@@ -24,39 +24,33 @@ const UserAvatar = () => {
   };
 
   const onUploadImage = async (images) => {
+    const image = images[0];
+    // console.log(image);
     try {
-      images.forEach(async (image) => {
-        // console.log(image);
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          const url = await ImageService.uploadImage(image);
-          console.log('Image Url got: ' + url);
+      // eslint-disable-next-line no-await-in-loop
+      const url = await ImageService.uploadImage(image);
+      console.log('Image Url got: ' + url);
 
-          const newAvatar = {
-            avatar: url,
-          };
+      const newAvatar = {
+        avatar: url,
+      };
 
-          await new APIService(
-            'put',
-            `user/${getUserInformation('id')}`,
-            null,
-            newAvatar,
-            true,
-          ).request();
+      await new APIService(
+        'put',
+        `user/${getUserInformation('id')}`,
+        null,
+        newAvatar,
+        true,
+      ).request();
 
-          user.avatar = url;
-          saveUser(user);
-          setUser(user);
-          setAvatar(url);
-          return;
-        } catch (err) {
-          // console.log(error);
-          setError('Cannot upload image.');
-        }
-      });
+      user.avatar = url;
+      saveUser(user);
+      setUser(user);
+      setAvatar(url);
+      return;
     } catch (err) {
-      console.log(error);
-      setError(err);
+      // console.log(error);
+      setError('Cannot upload image.');
     }
   };
 

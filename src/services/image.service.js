@@ -14,6 +14,7 @@ class ImageService {
         },
         data: form,
       })
+      console.log(response.data);
       return response.data.link;
     } catch (err) {
       // return err.message;

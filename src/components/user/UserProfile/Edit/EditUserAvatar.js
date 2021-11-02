@@ -30,19 +30,18 @@ const UserAvatar = () => {
         try {
           // eslint-disable-next-line no-await-in-loop
           const url = await ImageService.uploadImage(image);
-          console.log(url);
 
           const newAvatar = {
             avatar: url,
           };
 
-          // await new APIService(
-          //   'put',
-          //   `users/${getUserInformation('id')}`,
-          //   null,
-          //   newAvatar,
-          //   true,
-          // ).request();
+          await new APIService(
+            'put',
+            `user/${getUserInformation('id')}`,
+            null,
+            newAvatar,
+            true,
+          ).request();
 
           user.avatar = url;
           saveUser(user);
@@ -55,7 +54,7 @@ const UserAvatar = () => {
         }
       });
     } catch (err) {
-      // console.log(error);
+      console.log(error);
       setError(err);
     }
   };

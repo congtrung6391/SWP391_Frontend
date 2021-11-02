@@ -17,7 +17,9 @@ const SingleListTutor = ({ tutor }) => {
         flexDirection: 'column',
         justifyContent: 'flex-end',
         bgcolor: 'primary.main',
-        backgroundImage: tutor.avatar ? `url(${tutor.avatar}` : 'url(/image/background/tutor.jpg)',
+        backgroundImage: `url(${tutor.avatar ? tutor.avatar : '/image/background/tutor.jpg'})`,
+        backgroundSize: 'contain',
+        backgroundRepeat: 'repeat',
         width: '100%',
         '&:hover': {
           boxShadow: 7,

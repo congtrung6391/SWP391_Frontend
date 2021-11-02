@@ -21,7 +21,9 @@ const UserAvatar = ({ user }) => {
         <div
           className="avatar"
           style={{
-            backgroundImage: `url(${user.avatar || '/image/background/tutor.jpg'})`,
+            backgroundImage: `url(${user.avatar ? user.avatar : '/image/background/tutor.jpg'})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'repeat',
           }}
         />
       </div>

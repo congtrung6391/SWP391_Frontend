@@ -138,7 +138,13 @@ class Login extends React.Component {
                       Online Tutor
                     </Typography>
                   </Box>
-                  <Box display="flex" flexDirection="column" mb={1}>
+                  <Box
+                    component='form'
+                    display="flex"
+                    flexDirection="column"
+                    mb={1}
+                    onSubmit={this.onSubmitLogin}
+                  >
                     <Box mb={2}>
                       <TextField
                         fullWidth
@@ -173,19 +179,19 @@ class Login extends React.Component {
                         labelPlacement="end"
                       />
                     </Box>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      fullWidth disabled={isLoggingIn}
+                      type="submit"
+                    >
+                      {
+                        isLoggingIn && <Loading />
+                      }
+                      &nbsp;
+                      Login
+                    </Button>
                   </Box>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    fullWidth disabled={isLoggingIn}
-                    onClick={this.onSubmitLogin}
-                  >
-                    {
-                      isLoggingIn && <Loading />
-                    }
-                    &nbsp;
-                    Login
-                  </Button>
                   <Box mt={2} display="flex" flexDirection="row" justifyContent="space-between">
                     <Link href="/forget-password" underline="none">Reset passwored</Link>
                     <Link href="/register" underline="none">Create new account</Link>

@@ -5,34 +5,31 @@ import { SubjectContext } from '../../../context/subject.context';
 import MuiSearch from '../../common/MuiSearch';
 
 const PublicCourseFilter = (props) => {
-  const courseContext = useContext(CourseContext);
+  const { onGetCourseList } = props;
   const subjectContext = useContext(SubjectContext);
-  const [costRange, setCostRange] = useState([0, 2000]);
-  const [lengthRange, setLengthRange] = useState([0, 300]);
-  const [subjectId, setSubjectId] = useState(0);
-
-  const onCostChange = (event, newValue) => {
-    setCostRange(newValue);
-  }
-
-  const costText = (value) => {
-    return `${value}k VND`;
-  }
-
-  const onLengthChange = (event, newValue) => {
-    setLengthRange(newValue);
-  }
-
-  const lengthText = (value) => {
-    return `${20000 * value} minutes`;
-  }
+  const [subjectId, setSubjectId] = useState(null);
+  const [courseName, setCourseName] = useState('');
+  const [minCost, setMinCost] = useState(null);
+  const [maxCost, setMaxCost] = useState(null);
+  const [minLength, setMinLength] = useState(null);
+  const [maxLength, setMaxLength] = useState(null);
+  const [tutorName, setTutorName] = useState('');
 
   const onChangeSubject = (event) => {
     setSubjectId(event.target.value);
   }
 
-  const reloadCourseList = () => {
-
+  const onFiler = () => {
+    onGetCourseList({
+      page: 1,
+      subjectId,
+      courseName,
+      minCost: minCost ? minCost + '000' : null, 
+      maxCost: maxCost ? maxCost + '000' : null,
+      minLength,
+      maxLength,
+      tutorName,
+    })
   };
 
   return (
@@ -44,50 +41,80 @@ const PublicCourseFilter = (props) => {
         borderRadius: 3,
       }}
     >
-      <Box
-        sx={{ pb: 1 }}
-      >
-        <MuiSearch />
-      </Box>
-      <Box
-        sx={{ px: 1 }}
-      >
-        <Typography gutterBottom>
-          Cost range
-        </Typography>
-        <Slider
-          size="small"
-          getAriaLabel={() => 'cost range'}
-          value={costRange}
-          onChange={onCostChange}
-          valueLabelDisplay="auto"
-          getAriaValueText={costText}
-          max={2000}
-          min={0}
-          step={50}
+      <Box>
+        <MuiSearch
+          label="Search course name"
+          value={courseName}
+          onChange={(event) => setCourseName(event.target.value)}
+          onSearhc={onFiler}
         />
       </Box>
       <Box
-        sx={{ pb: 1, px: 1 }}
+        sx={{ mt: 2 }}
       >
-        <Typography gutterBottom>
-          Length range
-        </Typography>
-        <Slider
-          size="small"
-          getAriaLabel={() => 'Legnth range'}
-          value={lengthRange}
-          onChange={onLengthChange}
-          valueLabelDisplay="auto"
-          getAriaValueText={lengthText}
-          max={300}
-          min={0}
-          step={10}
+        <MuiSearch
+          label="Search Tutor name"
+          value={tutorName}
+          onChange={(event) => setTutorName(event.target.value)}
+          onSearhc={onFiler}
         />
       </Box>
       <Box
         display="flex"
+        flexDirection="column"
+        sx={{ mt: 2 }}
+      >
+        <Typography gutterBottom>
+          Cost range - thousand VND
+        </Typography>
+        <Box
+          display="flex"
+          flexDirection="row"
+          sx={{ mt: 1 }}
+        >
+          <TextField
+            label="Min Cost"
+            value={minCost || ''}
+            onChange={(event) => setMinCost(event.target.value)}
+            sx={{ mr: 1 }}
+          />
+          <TextField
+            label="Max Cost"
+            value={maxCost || ''}
+            onChange={(event) => setMaxCost(event.target.value)}
+          />
+        </Box>
+      </Box>
+      <Box
+        display="flex"
+        flexDirection="column"
+        sx={{ mt: 2 }}
+      >
+        <Typography gutterBottom>
+          Length range - minutes
+        </Typography>
+        <Box
+          display="flex"
+          flexDirection="row"
+          sx={{ mt: 1 }}
+        >
+          <TextField
+            label="Min length"
+            value={minLength || ''}
+            onChange={(event) => setMinLength(event.target.value)}
+            sx={{ mr: 1 }}
+          />
+          <TextField
+            label="Max length"
+            value={maxLength || ''}
+            onChange={(event) => setMaxLength(event.target.value)}
+          />
+        </Box>
+      </Box>
+      <Box
+        display="flex"
         flexDirection="row"
+        sx={{ mt: 2 }}
       >
         <FormControl
           sx={{ flexGrow: 1 }}
@@ -96,10 +123,15 @@ const PublicCourseFilter = (props) => {
           <Select
             id="select-subject"
             label="Subject"
-            value={subjectId}
+            value={subjectId || 0}
             onChange={(event) => onChangeSubject(event)}
             sx={{ minWidth: '8.5rem', height: '2.5rem' }}
           >
+            <MenuItem
+              value={0}
+            >
+              All subjects
+            </MenuItem>
             {
               subjectContext.subjects.map((subject) => (
                 <MenuItem
@@ -114,7 +146,7 @@ const PublicCourseFilter = (props) => {
         </FormControl>
         <Button
           variant="contained"
-          onClick={reloadCourseList}
+          onClick={onFiler}
           sx={{ ml: 1}}
         >
           Filter

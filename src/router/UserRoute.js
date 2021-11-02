@@ -13,6 +13,7 @@ import ToastProvider from '../context/toast.context';
 import CourseRoute from './UserRoute/CourseRoute';
 import TutorRoute from './UserRoute/TutorRoute';
 import ForumRoute from './UserRoute/ForumRoute';
+import HomePage from '../components/user/home/HomePage';
 
 
 const UserRoute = () => (
@@ -26,6 +27,8 @@ const UserRoute = () => (
       <Route path="/userS" component={UserProfileRoute} />
       <Route path="/tutors" component={TutorRoute} />
       <Route path="/forum" component={ForumRoute} />
+      <Route path="/home" component={HomePage} />
+      <Route exact path="/" component={HomePage} />
       <Route component={Page404} />
     </Switch>
   </ToastProvider>

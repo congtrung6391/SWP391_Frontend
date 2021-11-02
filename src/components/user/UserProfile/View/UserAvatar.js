@@ -22,7 +22,7 @@ const UserAvatar = ({ user }) => {
           className="avatar"
           style={{
             backgroundImage: `url(${user.avatar ? user.avatar : '/image/background/tutor.jpg'})`,
-            backgroundSize: 'contain',
+            backgroundSize: 'cover',
             backgroundRepeat: 'repeat',
           }}
         />

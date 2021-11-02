@@ -154,7 +154,34 @@ const ListUsers = () => {
           </Button>
         </ButtonGroup>
       </Box>
-      <Box mb={1} display="flex" flexDirection="row">
+      <Box mb={1} display="flex" flexDirection="row" flexWrap="wrap" gap={1}>
+        <Box sx={{ mr: 1 }}>
+          <MuiSearch
+            label="Course Id"
+            placeholder="Search Course Id"
+            value={searchCourseId}
+            onChange={(event) => setSearchCourseId(event.target.value)}
+            onSearch={onSearch}
+          />
+        </Box>
+        <Box sx={{ mr: 1 }}>
+          <MuiSearch
+            label="Tutor name"
+            placeholder="Tutor name"
+            value={searchTutorName}
+            onChange={(event) => setSearchTutorName(event.target.value)}
+            onSearch={onSearch}
+          />
+        </Box>
+        <Box flexGrow={1} sx={{ mr: 1 }}>
+          <MuiSearch
+            label="Course name"
+            placeholder="Search Course name"
+            value={searchName}
+            onChange={(event) => setSearchName(event.target.value)}
+            onSearch={onSearch}
+          />
+        </Box>
         <Box sx={{ mr: 1 }}>
           <FormControl>
             <Select
@@ -185,33 +212,6 @@ const ListUsers = () => {
               }
             </Select>
           </FormControl>
-        </Box>
-        <Box sx={{ mr: 1 }}>
-          <MuiSearch
-            label="Course Id"
-            placeholder="Search Course Id"
-            value={searchCourseId}
-            onChange={(event) => setSearchCourseId(event.target.value)}
-            onSearch={onSearch}
-          />
-        </Box>
-        <Box sx={{ mr: 1 }}>
-          <MuiSearch
-            label="Tutor name"
-            placeholder="Tutor name"
-            value={searchTutorName}
-            onChange={(event) => setSearchTutorName(event.target.value)}
-            onSearch={onSearch}
-          />
-        </Box>
-        <Box flexGrow={1} sx={{ mr: 1 }}>
-          <MuiSearch
-            label="Course name"
-            placeholder="Search Course name"
-            value={searchName}
-            onChange={(event) => setSearchName(event.target.value)}
-            onSearch={onSearch}
-          />
         </Box>
         <Button
           variant="contained"

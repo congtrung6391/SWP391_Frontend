@@ -118,8 +118,9 @@ const PublicCoursePage = (props) => {
               display="flex"
               flexDirection="row"
               justifyContent="space-between"
+              flexWrap="wrap"
               sx={{
-                height: '10.8rem',
+                minHeight: '10.8rem',
                 width: '100%',
                 backdropFilter: 'brightness(45%)',
                 borderTopLeftRadius: 5,
@@ -134,6 +135,7 @@ const PublicCoursePage = (props) => {
                 sx={{
                   height: '100%',
                   minWidth: '13.25rem',
+                  minHeight: '10.8rem',
                 }}
               >
                 <Avatar 
@@ -165,11 +167,13 @@ const PublicCoursePage = (props) => {
                 display='flex'
                 flexDirection="column"
                 justifyContent="space-between"
+                flexWrap="wrap"
                 alignItems="center"
               >
                 <Box
                   display="flex"
                   flexDirection="row"
+                  flexWrap="wrap"
                 >
                   <Typography
                     textAlign="center"

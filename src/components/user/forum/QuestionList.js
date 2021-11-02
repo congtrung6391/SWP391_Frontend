@@ -83,10 +83,24 @@ const QuestionList = (props) => {
         sx={{
           display: 'flex',
           flexDirection: 'row',
+          flexWrap: 'wrap',
         }}
       >
+        <Box
+          sx={{
+            mr: 1
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={toggleShowAddForm}
+            sx={{ height: '2.5rem' }}
+          >
+            New question
+          </Button>
+        </Box>
         <FormControl
-          sx={{ mr: 1 }}
+          sx={{ mr: 1, mb: 1 }}
         >
           {/* <InputLabel id="select-subject">Subject</InputLabel> */}
           <Select
@@ -119,7 +133,7 @@ const QuestionList = (props) => {
         </FormControl>
         <Box
           flexGrow={1}
-          mr={1}
+          mb={1}
         >
           <MuiSearch
             value={searchName || ''}
@@ -127,12 +141,6 @@ const QuestionList = (props) => {
             onSearch={fetchQuestionList}
           />
         </Box>
-        <Button
-          variant="contained"
-          onClick={toggleShowAddForm}
-        >
-          New question
-        </Button>
       </Box>
       {
         showAddForm && (

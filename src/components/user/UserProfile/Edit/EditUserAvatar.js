@@ -71,6 +71,8 @@ const UserAvatar = () => {
           className="avatar"
           style={{
             backgroundImage: `url(${avatar || './image/user.png'})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'repeat',
           }}
         />
         <Button

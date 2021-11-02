@@ -393,7 +393,7 @@ const UserPassword = () => {
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider> */}
-          <Box ml={2}>
+          <Box>
             <CustomMuiInput
               fullWidth
               label='GPA'

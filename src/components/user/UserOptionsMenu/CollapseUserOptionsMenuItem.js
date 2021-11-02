@@ -31,7 +31,7 @@ const CollapseUserOptionsMenuItem = ({ onClick }) => {
       Id: uniqid(),
       Icon: <BallotIcon fontSize="small" />,
       Content: 'Your course',
-      Link: `/users/${id}/edit`,
+      Link: `/admin/courses`,
       EventHandler: handleClose,
     },
     {

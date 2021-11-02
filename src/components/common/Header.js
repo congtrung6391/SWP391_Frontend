@@ -125,12 +125,12 @@ const Header = () => {
               <List className={classes['nav-menu']}>
                 <NavLink to="/register" onClick={toggleDrawler}>
                   <ListItem>
-                    <ListItemText primary="Sign-up" />
+                    <ListItemText primary="Register" />
                   </ListItem>
                 </NavLink>
                 <NavLink to="/login" onClick={toggleDrawler}>
                   <ListItem>
-                    <ListItemText primary="Sign-in" />
+                    <ListItemText primary="Login" />
                   </ListItem>
                 </NavLink>
               </List>
@@ -244,12 +244,12 @@ const Header = () => {
                     <List className={classes['nav-menu']}>
                       <NavLink className="nav-item" to="/register">
                         <ListItem>
-                          <ListItemText primary="Đăng ký" />
+                          <ListItemText primary="Register" />
                         </ListItem>
                       </NavLink>
                       <NavLink className="nav-item" to="/login">
                         <ListItem>
-                          <ListItemText primary="Đăng nhập" />
+                          <ListItemText primary="Login" />
                         </ListItem>
                       </NavLink>
                     </List>

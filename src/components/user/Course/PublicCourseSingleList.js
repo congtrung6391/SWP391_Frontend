@@ -42,7 +42,7 @@ const PublicCourseSingleList = ({ course }) => {
         backgroundRepeat: 'repeat',
         '&:hover': {
           boxShadow: 7,
-        }
+        },
       }}
     >
       <Box
@@ -58,15 +58,19 @@ const PublicCourseSingleList = ({ course }) => {
         <NavLink
           to={`/courses/${course.id}`}
         >
-          <Box
-            fontWeight="bold"
-            fontSize="h6.fontSize"
-          >
-            {course.courseName}
+          <Box>
+            <Typography
+              fontWeight="bold"
+              fontSize="h6.fontSize"
+              noWrap
+            >
+              {course.courseName}
+            </Typography>
           </Box>
           <Box
             display="flex"
             flexDirection="row"
+            flexWrap="wrap"
             justifyContent="space-between"
           >
             <Box
@@ -74,20 +78,22 @@ const PublicCourseSingleList = ({ course }) => {
               fontStyle="italic"
             >
               {course.tutor.fullName}
-            </Box>'
-            <Box
-              typography="caption"
-              fontStyle="italic"
-              fontWeight="bold"
-              sx={{
-                border: 2,
-                borderRadius: 3,
-                px: 1,
-                borderColor: 'secondary.main',
-                color: 'secondary.main',
-              }}
-            >
-              {course.subject.subjectName}
+            </Box>
+            <Box>
+              <Box
+                typography="caption"
+                fontStyle="italic"
+                fontWeight="bold"
+                sx={{
+                  border: 2,
+                  borderRadius: 3,
+                  px: 1,
+                  borderColor: 'secondary.main',
+                  color: 'secondary.main',
+                }}
+              >
+                {course.subject.subjectName}
+              </Box>
             </Box>
           </Box>
           <Box
@@ -105,6 +111,8 @@ const PublicCourseSingleList = ({ course }) => {
           display="flex"
           flexDirection="row"
           justifyContent="space-between"
+          flexWrap="wrap"
+          gap={1}
         >
           <Typography
             typography="body1"

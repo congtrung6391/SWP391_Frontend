@@ -22,6 +22,8 @@ const HomePage = () => {
         <Box
           display="flex"
           flexDirection="row"
+          flexWrap="wrap"
+          justifyContent="center"
           sx={{ mt: 2 }}
         >
           <Box mr={3}>
@@ -34,7 +36,7 @@ const HomePage = () => {
               component={Box}
               fontSize="h6.fontSize"
               sx={{
-                width: '40rem',
+                maxWidth: '40rem',
               }}
             >
               You can find various course, talent tutor help do do well in school. If you have any trouble, you can post it in forum.
@@ -45,7 +47,7 @@ const HomePage = () => {
               src="image/home-thumbnail.png"
               alt="learning-brain"
               style={{
-                height: "20rem"
+                maxHeight: "20rem"
               }}
             />
           </Box>
@@ -53,6 +55,9 @@ const HomePage = () => {
         <Box
           display="flex"
           flexDirection="row"
+          flexWrap="wrap"
+          justifyContent="center"
+          gap="1rem"
           sx={{ mt: 3, pb: 6 }}
         >
           {

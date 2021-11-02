@@ -72,7 +72,6 @@ class AdminCourseService {
         null,
         true,
       ).request();
-      console.log(response);
       return response;
     } catch (error) {
       return error.message;

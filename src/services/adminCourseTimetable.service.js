@@ -22,7 +22,6 @@ class AdminCourseService {
   }
 
   static async addTimetable(cid, data) {
-    console.log(data);
     try {
       const response = await new AdminAPIService(
         'post',

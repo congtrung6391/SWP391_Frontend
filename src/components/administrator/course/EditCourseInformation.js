@@ -72,7 +72,6 @@ const EditCourseInformation = (props) => {
 
   const onSaveCourse = async () => {
     setSaving(true);
-    console.log(course);
     const response = await courseContext.updateCourse(course);
     if (typeof response === 'string') {
       toastContext.addNotification('Error', response, 'error');

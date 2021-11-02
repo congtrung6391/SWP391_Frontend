@@ -33,7 +33,6 @@ class URLService {
       return null;
     }).filter((value) => value !== null);
     const paramsString = paramList.join('&');
-    console.log(paramsString);
     return paramsString;
   }
 }

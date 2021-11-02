@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import MomentUtils from '@date-io/moment';
 import {
   Box,
   Paper,
@@ -15,10 +14,6 @@ import {
   useTheme,
   withStyles,
 } from '@mui/styles';
-import {
-  LocalizationProvider,
-  DatePicker,
-} from '@mui/lab';
 import { getUserInformation, saveUser } from '../../../../utils/cookies';
 import { APIService } from '../../../../services/api.service';
 import { Loading } from '../../../common/Loading';
@@ -151,9 +146,9 @@ const UserPassword = () => {
   }
 
   const [birthday, setBirthday] = useState();
-  const onBirthdayChange = (date) => {
-    setBirthday(date.valueOf());
-  };
+  // const onBirthdayChange = (date) => {
+  //   setBirthday(date.valueOf());
+  // };
 
   const [gender, setGender] = useState(null);
   const onChangeGender = (event) => {

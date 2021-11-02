@@ -1,6 +1,5 @@
-import { Box, TextField, Slider, Typography, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
+import { Box, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
 import React, { useState, useContext } from 'react';
-import { CourseContext } from '../../../context/course.context';
 import { SubjectContext } from '../../../context/subject.context';
 import MuiSearch from '../../common/MuiSearch';
 

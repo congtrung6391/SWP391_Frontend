@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ForumContext } from '../../../context/forum.context';
-import { SubjectContext } from '../../../context/subject.context';
 import { ToastContext } from '../../../context/toast.context';
 import {
   Box,
@@ -35,10 +34,12 @@ const AnswerList = ({ questionId }) => {
 
   useEffect(() => {
     fetchAnswerList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     fetchAnswerList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   useEffect(() => {

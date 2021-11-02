@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ForumPage from '../../components/user/forum/ForumPage';
-import QuestionPage from '../../components/user/forum/QuestionPage';
 import ForumProvider from '../../context/forum.context';
 
 const ForumRoute = () => {

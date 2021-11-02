@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  // Typography,
   Box,
-  // Grid,
   TableContainer,
   Paper,
   TableHead,
@@ -12,20 +10,13 @@ import {
   TableBody,
   Pagination,
   FormControl,
-  // InputLabel,
   Select,
   MenuItem,
   IconButton,
-  // TextField,
   Button,
 } from '@mui/material';
-// import { makeStyles } from '@mui/styles';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Loading, LoadingDNA3X } from '../../common/Loading';
-// import PaginationList from '../../basic/PaginationList';
-// import SingleUser from './SingleUser';
-// import UserTypeProvider, { UserTypeContext } from '../../../context/usertype.context';
-import { AdminUserContext } from '../../../context/adminUser.context';
 import { ToastContext } from '../../../context/toast.context';
 import MuiSearch from '../../common/MuiSearch';
 import { AdminForumContext } from '../../../context/adminForum.context';
@@ -50,6 +41,7 @@ const ListQuestion = () => {
 
   useEffect(() => {
     fetchQuestionList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -59,6 +51,7 @@ const ListQuestion = () => {
 
   useEffect(() => {
     fetchQuestionList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjectId, page]);
 
 

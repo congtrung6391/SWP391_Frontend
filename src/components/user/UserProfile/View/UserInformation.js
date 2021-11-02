@@ -1,19 +1,12 @@
 import React from 'react';
-import MomentUtils from '@date-io/moment';
 import {
   Box,
   Paper,
-  TextField,
   Typography,
   TableCell,
   TableRow,
   Table,
 } from '@mui/material';
-import {
-  LocalizationProvider,
-  DatePicker,
-} from '@mui/lab';
-import moment from 'moment';
 
 const UserInformation = ({ user }) => {
 

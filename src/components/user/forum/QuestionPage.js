@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 import { SubjectContext } from '../../../context/subject.context';
 import { ForumContext } from '../../../context/forum.context';
-import { AuthenticationContext } from '../../../context/authentication.context';
 import { ToastContext } from '../../../context/toast.context';
 import {
   Box,
@@ -43,10 +42,12 @@ const QuestionPage = (props) => {
 
   useEffect(() => {
     fetchQuestion();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     fetchQuestion();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [qid])
 
 
@@ -65,14 +66,14 @@ const QuestionPage = (props) => {
     setDesciption(event.target.value);
   }
 
-  const onOpenModal = () => {
-    setShowEditModal(true);
-    setFetched(false);
-    setTitle(question.title);
-    setDesciption(question.description);
-    setSubjectId(question.subject.id);
-    setFetched(true);
-  }
+  // const onOpenModal = () => {
+  //   setShowEditModal(true);
+  //   setFetched(false);
+  //   setTitle(question.title);
+  //   setDesciption(question.description);
+  //   setSubjectId(question.subject.id);
+  //   setFetched(true);
+  // }
 
   const onCloseModal = () => {
     setShowEditModal(false)

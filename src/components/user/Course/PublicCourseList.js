@@ -26,6 +26,7 @@ const PublicCourseList = (props) => {
 
   useEffect(() => {
     fetchCourseList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
   return (

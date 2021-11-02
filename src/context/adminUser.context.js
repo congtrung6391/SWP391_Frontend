@@ -46,7 +46,6 @@ class AdminUserProvider extends React.Component {
   getUserList = async (setting = { page: 1, limit: 20 }) => {
     const { users: newUserList, totalUsers } = await AdminUsersService.getUserList(setting);
     this.setState({ userList: newUserList, totalUsers });
-    console.log(newUserList);
   }
 
   componentDidMount() {

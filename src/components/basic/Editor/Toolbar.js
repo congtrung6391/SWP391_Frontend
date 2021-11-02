@@ -44,8 +44,6 @@ class Toolbar extends React.Component {
         // console.log(error);
       }
 
-      console.log("Url Image in Toolbar: " + urls);
-
       const { insert } = this.props;
       urls.forEach((url) => {
         insert('',

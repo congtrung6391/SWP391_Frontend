@@ -59,7 +59,6 @@ class AdminCourseService {
         COURSE_INFO,
         { id },
       ).request();
-      console.log(response);
       return response;
     } catch (error) {
       return error.message;

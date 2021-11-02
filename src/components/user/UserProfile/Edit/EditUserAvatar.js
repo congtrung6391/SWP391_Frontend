@@ -29,7 +29,6 @@ const UserAvatar = () => {
     try {
       // eslint-disable-next-line no-await-in-loop
       const url = await ImageService.uploadImage(image);
-      console.log('Image Url got: ' + url);
 
       const newAvatar = {
         avatar: url,

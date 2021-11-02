@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import moment from 'moment';
 import {
   Box,
-  Paper,
   FormControl,
   Select,
   MenuItem,

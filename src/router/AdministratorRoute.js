@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import Dashboard from '../components/administrator/Dashboard/Dashboard';
 import ToastProvider from '../context/toast.context';
-import { AuthenticationContext } from '../context/authentication.context';
 import AdminUserRoute from './AdministrationRoute/AdminUserRoute';
 import AdminCourseRoute from './AdministrationRoute/AdminCourseRoute';
 import AdminForumRoute from './AdministrationRoute/AdminForumRoute';

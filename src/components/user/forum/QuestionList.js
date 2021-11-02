@@ -14,7 +14,6 @@ import {
 import QuestionSingleList from './QuestionSingleList';
 import QuestionAddPage from './QuestionAddPage';
 import { ToastContext } from '../../../context/toast.context';
-import { NavLink } from 'react-router-dom';
 import { LoadingDNA3X } from '../../common/Loading';
 
 const QuestionList = (props) => {
@@ -35,6 +34,7 @@ const QuestionList = (props) => {
 
   useEffect(() => {
     fetchQuestionList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -44,6 +44,7 @@ const QuestionList = (props) => {
 
   useEffect(() => {
     fetchQuestionList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjectId, page]);
 
 

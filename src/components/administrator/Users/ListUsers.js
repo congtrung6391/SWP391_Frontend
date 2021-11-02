@@ -76,7 +76,6 @@ const ListUsers = () => {
   }
 
   const onDeleteUser = async (id) => {
-    console.log(id);
     if (window.confirm('This action cannot be undo, are you sure?')) {
       const response = await userContext.deleteUser(id);
       if (response === null) {

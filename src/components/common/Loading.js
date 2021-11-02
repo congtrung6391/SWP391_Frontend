@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CenterContainer from '../basic/CenterContainer';
-import HorizontalContainer from '../basic/HorizontalContainer';
 import Body from '../basic/Body';
 import NavigationBar from './NavigationBar';
 import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
 
 export const LoadingInterwind = () => (
   <div class="loadingio-spinner-interwind-kf4315nhojd"><div class="ldio-h51982wfzh">

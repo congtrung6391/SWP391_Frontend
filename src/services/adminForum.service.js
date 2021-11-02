@@ -1,4 +1,3 @@
-import { APIService } from './api.service';
 import URLService from './URL.service';
 import {
   QUESTION,

@@ -148,7 +148,6 @@ const EditCourseTimetable = ({ course }) => {
               onChange={onChangeDay}
               sx={{ minWidth: '8.5rem' }}
               renderValue={(selected) => {
-                console.log(selected)
                 return (
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                     {

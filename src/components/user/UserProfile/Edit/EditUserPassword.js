@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box, Paper, TextField, Typography, Button,
 } from '@mui/material';
@@ -9,7 +9,6 @@ import {
 import { getUserInformation, saveUser } from '../../../../utils/cookies';
 import { APIService } from '../../../../services/api.service';
 import { Loading } from '../../../common/Loading';
-import { ToastContext } from '../../../../context/toast.context';
 
 const CustomMuiInput = withStyles((theme) => ({
   root: {

@@ -78,7 +78,7 @@ const AnswerSingleList = ({ qid, answer }) => {
         justifyContent="space-between"
       >
         <Typography variant="body2">
-          <em>{`${answer.author && (answer.author.fullname || 'Anonymous')} - ${moment(answer.createdDate).format('DD/MM/YYYY')}`}</em>
+          <em>{`${answer.user && (answer.user.username || 'Anonymous')} - ${moment(answer.createdDate).format('DD/MM/YYYY')}`}</em>
         </Typography>
         {
           (getUserInformation('id') === answer.userId || verifyAdministrator()) && (

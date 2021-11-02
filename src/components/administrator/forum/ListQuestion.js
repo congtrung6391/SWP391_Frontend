@@ -40,9 +40,12 @@ const ListQuestion = () => {
   const [totalPage, setTotalPage] = useState(1);
   const [subjectId, setSubjectId] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [fetched, setFetched] = useState(false);
 
   const fetchQuestionList = async () => {
+    setFetched(false);
     await forumContext.getQuestionList({ page, subjectId, name: searchName });
+    setFetched(true);
   }
 
   useEffect(() => {
@@ -80,14 +83,14 @@ const ListQuestion = () => {
 
   const onDeleteQuestion = async (qid) => {
     if (window.confirm('This action cannot be undo. Are you sure?')) {
-      setDeleting(true);
+      setDeleting(qid);
       const response = await forumContext.deletQuestion(qid);
       if (response) {
         toastContext.addNotification('Error', 'Delete question failed', 'error');
       } else {
         toastContext.addNotification('Success', 'Delete question success');
       }
-      setDeleting(false);
+      setDeleting(qid);
     }
   }
 
@@ -162,27 +165,44 @@ const ListQuestion = () => {
               <TableCell sx={{ color: 'primary.contrastText' }}>Title</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Author</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Email</TableCell>
+              <TableCell sx={{ color: 'primary.contrastText' }}>Subject</TableCell>
               <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {
-              forumContext.questionList.map((question) => (
-                <TableRow key={question.id}>
-                  <TableCell>{question.id}</TableCell>
-                  <TableCell>{question.title.substring(0, Math.min(20, question.title.length))}</TableCell>
-                  <TableCell>{question.author.username}</TableCell>
-                  <TableCell>{question.author.email}</TableCell>
-                  <TableCell align="center">
-                    <IconButton onClick={() => onDeleteQuestion(question.id)} disabled={deleting}>
-                      <DeleteForeverIcon color="error" />
-                      {
-                        deleting && <Loading />
-                      }
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
+              fetched
+                ? (
+                  forumContext.questionList.map((question) => (
+                    <TableRow key={question.id}>
+                      <TableCell>{question.id}</TableCell>
+                      <TableCell>{question.title.substring(0, Math.min(20, question.title.length))}</TableCell>
+                      <TableCell>{question.author.username}</TableCell>
+                      <TableCell>{question.author.email}</TableCell>
+                      <TableCell>{question.subject.subjectName}</TableCell>
+                      <TableCell align="center">
+                        <IconButton
+                          onClick={() => onDeleteQuestion(question.id)}
+                          disabled={deleting}
+                        >
+                          <DeleteForeverIcon color="error" />
+                          {
+                            deleting === question.id && (
+                              <Loading />
+                            )
+                          }
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )
+                : (
+                  <TableRow style={{ overflow: 'hidden' }}>
+                    <TableCell colSpan={6} style={{  overflow: 'hidden' }}>
+                      <LoadingDNA3X />
+                    </TableCell>
+                  </TableRow>
+                )
             }
           </TableBody>
         </Table>

@@ -1,7 +1,7 @@
 import AdminAPIService from './adminAPI.service';
 import URLService from './URL.service';
 import {
-  COURSES, COURSE_ID, COURSE_INFO, COURSE_REGISTER,
+  COURSES, COURSE_ID, COURSE_INFO, COURSE_REGISTER, COURSE_TOGGLE_PUBLIC,
 } from '../config/route';
 
 class AdminCourseService {
@@ -90,8 +90,20 @@ class AdminCourseService {
           action,
         },
       ).request();
-      console.log(response);
       return response;
+    } catch (error) {
+      return error.message;
+    }
+  }
+
+  static async togglePublicCourse(id) {
+    try {
+       await new AdminAPIService(
+        'put',
+        COURSE_TOGGLE_PUBLIC,
+        { id },
+      ).request();
+      return null;
     } catch (error) {
       return error.message;
     }

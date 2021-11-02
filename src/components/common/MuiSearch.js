@@ -2,6 +2,7 @@ import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { FormControl, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -29,6 +30,9 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  '& .MuiInputLabel-root': {
+    color: 'green',
+  },
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
@@ -48,7 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBar = ({ value, placeholder, onChange, onSearch }) => {
+const SearchBar = ({ value, placeholder, id, label, onChange, onSearch }) => {
   const onKeyPress = (event) => {
     if (event.code === 'Enter') {
       onSearch();
@@ -56,19 +60,26 @@ const SearchBar = ({ value, placeholder, onChange, onSearch }) => {
   }
 
   return (
-    <Search>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
+    <FormControl fullWidth>
+      <InputLabel htmlFor={id}>{label || 'Search...'}</InputLabel>
+      <OutlinedInput
+        id={id}
+        label={ label || 'Search' }
+        startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
         fullWidth
         placeholder={ placeholder || "Search…" }
-        inputProps={{ 'aria-label': 'search' }}
+        inputProps={{
+          'aria-label': 'search',
+          sx: {
+            lineHeight: '1rem',
+            py: '0.65rem',
+          }
+        }}
         onChange={onChange}
         value={value || ''}
         onKeyPress={onKeyPress}
       />
-    </Search>
+    </FormControl>
   );
 }
 

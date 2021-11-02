@@ -74,13 +74,15 @@ class AdminCourseProvider extends React.Component {
   }
 
   publicCourse = async (id, value) => {
-    const response = await AdminCourseService.updateCourse(id, { course_status: value });
+    const response = await AdminCourseService.togglePublicCourse(id, { course_status: value });
     if (typeof response === 'string') {
       return response;
     }
     const { courseList } = this.state;
     const index = courseList.findIndex((c) => c.id === id);
-    courseList.splice(index, 1, response);
+    const course = courseList.find((c) => c.id === id);
+    course.publicStatus = true;
+    courseList.splice(index, 1, course);
     this.setState({ courseList });
     return null;
   }

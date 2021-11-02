@@ -16,8 +16,8 @@ const SingleListTutor = ({ tutor }) => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
+        backgroundImage: tutor.avatar ? `url(${tutor.avatar}` : 'url(/image/background/tutor.jpg)',
         bgcolor: 'primary.main',
-        backgroundImage: tutor.avatar ? tutor.avatar : 'url(/image/background/tutor.jpg)',
         width: '100%',
         '&:hover': {
           boxShadow: 7,
@@ -54,7 +54,7 @@ const SingleListTutor = ({ tutor }) => {
                 value={tutor.avgRate || 0}
                 readOnly
               />
-              <Typography variant="caption">{`(${tutor.totalRate || 0})`}</Typography>
+              {/* <Typography variant="caption">{`(${tutor.totalRate || 0})`}</Typography> */}
             </Box>
           </Box>
           <Box

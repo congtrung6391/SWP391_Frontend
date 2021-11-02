@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box,
   Rating,
+  Typography,
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
@@ -43,11 +44,18 @@ const SingleListTutor = ({ tutor }) => {
             >
               {tutor.fullName}
             </Box>
-            <Rating
-              size="small"
-              name={`${tutor.username}-overall-rating`}
-              value={3.5}
-            />
+            <Box
+              display="flex"
+              flexDirection="row"
+            >
+              <Rating
+                size="small"
+                name={`${tutor.username}-overall-rating`}
+                value={tutor.avgRate || 0}
+                readOnly
+              />
+              <Typography variant="caption">{`(${tutor.totalRate || 0})`}</Typography>
+            </Box>
           </Box>
           <Box
             typography="caption"

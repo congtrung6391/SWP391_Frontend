@@ -384,7 +384,7 @@ const UserPassword = () => {
           ))
         }
         <Box my={2} display="flex" flexDirection="row">
-          <LocalizationProvider dateAdapter={MomentUtils}>
+          {/* <LocalizationProvider dateAdapter={MomentUtils}>
             <DatePicker
               inputVariant="outlined"
               id="birthday-picker-dialog"
@@ -397,7 +397,7 @@ const UserPassword = () => {
               }}
               renderInput={(params) => <TextField {...params} />}
             />
-          </LocalizationProvider>
+          </LocalizationProvider> */}
           <Box ml={2}>
             <CustomMuiInput
               fullWidth

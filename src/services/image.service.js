@@ -14,8 +14,7 @@ class ImageService {
         },
         data: form,
       })
-      console.log(response.data);
-      return response.data.link;
+      return response.data.data.link;
     } catch (err) {
       // return err.message;
       return 'https://i.imgur.com/iYu5zig.png';

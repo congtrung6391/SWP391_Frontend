@@ -132,7 +132,7 @@ const QuestionPage = (props) => {
         flexDirection="row"
       >
         <Typography variant="body2">
-          <em>{`${question.user && question.author.fullname} - ${moment(question.createdDate).format('DD/MM/YYYY')}`}</em>
+          <em>{`${question.author && question.author.username} - ${moment(question.createdDate).format('DD/MM/YYYY')}`}</em>
         </Typography>
         <Box
           display="flex"

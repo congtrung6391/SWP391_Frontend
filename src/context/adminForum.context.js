@@ -18,12 +18,12 @@ class AdminForumProvider extends React.Component {
       getQuestionList: this.getQuestionList,
       // addQuestion: this.addQuestion,
       // updateQuestion: this.updateQuestion,
-      // deletQuestion: this.deleteQuestion,
+      deletQuestion: this.deleteQuestion,
       // getQuestion: this.getQuestion,
       // getAnswerList: this.getAnswerList,
       // addAnswer: this.addAnswer,
       // updateAnswer: this.updateAnswer,
-      deleteAnswer: this.deleteAnswer,
+      // deleteAnswer: this.deleteAnswer,
     };
   }
 

@@ -1,26 +1,23 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { CourseContext } from '../../../context/course.context';
 import {
-  Grid, Pagination, Box,
+  Grid, Pagination, Box, Typography,
 } from '@mui/material';
 // import { NavLink } from 'react-router-dom';
 import PublicCourseSingleList from './PublicCourseSingleList';
 import { LoadingDNA3X } from '../../common/Loading';
 
 const PublicCourseList = (props) => {
+  const { onGetCourseList, fetched } = props;
   const courseContext = useContext(CourseContext);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-  const [fetched, setFetched] = useState(true);
-
   const onChangePage = (event, newValue) => {
     setPage(newValue);
   };
 
   const fetchCourseList = async () => {
-    setFetched(false);
-    await courseContext.getCourseList({ page });
-    setFetched(true);
+    await onGetCourseList({ page });
   }
 
   useEffect(() => {
@@ -66,6 +63,23 @@ const PublicCourseList = (props) => {
               </Grid>
             ))
           )
+      }
+      {
+        fetched && courseContext.courseList.length === 0 && (
+          <Grid
+              item
+              md={12}
+              xs={12}
+              sx={{
+                padding: '0.35rem',
+                textAlign: 'center',
+              }}
+            >
+              <Typography variant="h6">
+                No Course is found
+              </Typography>
+            </Grid>
+        )
       }
       <Grid
         item

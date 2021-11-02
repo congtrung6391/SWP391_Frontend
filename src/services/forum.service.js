@@ -109,8 +109,8 @@ class ForumService {
         }
       ).request();
       return {
-        answerList: response.list,
-        totalAnswer: response.size,
+        answerList: response.answerList,
+        totalAnswer: response.totalAnswer,
       };
     }catch (err) {
       return {

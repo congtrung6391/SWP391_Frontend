@@ -16,6 +16,7 @@ import {
   Button,
   ButtonGroup,
   Typography,
+  InputLabel,
 } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -32,15 +33,16 @@ import { AuthenticationContext } from '../../../context/authentication.context';
 import { NavLink } from 'react-router-dom';
 
 const ListUsers = () => {
-  const itemPerPage = 20;
   const courseContext = useContext(AdminCourseContext);
   const toastContext = useContext(ToastContext);
   const subjectContext = useContext(SubjectContext);
-  const { verifdyAdministrator } = useContext(AuthenticationContext);
+  const { verifyAdministrator, verifyTutor } = useContext(AuthenticationContext);
   const [fetched, setFetched] = useState(false);
   const [searchName, setSearchName] = useState('');
   const [searchSubjectId, setSearchSubjectId] = useState('');
-
+  const [searchCourseId, setSearchCourseId] = useState(null);
+  const [searchTutorName, setSearchTutorName] = useState('');
+ 
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberofPages] = useState(1);
 
@@ -49,7 +51,13 @@ const ListUsers = () => {
     try {
       const setting = URLService.getAllQueryString();
       setting.key = setting.search;
-      const { totalCourse } = await courseContext.getCourseList({ name: searchName, page });
+      const { totalCourse } = await courseContext.getCourseList({
+        courseName: searchName,
+        page,
+        subjectId: searchSubjectId,
+        id: searchCourseId, 
+        tutorName: searchTutorName,
+      });
       setFetched(true);
       setNumberofPages(Math.ceil((totalCourse) / courseContext.limit));
     } catch (error) {
@@ -66,6 +74,10 @@ const ListUsers = () => {
     setPage(value);
   }
 
+  const onChangeSubject = (event) => {
+    setSearchSubjectId(event.target.value);
+  }
+
   const onDeleteCourse = async (id) => {
     if (window.confirm('This action cannot be undo, are you sure?')) {
       const response = await courseContext.deleteCourse(id);
@@ -78,6 +90,10 @@ const ListUsers = () => {
   }
 
   const onPublicCourse = async (course) => {
+    if (!verifyAdministrator()) {
+      toastContext.addNotification('Toggle public course failed', 'You are not allowed to perform this action.', 'error');
+      return;
+    }
     const response = await courseContext.publicCourse(course.id, course.courseStatus ? false : true);
     if (response === null) {
       toastContext.addNotification('Toggle public course success');
@@ -91,7 +107,7 @@ const ListUsers = () => {
     if (response === null) {
       toastContext.addNotification('Action success');
     } else {
-      toastContext.addNotification('Action failed', response, 'error');
+      toastContext.addNotification('Action failed', 'Cannot perform action', 'error');
     }
   }
 
@@ -100,15 +116,22 @@ const ListUsers = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
-  // const refresh = async () => {
-  //   setFetched(true);
-  //   URLService.setQueryString('page', this.state.page);
-  //   await fetchUsers();
-  // }
+  useEffect(() => {
+    setPage(1);
+    fetchCourseList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchSubjectId])
+
+  const onSearch = () => {
+    setPage(1);
+    fetchCourseList();
+  };
 
   return (
     <Box>
-      <Box mb={1} display="flex" flexDirection="row">
+      <Box
+        sx={{ mb: 2 }}
+      >
         <ButtonGroup sx={{ mr: 1 }}>
           <Button
             disableFocusRipple
@@ -131,39 +154,72 @@ const ListUsers = () => {
             {`Total courses: ${courseContext.totalCourse}`}
           </Button>
         </ButtonGroup>
-        <Box flexGrow={1} sx={{ mr: 1 }}>
-          <MuiSearch />
+      </Box>
+      <Box mb={1} display="flex" flexDirection="row">
+        <Box sx={{ mr: 1 }}>
+          <FormControl>
+            <Select
+              id="select-subject"
+              label="Subject"
+              value={searchSubjectId || 0}
+              onChange={(event) => onChangeSubject(event)}
+              sx={{
+                minWidth: '8.5rem',
+                px: 1,
+                lineHeight: '2rem',
+                border: 1,
+                borderColor: 'primary.main',
+                borderRadius: 1
+              }}
+              variant="standard"
+            >
+              <MenuItem key={0} value={0}>All subject</MenuItem>
+              {
+                subjectContext.subjects.map((subject) => (
+                  <MenuItem
+                    key={subject.id}
+                    value={subject.id}
+                  >
+                    {subject.subjectName}
+                  </MenuItem>
+                ))
+              }
+            </Select>
+          </FormControl>
         </Box>
-        <FormControl>
-          {/* <InputLabel id="select-subject">Subject</InputLabel> */}
-          <Select
-            id="select-subject"
-            // label="Subject"
-            value={searchSubjectId || 0}
-            // onChange={(event) => onChangeSubject(event)}
-            sx={{
-              minWidth: '8.5rem',
-              px: 1,
-              lineHeight: '1.8rem',
-              border: 1,
-              borderColor: 'primary.main',
-              borderRadius: 1
-            }}
-            variant="standard"
-          >
-            <MenuItem key={0} value={0}>All subject</MenuItem>
-            {
-              subjectContext.subjects.map((subject) => (
-                <MenuItem
-                  key={subject.id}
-                  value={subject.id}
-                >
-                  {subject.subjectName}
-                </MenuItem>
-              ))
-            }
-          </Select>
-        </FormControl>
+        <Box sx={{ mr: 1 }}>
+          <MuiSearch
+            label="Course Id"
+            placeholder="Search Course Id"
+            value={searchCourseId}
+            onChange={(event) => setSearchCourseId(event.target.value)}
+            onSearch={onSearch}
+          />
+        </Box>
+        <Box sx={{ mr: 1 }}>
+          <MuiSearch
+            label="Tutor name"
+            placeholder="Tutor name"
+            value={searchTutorName}
+            onChange={(event) => setSearchTutorName(event.target.value)}
+            onSearch={onSearch}
+          />
+        </Box>
+        <Box flexGrow={1} sx={{ mr: 1 }}>
+          <MuiSearch
+            label="Course name"
+            placeholder="Search Course name"
+            value={searchName}
+            onChange={(event) => setSearchName(event.target.value)}
+            onSearch={onSearch}
+          />
+        </Box>
+        <Button
+          variant="contained"
+          onClick={onSearch}
+        >
+          Search
+        </Button>
       </Box>
       <TableContainer component={Paper}>
         <Table>
@@ -175,9 +231,21 @@ const ListUsers = () => {
               <TableCell sx={{ color: 'primary.contrastText' }}>Student</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Subject</TableCell>
               <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Learning</TableCell>
-              <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Approve/Reject</TableCell>
-              <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Toggle Public</TableCell>
-              <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Delete</TableCell>
+              {
+                verifyTutor() && (
+                  <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Approve/Reject</TableCell>
+                )
+              }
+              {
+                verifyTutor() && (
+                  <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Toggle Public</TableCell>
+                )
+              }
+              {
+                verifyTutor() && (
+                  <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Delete</TableCell>
+                )
+              }
             </TableRow>
           </TableHead>
           <TableBody>
@@ -187,17 +255,17 @@ const ListUsers = () => {
                   courseContext.courseList.map((course, index) => (
                     <TableRow compnent={NavLink} key={course.id}>
                       <TableCell>
-                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                        <NavLink to={`${verifyTutor() ? '/admin' : ''}/courses/${verifyTutor() ? 'edit/' : ''}${course.id}`}>
                           {course.id}
                         </NavLink>
                       </TableCell>
                       <TableCell>
-                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                        <NavLink to={`${verifyTutor() ? '/admin' : ''}/courses/${verifyTutor() ? 'edit/' : ''}${course.id}`}>
                           {course.courseName}
                         </NavLink>
                       </TableCell>
                       <TableCell>
-                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                        <NavLink to={`${verifyTutor() ? '/admin' : ''}/courses/${verifyTutor() ? 'edit/' : ''}${course.id}`}>
                           <Typography
                             noWrap
                             sx={{ maxWidth: '8rem' }}
@@ -207,7 +275,7 @@ const ListUsers = () => {
                         </NavLink>
                       </TableCell>
                       <TableCell>
-                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                        <NavLink to={`${verifyTutor() ? '/admin' : ''}/courses/${verifyTutor() ? 'edit/' : ''}${course.id}`}>
                           <Typography
                             noWrap
                             sx={{ maxWidth: '8rem' }}
@@ -217,42 +285,54 @@ const ListUsers = () => {
                         </NavLink>
                       </TableCell>
                       <TableCell>
-                        <NavLink to={`/admin/courses/edit/${course.id}`}>
+                        <NavLink to={`${verifyTutor() ? '/admin' : ''}/courses/${verifyTutor() ? 'edit/' : ''}${course.id}`}>
                           {course.subject.subjectName}
                         </NavLink>
                       </TableCell>
                       <TableCell align="center">
                         <MenuBookIcon
-                          color={course.courseStatus ? 'error' : 'success'}
+                          color={!course.learningStatus ? 'error' : 'success'}
                         />
                       </TableCell>
-                      <TableCell align="center">
-                        <ButtonGroup variant="contained" size="small">
-                          <Button
-                            color="success"
-                            onClick={() => onReplyRegister(course, true, course)}
-                          >
-                            <CheckCircleOutlineIcon />
-                          </Button>
-                          <Button
-                            color="error"
-                            onClick={() => onReplyRegister(course, false, course)}
-                          >
-                            <HighlightOffIcon />
-                          </Button>
-                        </ButtonGroup>
-                      </TableCell>
-                      <TableCell align="center">
-                        <IconButton onClick={() => onPublicCourse(course)}>
-                          <PublicIcon color={course.courseStatus ? 'success' : 'warning'} />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell align="center">
-                        <IconButton onClick={() => onDeleteCourse(course.id)}>
-                          <DeleteForeverIcon color="error" />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
+                      {
+                        verifyTutor() && (
+                          <TableCell align="center">
+                            <ButtonGroup variant="contained" size="small">
+                              <Button
+                                color="success"
+                                onClick={() => onReplyRegister(course, true, course)}
+                              >
+                                <CheckCircleOutlineIcon />
+                              </Button>
+                              <Button
+                                color="error"
+                                onClick={() => onReplyRegister(course, false, course)}
+                              >
+                                <HighlightOffIcon />
+                              </Button>
+                            </ButtonGroup>
+                          </TableCell>
+                        )
+                      }
+                      {
+                        verifyTutor() && (
+                          <TableCell align="center">
+                            <IconButton onClick={() => onPublicCourse(course)}>
+                              <PublicIcon color={course.publicStatus ? 'success' : 'warning'} />
+                            </IconButton>
+                          </TableCell>
+                        )
+                      }
+                      {
+                        verifyTutor() && (
+                          <TableCell align="center">
+                            <IconButton onClick={() => onDeleteCourse(course.id)}>
+                              <DeleteForeverIcon color="error" />
+                            </IconButton>
+                          </TableCell>
+                        )
+                      }
+                      </TableRow> 
                   ))
                 )
                 : (
@@ -262,6 +342,15 @@ const ListUsers = () => {
                     </TableCell>
                   </TableRow>
                 )
+            }
+            {
+              fetched && courseContext.courseList.length === 0 && (
+                <TableRow style={{ overflow: 'hidden' }}>
+                    <TableCell colSpan={9} style={{  overflow: 'hidden', textAlign: 'center' }}>
+                      No result
+                    </TableCell>
+                  </TableRow>
+              )
             }
           </TableBody>
         </Table>

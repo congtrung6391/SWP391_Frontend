@@ -7,14 +7,18 @@ import {
   Divider,
 } from '@mui/material';
 import { ForumContext } from '../../../context/forum.context';
+import { Loading3X } from '../../common/Loading';
 
 const TopQuestionList = (props) => {
   const forumContext = useContext(ForumContext);
-  const [questionList, setQuestionList] = useState([])
+  const [questionList, setQuestionList] = useState([]);
+  const [fetched, setFetched] = useState(false);
 
   const fetchQuestionList = async () => {
+    setFetched(false);
     const list = await forumContext.getTopQuestionList();
     setQuestionList(list);
+    setFetched(true);
   }
 
   useEffect(() => {
@@ -30,6 +34,8 @@ const TopQuestionList = (props) => {
         borderRadius: 2,
         px: 2,
         pt: 1,
+        pb: 1,
+        alignItems: 'center'
       }}
     >
       <Typography
@@ -37,6 +43,18 @@ const TopQuestionList = (props) => {
       >
         Top Question
       </Typography>
+      {
+        !fetched && (
+          <Box
+            display='flex'
+            flexDirection="row"
+            justifyContent="center"
+            sx={{ pt: 1 }}
+          >
+            <Loading3X />
+          </Box>
+        )
+      }
       {
         questionList.map((question) => (
           <NavLink

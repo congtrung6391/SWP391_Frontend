@@ -34,7 +34,7 @@ class AuthenticationService {
       ).request();
       return null;
     } catch (error) {
-      return error.message;
+      return error.message || 'register failed';
     }
   }
 

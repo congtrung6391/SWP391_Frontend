@@ -227,13 +227,6 @@ class Register extends React.Component {
       confirmPassword,
       role, 
       phone,
-      errorFullname,
-      errorUsername,
-      errorEmail,
-      errorPassword,
-      errorConfirmPassword,
-      errorPhone,
-      errorRole,
     } = this.state;
     const { history } = this.props;
     event.preventDefault();
@@ -244,6 +237,16 @@ class Register extends React.Component {
     this.validateConfirmPassword(password, confirmPassword);
     this.validatePhone(phone);
     this.validateRole();
+
+    const {
+      errorFullname,
+      errorUsername,
+      errorEmail,
+      errorPassword,
+      errorConfirmPassword,
+      errorPhone,
+      errorRole,
+    } = this.state;
 
     if (errorFullname
         || errorUsername

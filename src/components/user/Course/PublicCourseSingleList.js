@@ -31,13 +31,15 @@ const PublicCourseSingleList = ({ course }) => {
       sx={{
         boxShadow: 3,
         borderRadius: 2,
-        height: '13rem',
+        height: '14rem',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
         bgcolor: 'primary.main',
         width: '100%',
         backgroundImage: `url(/image/background/${course.subject.subjectName}.jpg)`,
+        backgroundSize: 'contain',
+        backgroundRepeat: 'repeat',
         '&:hover': {
           boxShadow: 7,
         }
@@ -94,7 +96,7 @@ const PublicCourseSingleList = ({ course }) => {
             <Typography
               noWrap
             >
-              {course.courseDescription}
+              {course.courseDescription && course.courseDescription.substring(0, Math.min(course.courseDescription.length, 50))}
             </Typography>
           </Box>
         </NavLink>

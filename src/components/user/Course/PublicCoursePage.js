@@ -102,16 +102,12 @@ const PublicCoursePage = (props) => {
       <Body>
         <Grid item md={12} xs={12}>
           <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
             sx={{
               border: 3,
               borderBottom: 1,
               borderColor: 'primary.main',
               backgroundImage: `url(/image/background/${course.subject.subjectName}.jpg)`,
               bgcolor: alpha(theme.palette.primary.main, 0.3),
-              height: '10.8rem',
               borderTopLeftRadius: 5,
               borderTopRightRadius: 25,
               position: 'relative',
@@ -120,119 +116,128 @@ const PublicCoursePage = (props) => {
           >
             <Box
               display="flex"
-              flexDirection="column"
-              justifyContent="flex-end"
-              alignItems="center"
-              sx={{
-                height: '100%',
-                minWidth: '13.25rem',
-              }}
-            >
-              <Avatar 
-                src={course.tutor.avatar}
-                sx={{
-                  width: '10rem',
-                  height: '10rem',
-                  border: 5,
-                  borderColor: 'primary.main',
-                  position: 'absolute',
-                  left: 20,
-                  top: '-3rem',
-                }}
-              />
-              <Typography
-                variant="h6"
-                sx={{
-                  mb: 1,
-                  px: 2,
-                  borderRadius: 4,
-                  bgcolor: alpha("#000", 0.35),
-                  color: alpha("#fff", 0.9),
-                }}
-              >
-                {course.tutor.fullName}
-              </Typography>
-            </Box>
-            <Box
-              flexGrow={1}
-              display='flex'
-              flexDirection="column"
+              flexDirection="row"
               justifyContent="space-between"
-              alignItems="center"
+              sx={{
+                height: '10.8rem',
+                width: '100%',
+                backdropFilter: 'brightness(45%)',
+                borderTopLeftRadius: 5,
+                borderTopRightRadius: 25,
+              }}
             >
               <Box
                 display="flex"
-                flexDirection="row"
+                flexDirection="column"
+                justifyContent="flex-end"
+                alignItems="center"
+                sx={{
+                  height: '100%',
+                  minWidth: '13.25rem',
+                }}
               >
-                <Typography
-                  textAlign="center"
-                  variant="h5"
+                <Avatar 
+                  src={course.tutor.avatar}
                   sx={{
-                    fontWeight: 500,
-                    mt: 3,
+                    width: '10rem',
+                    height: '10rem',
+                    border: 5,
+                    borderColor: 'primary.main',
+                    position: 'absolute',
+                    left: 20,
+                    top: '-3rem',
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  sx={{
                     mb: 1,
                     px: 2,
-                    py: 1,
-                    borderRadius: 10,
-                    bgcolor: alpha("#000", 0.35),
+                    borderRadius: 4,
                     color: alpha("#fff", 0.9),
                   }}
                 >
-                  {course.courseName}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    border: 2,
-                    borderRadius: 10,
-                    mt: 4,
-                    mb: 2,
-                    ml: 1,
-                    px: 2,
-                    py: 1,
-                    borderColor: 'secondary.main',
-                    bgcolor: alpha("#000", 0.2),
-                    color: 'secondary.main',
-                    fontStyle: "italic",
-                    fontWeight: "bold"
-                  }}
-                >
-                  {course.subject.subjectName}
+                  {course.tutor.fullName}
                 </Typography>
               </Box>
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ borderRadius: 50 }}
-                onClick={onRegisterCourse}
-              >
-                {
-                  course.courseStatus
-                    ? 'Register'
-                    : 'Registered'
-                }
-                {
-                  registering && (<Loading />)
-                }
-              </Button>
               <Box
-                sx={{
-                  borderBottom: 1,
-                  borderColor: 'divider',
-                  bgcolor: alpha("#000", 0.2),
-                }}
+                flexGrow={1}
+                display='flex'
+                flexDirection="column"
+                justifyContent="space-between"
+                alignItems="center"
               >
-                <Tabs
-                  value={tab}
-                  onChange={onChangeTab}
-                  aria-label="public-course-tab"
-                  textColor="primary"
-                  indicatorColor="primary"
+                <Box
+                  display="flex"
+                  flexDirection="row"
                 >
-                  <Tab sx={{ fontWeight: "bold", color: alpha("#fff", 0.9) }} label="Overview" {...a11yProps(0)} />
-                  <Tab sx={{ fontWeight: "bold", color: alpha("#fff", 0.9) }} label="Material" {...a11yProps(1)} />
-                  <Tab sx={{ fontWeight: "bold", color: alpha("#fff", 0.9) }} label="Available Time" {...a11yProps(2)} />
-                </Tabs>
+                  <Typography
+                    textAlign="center"
+                    variant="h5"
+                    sx={{
+                      fontWeight: 500,
+                      mt: 3,
+                      mb: 1,
+                      px: 2,
+                      py: 1,
+                      borderRadius: 10,
+                      color: alpha("#fff", 0.9),
+                    }}
+                  >
+                    {course.courseName}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      border: 2,
+                      borderRadius: 10,
+                      mt: 4,
+                      mb: 2,
+                      ml: 1,
+                      px: 2,
+                      py: 1,
+                      borderColor: 'secondary.main',
+                      color: 'secondary.main',
+                      fontStyle: "italic",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    {course.subject.subjectName}
+                  </Typography>
+                </Box>
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ borderRadius: 50 }}
+                  onClick={onRegisterCourse}
+                >
+                  {
+                    course.courseStatus
+                      ? 'Register'
+                      : 'Registered'
+                  }
+                  {
+                    registering && (<Loading />)
+                  }
+                </Button>
+                <Box
+                  sx={{
+                    borderBottom: 1,
+                    borderColor: 'divider',
+                  }}
+                >
+                  <Tabs
+                    value={tab}
+                    onChange={onChangeTab}
+                    aria-label="public-course-tab"
+                    textColor="primary"
+                    indicatorColor="primary"
+                  >
+                    <Tab sx={{ fontWeight: "bold", color: alpha("#fff", 0.9) }} label="Overview" {...a11yProps(0)} />
+                    <Tab sx={{ fontWeight: "bold", color: alpha("#fff", 0.9) }} label="Material" {...a11yProps(1)} />
+                    <Tab sx={{ fontWeight: "bold", color: alpha("#fff", 0.9) }} label="Available Time" {...a11yProps(2)} />
+                  </Tabs>
+                </Box>
               </Box>
             </Box>
           </Box>

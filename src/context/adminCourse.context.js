@@ -81,7 +81,7 @@ class AdminCourseProvider extends React.Component {
     const { courseList } = this.state;
     const index = courseList.findIndex((c) => c.id === id);
     const course = courseList.find((c) => c.id === id);
-    course.publicStatus = true;
+    course.publicStatus = !course.publicStatus;
     courseList.splice(index, 1, course);
     this.setState({ courseList });
     return null;

@@ -193,7 +193,7 @@ class Login extends React.Component {
                     </Button>
                   </Box>
                   <Box mt={2} display="flex" flexDirection="row" justifyContent="space-between">
-                    <Link href="/forget-password" underline="none">Reset passwored</Link>
+                    <Link href="/forget-password" underline="none">Reset password</Link>
                     <Link href="/register" underline="none">Create new account</Link>
                   </Box>
                 </Box>

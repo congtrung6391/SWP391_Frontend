@@ -214,11 +214,12 @@ const PublicCoursePage = (props) => {
                   color="success"
                   sx={{ borderRadius: 50 }}
                   onClick={onRegisterCourse}
+                  disabled={course.learningStatus}
                 >
                   {
-                    course.courseStatus
-                      ? 'Register'
-                      : 'Registered'
+                    course.learningStatus
+                      ? 'Registered'
+                      : 'Register'
                   }
                   {
                     registering && (<Loading />)

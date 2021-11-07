@@ -22,15 +22,16 @@ const PublicCourseMaterialList = ({ course }) => {
   useEffect(() => {
     const fetchMatrialList = async () => {
       setFetched(false);
-      const { materialList: material } = await materialContext.getMaterialList(course.id)
+      const response = await materialContext.getMaterialList(course.id)
+      const { materialList: material } = response;
       setMaterialList(material);
       setFetched(true);
     }
     fetchMatrialList();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  if (!materialList) {
+  
+  if (fetched && materialList === undefined) {
     return (
       <Box
         sx={{
@@ -46,8 +47,8 @@ const PublicCourseMaterialList = ({ course }) => {
       </Box>
     );
   }
-  
-  if (fetched && (!materialList || materialList.length === 0)) {
+
+  if (fetched && materialList.length === 0) {
     return (
       <Box
         sx={{
@@ -58,7 +59,7 @@ const PublicCourseMaterialList = ({ course }) => {
         }}
       >
         <Typography variant="subtitle">
-          You do not have permission to access this course's material.
+          There is no material for this course.
         </Typography>
       </Box>
     );

@@ -132,17 +132,21 @@ const ListUsers = () => {
         sx={{ mb: 2 }}
       >
         <ButtonGroup sx={{ mr: 1 }}>
-          <Button
-            disableFocusRipple
-            disableRipple
-            disableElevation
-            variant="contained"
-            color="secondary"
-          >
-            <NavLink to="/admin/courses/add">
-              Add new
-            </NavLink>
-          </Button>
+          {
+            verifyTutor() && (
+              <Button
+                disableFocusRipple
+                disableRipple
+                disableElevation
+                variant="contained"
+                color="secondary"
+              >
+                <NavLink to="/admin/courses/add">
+                  Add new
+                </NavLink>
+              </Button>
+            )
+          }
           <Button
             disableFocusRipple
             disableRipple

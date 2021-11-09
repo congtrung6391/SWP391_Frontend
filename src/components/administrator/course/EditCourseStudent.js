@@ -103,7 +103,7 @@ const EdtiCourseStudent = (props) => {
                     <EditCourseStudentSingleList
                       course={course}
                       student={student}
-                      index={index}
+                      index={index+1}
                     />
                   ))
                 )

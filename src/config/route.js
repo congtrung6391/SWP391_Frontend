@@ -27,6 +27,8 @@ export const COURSE_INFO = 'course/:id/info';
 export const COURSE_ID = 'course/:id';
 export const COURSE_REGISTER = 'course/:id/register';
 export const COURSE_TOGGLE_PUBLIC = 'course/:id/toggle-public';
+export const COURSE_STUDENT = 'course/:id/student';
+export const COURSE_STUDENT_ID = 'course/:id/student/:sid';
 
 // material
 export const COURSE_MATERIAL = 'course/:cid/material';

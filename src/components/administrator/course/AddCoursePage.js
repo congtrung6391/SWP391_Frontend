@@ -9,6 +9,7 @@ import {
   Typography,
   Button,
   InputLabel,
+  InputAdornment,
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { AdminCourseContext } from '../../../context/adminCourse.context';
@@ -18,7 +19,7 @@ import { SubjectContext } from '../../../context/subject.context';
 import { ToastContext } from '../../../context/toast.context';
 
 const AddCoursePage = (props) => {
-  const [course, setCourse] = useState({ subjectId: 1});
+  const [course, setCourse] = useState({ subjectId: 1, grade: 1, cost: 100, length: 90 });
   const [costError, setCostError] = useState('');
   const [lengthError, setLengthError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -45,8 +46,10 @@ const AddCoursePage = (props) => {
 
   const validateCost = (cost) => {
     const costNumber = parseInt(cost, 10);
-    if (costNumber > 2000000) {
-      setCostError('Cost should not be greater than 2.000.000 VND')
+    if (costNumber > 2000) {
+      setCostError('Cost should not be greater than 2.000.000 VND');
+    } else if (costNumber < 0) {
+      setCostError('Cost should be positive')
     } else {
       setCostError('');
     }
@@ -137,12 +140,15 @@ const AddCoursePage = (props) => {
                   fullWidth
                   variant="outlined"
                   type='number'
-                  label="Cost (VNĐ)"
+                  label="Cost"
                   name="cost"
                   value={course.cost || ''}
                   onChange={onChangeCost}
                   helperText={costError || 'Must be less than 2,000,000 VND'}
                   error={!!costError}
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">,000 VND / Lesson</InputAdornment>,
+                  }}
                 />
               </Box>
               <Box flexGrow={1} mr={2}>
@@ -150,12 +156,15 @@ const AddCoursePage = (props) => {
                   fullWidth
                   variant="outlined"
                   type='number'
-                  label="Lession Length (Minutes)"
+                  label="Lesson Length"
                   name="legnth"
                   value={course.length || ''}
                   onChange={onChangeLength}
                   helperText={lengthError || 'Must be greater than 1 hour and less than 5 hours'}
                   error={!!lengthError}
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">minute(s)</InputAdornment>,
+                  }}
                 />
               </Box>
               <FormControl sx={{ mr: 2 }}>

@@ -83,7 +83,7 @@ const PublicCourseInfor = ({ course }) => {
             </TableCell>
             <TableCell>
               <Typography>
-                {`${course.cost} VND`}
+                {`${course.cost}.000 VND`}
               </Typography>
             </TableCell>
           </TableRow>

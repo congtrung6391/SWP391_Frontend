@@ -15,12 +15,10 @@ import {
   IconButton,
   Button,
   ButtonGroup,
-  Typography,
 } from '@mui/material';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PublicIcon from '@mui/icons-material/Public';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { LoadingDNA3X } from '../../common/Loading';
 import URLService from '../../../services/URL.service';
@@ -101,14 +99,14 @@ const ListUsers = () => {
     }
   }
 
-  const onReplyRegister = async (course, action) => {
-    const response = await courseContext.replyRegister(course.id, action, course);
-    if (response === null) {
-      toastContext.addNotification('Action success');
-    } else {
-      toastContext.addNotification('Action failed', 'Cannot perform action', 'error');
-    }
-  }
+  // const onReplyRegister = async (course, action) => {
+  //   const response = await courseContext.replyRegister(course.id, action, course);
+  //   if (response === null) {
+  //     toastContext.addNotification('Action success');
+  //   } else {
+  //     toastContext.addNotification('Action failed', 'Cannot perform action', 'error');
+  //   }
+  // }
 
   useEffect(() => {
     fetchCourseList();
@@ -154,7 +152,7 @@ const ListUsers = () => {
             variant="contained"
             color="primary"
           >
-            {`Total courses: ${courseContext.totalCourse}`}
+            {`Total courses: ${courseContext.totalCourse || 0}`}
           </Button>
         </ButtonGroup>
       </Box>
@@ -168,21 +166,21 @@ const ListUsers = () => {
             onSearch={onSearch}
           />
         </Box>
-        <Box sx={{ mr: 1 }}>
-          <MuiSearch
-            label="Tutor name"
-            placeholder="Tutor name"
-            value={searchTutorName}
-            onChange={(event) => setSearchTutorName(event.target.value)}
-            onSearch={onSearch}
-          />
-        </Box>
         <Box flexGrow={1} sx={{ mr: 1 }}>
           <MuiSearch
             label="Course name"
             placeholder="Search Course name"
             value={searchName}
             onChange={(event) => setSearchName(event.target.value)}
+            onSearch={onSearch}
+          />
+        </Box>
+        <Box sx={{ mr: 1 }}>
+          <MuiSearch
+            label="Tutor name"
+            placeholder="Tutor name"
+            value={searchTutorName}
+            onChange={(event) => setSearchTutorName(event.target.value)}
             onSearch={onSearch}
           />
         </Box>
@@ -231,17 +229,17 @@ const ListUsers = () => {
               <TableCell sx={{ color: 'primary.contrastText' }}>Id</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Title</TableCell>
               <TableCell sx={{ color: 'primary.contrastText' }}>Tutor</TableCell>
-              <TableCell sx={{ color: 'primary.contrastText' }}>Student</TableCell>
+              {/* <TableCell sx={{ color: 'primary.contrastText' }}>Student</TableCell> */}
               <TableCell sx={{ color: 'primary.contrastText' }}>Subject</TableCell>
               <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Learning</TableCell>
               {
                 verifyTutor() && (
-                  <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Approve/Reject</TableCell>
+                  <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Toggle Public</TableCell>
                 )
               }
               {
                 verifyTutor() && (
-                  <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Toggle Public</TableCell>
+                  <TableCell sx={{ textAlign: 'center', color: 'primary.contrastText' }}>Edit</TableCell>
                 )
               }
               {
@@ -269,15 +267,10 @@ const ListUsers = () => {
                       </TableCell>
                       <TableCell>
                         <NavLink to={`/users/${course.tutor ? course.tutor.id : ''}/profile`}>
-                          <Typography
-                            noWrap
-                            sx={{ maxWidth: '8rem' }}
-                          >
-                            {course.tutor.email}
-                          </Typography>
+                          {course.tutor.email}
                         </NavLink>
                       </TableCell>
-                      <TableCell>
+                      {/* <TableCell>
                         <NavLink to={`/users/${course.student ? course.student.id : ''}/profile`}>
                           <Typography
                             noWrap
@@ -285,7 +278,7 @@ const ListUsers = () => {
                             {course.student ? course.student.email : 'No student'}
                           </Typography>
                         </NavLink>
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell>
                         <NavLink to={`${verifyTutor() ? '/admin' : ''}/courses/${verifyTutor() ? 'edit/' : ''}${course.id}`}>
                           {course.subject.subjectName}
@@ -296,7 +289,7 @@ const ListUsers = () => {
                           color={!course.learningStatus ? 'error' : 'success'}
                         />
                       </TableCell>
-                      {
+                      {/* {
                         verifyTutor() && (
                           <TableCell align="center">
                             <ButtonGroup variant="contained" size="small">
@@ -315,13 +308,22 @@ const ListUsers = () => {
                             </ButtonGroup>
                           </TableCell>
                         )
-                      }
+                      } */}
                       {
                         verifyTutor() && (
                           <TableCell align="center">
                             <IconButton onClick={() => onPublicCourse(course)}>
                               <PublicIcon color={course.publicStatus ? 'success' : 'warning'} />
                             </IconButton>
+                          </TableCell>
+                        )
+                      }
+                      {
+                        verifyTutor() && (
+                          <TableCell align="center">
+                            <NavLink to={`${verifyTutor() ? '/admin' : ''}/courses/${verifyTutor() ? 'edit/' : ''}${course.id}`}>
+                              <EditIcon color="error" />
+                            </NavLink>
                           </TableCell>
                         )
                       }

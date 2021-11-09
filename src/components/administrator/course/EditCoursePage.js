@@ -18,6 +18,8 @@ import SideTabContent from '../../basic/SideTabControl/SideTabContent';
 import EditCourseInformation from './EditCourseInformation';
 import EditCourseMaterial from './EditCourseMaterial';
 import EditCourseTimetable from './EditCourseTimetable';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import EditCourseStudent from './EditCourseStudent';
 
 const EditCoursePage = (props) => {
   const [fetched, setFetched] = useState(false);
@@ -61,7 +63,7 @@ const EditCoursePage = (props) => {
             variant="h5"
             fontWeight="bold"
             textAlign="center"
-            sx={{ pl: 2, mb: 2 }}
+            sx={{ pl: 2, mb: 3 }}
           >
             {course.courseName}
           </Typography>
@@ -93,6 +95,13 @@ const EditCoursePage = (props) => {
                   <CloudDownloadIcon />
                 </Icon>
               </Typography>
+              <Typography className="text-vertical" variant="h6" route="student" key="student">
+                Students
+                &nbsp;
+                <Icon>
+                  <SupervisedUserCircleIcon />
+                </Icon>
+              </Typography>
             </SideTabControl>
             <SideTabContent controlKey="editcourse-view">
               <Box route="info" flexGrow={1}>
@@ -107,6 +116,11 @@ const EditCoursePage = (props) => {
               </Box>
               <Box route="time" flexGrow={1}>
                 <EditCourseTimetable
+                  course={course}
+                />
+              </Box>
+              <Box route="student" flexGrow={1}>
+                <EditCourseStudent
                   course={course}
                 />
               </Box>

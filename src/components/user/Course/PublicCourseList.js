@@ -95,7 +95,7 @@ const PublicCourseList = (props) => {
         >
           <Pagination
             page={page}
-            count={totalPage}
+            count={totalPage || 1}
             color="primary"
             onChange={onChangePage}
           />

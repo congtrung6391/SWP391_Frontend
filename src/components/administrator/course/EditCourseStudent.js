@@ -20,6 +20,7 @@ const EdtiCourseStudent = (props) => {
   const fetchStudent = async () => {
     setFetched(false);
     const { totalStudent } = await studentContext.getStudentList(course.id, { page, studentName });
+    console.log(totalStudent);
     setTotalPage(Math.ceil(totalStudent / studentContext.limit));
     setFetched(true);
   };
@@ -104,6 +105,7 @@ const EdtiCourseStudent = (props) => {
                       course={course}
                       student={student}
                       index={index+1}
+                      key={student.courseStudentId}
                     />
                   ))
                 )

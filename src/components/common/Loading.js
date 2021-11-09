@@ -43,13 +43,13 @@ export const LoadingDNA3X = () => (
     alginItems="center"
   >
     {/* <Typography>Loading...</Typography> */}
-    <div class="wrap-loading">
-      <div class="one-loading common-loading"></div>
-      <div class="two-loading common-loading"></div>
-      <div class="three-loading common-loading"></div>
-      <div class="four-loading common-loading"></div>
-      <div class="box-loading">
-          <div class="circle-loading"></div>
+    <div className="wrap-loading">
+      <div className="one-loading common-loading"></div>
+      <div className="two-loading common-loading"></div>
+      <div className="three-loading common-loading"></div>
+      <div className="four-loading common-loading"></div>
+      <div className="box-loading">
+          <div className="circle-loading"></div>
       </div>
     </div>
   </Box>

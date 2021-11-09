@@ -17,7 +17,8 @@ class AdminCourseStudentProvider extends React.Component {
   }
 
   getStudentList = async (cid, setting = {}) => {
-    const response = await AdminCourseStudentService.getStudentList(cid, setting);
+    const { limit } = this.state;
+    const response = await AdminCourseStudentService.getStudentList(cid, { ...setting, limit });
     this.setState({
       studentList: response.studentList,
       totalStudent: response.totalStudent,

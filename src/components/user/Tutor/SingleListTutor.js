@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box,
   Rating,
+  Typography,
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
@@ -55,7 +56,7 @@ const SingleListTutor = ({ tutor }) => {
                 value={tutor.avgRate || 0}
                 readOnly
               />
-              {/* <Typography variant="caption">{`(${tutor.totalRate || 0})`}</Typography> */}
+              <Typography variant="caption">{`(${tutor.totalRate || 0})`}</Typography>
             </Box>
           </Box>
           <Box

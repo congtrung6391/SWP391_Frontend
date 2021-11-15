@@ -216,6 +216,7 @@ const ListUsers = () => {
           </FormControl>
         </Box>
         <Button
+          color="secondary"
           variant="contained"
           onClick={onSearch}
         >

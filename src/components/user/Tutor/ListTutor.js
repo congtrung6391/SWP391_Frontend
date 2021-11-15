@@ -72,6 +72,7 @@ const ListTutor = () => {
         <Button
           variant="contained"
           onClick={onSearch}
+          color="secondary"
         >
           Search
         </Button>

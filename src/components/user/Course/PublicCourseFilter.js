@@ -147,6 +147,7 @@ const PublicCourseFilter = (props) => {
           variant="contained"
           onClick={onFiler}
           sx={{ ml: 1}}
+          color="secondary"
         >
           Filter
         </Button>

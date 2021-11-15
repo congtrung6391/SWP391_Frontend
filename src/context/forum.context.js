@@ -11,7 +11,7 @@ class ForumProvider extends React.Component {
     this.state = {
       questionList: [],
       totalQuestion: 0,
-      limit: 2,
+      limit: 20,
       answerList: [],
       totalAnswer: 0,
       getQuestionList: this.getQuestionList,

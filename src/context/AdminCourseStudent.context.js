@@ -10,7 +10,7 @@ class AdminCourseStudentProvider extends React.Component {
     this.state = {
       studentList: [],
       totalStudent: 0,
-      limit: 10,
+      limit: 20,
       getStudentList: this.getStudentList,
       replyRegister: this.replyRegister,
     };

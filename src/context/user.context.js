@@ -10,7 +10,7 @@ class UserProvider extends React.Component {
     this.state = {
       userList: [],
       totalUsers: 0,
-      limit: 2,
+      limit: 20,
       getTutorList: this.getTutorList,
       getUserProfile: this.getUserProfile,
     };

@@ -10,7 +10,7 @@ class AdminUserProvider extends React.Component {
     this.state = {
       userList: [],
       totalUsers: 0,
-      limit: 5,
+      limit: 20,
       getUserList: this.getUserList,
       changeUserRole: this.changeUserRole,
       deleteUser: this.deleteUser,

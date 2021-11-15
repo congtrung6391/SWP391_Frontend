@@ -10,7 +10,7 @@ class AdminCourseProvider extends React.Component {
     this.state = {
       courseList: [],
       totalCouse: 0,
-      limit: 3,
+      limit: 24,
       course: {},
       getCourseList: this.getCourseList,
       getCourse: this.getCourse,

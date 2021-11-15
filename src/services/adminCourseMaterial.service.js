@@ -9,7 +9,7 @@ class AdminCourseService {
   static async getMaterialList(cid, setting) {
     try {
       if (!setting.page) setting.page = 1;
-      if (!setting.limit) setting.limit = 1;
+      if (!setting.limit) setting.limit = 20;
       const queryString = URLService.stringify(setting);
       const response = await new AdminAPIService(
         'get',

@@ -18,8 +18,9 @@ class CourseProvider extends React.Component {
     };
   }
 
-  getCourseList = async (setting) => {
-    const response = await CourseService.getCourseList({ ...setting, limit: this.state.limit });
+  getCourseList = async (setting, auth) => {
+    console.log(auth);
+    const response = await CourseService.getCourseList({ ...setting, limit: this.state.limit }, auth);
     if (typeof response === 'string') {
         return;
     } else {
@@ -29,11 +30,12 @@ class CourseProvider extends React.Component {
 
   getCourse = async (id, auth = false) => {
     let newCourse = null;
-    if (auth) {
-      newCourse = await AdminCourseService.getCourse(id);
-    } else {
-      newCourse = await CourseService.getCourse(id);
-    }
+    // if (auth) {
+    //   newCourse = await AdminCourseService.getCourse(id);
+    // } else {
+    //   newCourse = await CourseService.getCourse(id);
+    // }
+    newCourse = await CourseService.getCourse(id, auth);
     if (typeof newCourse === 'string') {
       return null;
     }

@@ -120,17 +120,21 @@ const PublicCourseSingleList = ({ course }) => {
             fontStyle="italic"
             textAlign="center"
           >
-            {`${Math.floor(parseInt(course.cost, 10)/1000)}K/${course.length}'`}
+            {`${Math.floor(parseInt(course.cost, 10))}K/${course.length}'`}
           </Typography>
           <Box>
             <Button
               variant="contained"
-              color="success"
+              color={course.registered ? "error" : "success"}
               sx={{ borderRadius: 50 }}
-              onClick={onRegisterCourse}
+              onClick={course.registered ? null : onRegisterCourse}
               disabled={registering}
             >
-              Register
+              {
+                course.registered
+                  ? 'Registered'
+                  : 'Register'
+              }
               {
                 registering && (<Loading />)
               }

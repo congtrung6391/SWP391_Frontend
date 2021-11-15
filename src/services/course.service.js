@@ -6,7 +6,7 @@ import {
 
 class AdminCourseService {
 
-  static async getCourseList(setting = {}) {
+  static async getCourseList(setting = {}, auth) {
     try {
       if (!setting.page) setting.page = 1;
       if (!setting.limit) setting.limit = 20;
@@ -15,6 +15,8 @@ class AdminCourseService {
         'get',
         COURSES + '?' + queryString,
         null,
+        null,
+        auth,
       ).request();
       return {
         courseList: response.courseList,
@@ -45,7 +47,7 @@ class AdminCourseService {
     }
   }
 
-  static async getCourse(id) {
+  static async getCourse(id, auth) {
     // return {
     //   coureName: 'Demo Course Name',
     //   courseDescription: 'this is a demo course. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. it is hard coded>. ',
@@ -70,7 +72,7 @@ class AdminCourseService {
         COURSE_INFO,
         { id },
         null,
-        true,
+        auth,
       ).request();
       return response;
     } catch (error) {

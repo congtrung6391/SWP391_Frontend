@@ -78,7 +78,7 @@ const PublicCoursePage = (props) => {
       setFetched(false);
       const auth = verifyUser();
       const id = props.match.params['cid'];
-      const newCourse = await courseContext.getCourse(id, auth);
+      const newCourse = await courseContext.getCourse(id, !!auth);
       setCourse(newCourse);
       setFetched(true);
     }
@@ -211,13 +211,13 @@ const PublicCoursePage = (props) => {
                 </Box>
                 <Button
                   variant="contained"
-                  color="success"
+                  color={course.registered ? "error" : "success"}
                   sx={{ borderRadius: 50 }}
-                  onClick={onRegisterCourse}
-                  disabled={course.learningStatus}
+                  onClick={course.registered ? null : onRegisterCourse}
+                  disabled={registering}
                 >
                   {
-                    course.learningStatus
+                    course.registered
                       ? 'Registered'
                       : 'Register'
                   }

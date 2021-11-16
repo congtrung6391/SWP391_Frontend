@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Container, Box, Typography, Button, TextField, Paper, styled,
 } from '@mui/material';
-import SHA256 from 'crypto-js/sha256';
 import { isLoggedIn } from '../../../utils/cookies';
 import history from '../../../BrowserHistory';
 
@@ -168,7 +167,6 @@ class ResetPassword extends React.Component {
       errorResetCode,
       errorNewPassword,
       errorConfirmPassword,
-      username,
       resetCode,
       newPassword,
     } = this.state;
@@ -181,12 +179,11 @@ class ResetPassword extends React.Component {
 
     try {
       const resetObject = {
-        username,
-        resetPasswordToken: resetCode,
-        newPassword: SHA256(newPassword).toString(),
+        resetCode: resetCode,
+        newPassword: newPassword,
       };
 
-      const resetApi = new APIService('post', `${BASE}reset-password`, null, resetObject);
+      const resetApi = new APIService('post', `${BASE}auth/reset-password`, null, resetObject);
       await resetApi.request();
       history.push('/login');
     } catch (error) {

@@ -50,7 +50,7 @@ class ForgotPassword extends React.Component {
 
     try {
       await this.setState(() => ({ isSending: true }));
-      const forgotPasswordApi = new APIService('post', `${BASE}/auth/send-forgot-password?email=${emailOrUsername}`);
+      const forgotPasswordApi = new APIService('post', `${BASE}auth/send-forgot-password?email=${emailOrUsername}`);
       await forgotPasswordApi.request();
       history.push('/reset');
     } catch (error) {

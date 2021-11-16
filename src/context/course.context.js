@@ -1,5 +1,4 @@
 import React from 'react';
-import AdminCourseService from '../services/adminCourse.service';
 import CourseService from '../services/course.service';
 
 export const CourseContext = React.createContext();

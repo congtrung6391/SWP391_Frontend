@@ -128,7 +128,7 @@ const EditCourseInformation = (props) => {
             fullWidth
             variant="outlined"
             type='number'
-            label="Cost (VNĐ)"
+            label="Cost (K VNĐ)"
             name="cost"
             value={course.cost || ''}
             onChange={onChangeCost}

@@ -110,7 +110,7 @@ const ListUsers = () => {
         >
           {`Total users: ${userContext.totalUsers}`}
         </Button>
-        <Box
+        {/* <Box
           sx={{ mr: 1, maxWidth: '11rem' }}
         >
           <MuiSearch
@@ -119,7 +119,7 @@ const ListUsers = () => {
             onChange={onChangeSearchId}
             onSearch={onSearch}
           />
-        </Box>
+        </Box> */}
         <Box flexGrow={1}
           sx={{ mr: 1 }}
         >

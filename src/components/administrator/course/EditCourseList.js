@@ -157,7 +157,7 @@ const ListUsers = () => {
         </ButtonGroup>
       </Box>
       <Box mb={1} display="flex" flexDirection="row" flexWrap="wrap" gap={1}>
-        <Box sx={{ mr: 1 }}>
+        {/* <Box sx={{ mr: 1 }}>
           <MuiSearch
             label="Course Id"
             placeholder="Search Course Id"
@@ -165,7 +165,7 @@ const ListUsers = () => {
             onChange={(event) => setSearchCourseId(event.target.value)}
             onSearch={onSearch}
           />
-        </Box>
+        </Box> */}
         <Box flexGrow={1} sx={{ mr: 1 }}>
           <MuiSearch
             label="Course name"

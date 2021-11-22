@@ -51,7 +51,7 @@ const PublicCourseInfor = ({ course }) => {
               </Typography>
             </TableCell>
           </TableRow>
-          <TableRow>
+          {/* <TableRow>
             <TableCell>
               <Typography>
                 Course Description:
@@ -62,7 +62,7 @@ const PublicCourseInfor = ({ course }) => {
                 {course.courseDescription}
               </Typography>
             </TableCell>
-          </TableRow>
+          </TableRow> */}
           <TableRow>
             <TableCell>
               <Typography>

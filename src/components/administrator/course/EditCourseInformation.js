@@ -42,8 +42,8 @@ const EditCourseInformation = (props) => {
 
   const validateCost = (cost) => {
     const costNumber = parseInt(cost, 10);
-    if (costNumber > 2000000) {
-      setCostError('Cost should not be greater than 2.000.000 VND')
+    if (costNumber > 2000) {
+      setCostError('Cost should not be greater than 2.000 thousand VND')
     } else {
       setCostError('');
     }
@@ -128,7 +128,7 @@ const EditCourseInformation = (props) => {
             fullWidth
             variant="outlined"
             type='number'
-            label="Cost (K VNĐ)"
+            label="Cost (thousand VNĐ)"
             name="cost"
             value={course.cost || ''}
             onChange={onChangeCost}

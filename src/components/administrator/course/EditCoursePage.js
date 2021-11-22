@@ -75,7 +75,7 @@ const EditCoursePage = (props) => {
               direction="row"
             >
               <Typography className="text-vertical" variant="h6" route="info" key="info">
-                Infromation
+                Information
                 &nbsp;
                 <Icon>
                   <AssignmentIcon />
@@ -89,7 +89,7 @@ const EditCoursePage = (props) => {
                 </Icon>
               </Typography>
               <Typography className="text-vertical" variant="h6" route="material" key="material">
-                Material
+                Materials
                 &nbsp;
                 <Icon>
                   <CloudDownloadIcon />

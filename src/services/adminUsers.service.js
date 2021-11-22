@@ -34,7 +34,7 @@ class AdminUsersService {
   static async changeUserRole(role, username) {
     try {
       await new AdminAPIService(
-        'post',
+        'put',
         USER_ROLE,
         { id: username },
         { role: role },

@@ -76,7 +76,7 @@ const ListTutor = () => {
         >
           Search
         </Button>
-        <FormControl>
+        {/* <FormControl>
           <InputLabel id="select-subject">Sort by</InputLabel>
           <Select
             id="select-order"
@@ -101,14 +101,14 @@ const ListTutor = () => {
               Average rate
             </MenuItem>
           </Select>
-        </FormControl>
+        </FormControl> */}
       </Box>
       <Grid
         container
       >
         {
           fetched
-            ? tutorList.map((tutor) => (
+            ? (tutorList || []).map((tutor) => (
                 <Grid
                   item
                   key={tutor.id}

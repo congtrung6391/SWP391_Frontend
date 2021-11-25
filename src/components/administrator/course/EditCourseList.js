@@ -15,6 +15,7 @@ import {
   IconButton,
   Button,
   ButtonGroup,
+  Typography,
 } from '@mui/material';
 import PublicIcon from '@mui/icons-material/Public';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';

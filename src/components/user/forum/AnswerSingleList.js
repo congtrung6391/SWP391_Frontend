@@ -81,7 +81,7 @@ const AnswerSingleList = ({ qid, answer }) => {
           <em>{`${answer.user && (answer.user.username || 'Anonymous')} - ${moment(answer.createdDate).format('DD/MM/YYYY')}`}</em>
         </Typography>
         {
-          (getUserInformation('id') === answer.userId || verifyAdministrator()) && (
+          (getUserInformation('id') === answer.user.id || verifyAdministrator()) && (
             <ButtonGroup
               variant="text"
               size="small"

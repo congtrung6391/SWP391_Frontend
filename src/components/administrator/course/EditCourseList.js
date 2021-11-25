@@ -15,7 +15,7 @@ import {
   IconButton,
   Button,
   ButtonGroup,
-  Typography,
+  Tooltip,
 } from '@mui/material';
 import PublicIcon from '@mui/icons-material/Public';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -29,6 +29,7 @@ import { AdminCourseContext } from '../../../context/adminCourse.context';
 import { SubjectContext } from '../../../context/subject.context';
 import { AuthenticationContext } from '../../../context/authentication.context';
 import { NavLink } from 'react-router-dom';
+import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 
 const ListUsers = () => {
   const courseContext = useContext(AdminCourseContext);
@@ -287,9 +288,22 @@ const ListUsers = () => {
                         </NavLink>
                       </TableCell>
                       <TableCell align="center">
-                        <MenuBookIcon
-                          color={!course.learningStatus ? 'error' : 'success'}
-                        />
+                        {
+                          course.rejected && (
+                            <Tooltip title="You are rejected by the tutor of this course">
+                              <DoDisturbIcon color="error" />
+                            </Tooltip>
+                          )
+                        }
+                        {
+                          !course.rejected && (
+                            <Tooltip title={!course.learningStatus ? "Pending" : 'Approved'}>
+                              <MenuBookIcon
+                                color={!course.learningStatus ? 'warning' : 'success'}
+                              />
+                            </Tooltip>
+                          )
+                        }
                       </TableCell>
                       {/* {
                         verifyTutor() && (

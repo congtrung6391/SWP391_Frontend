@@ -4,7 +4,7 @@ class AdministratorService {
   static getRoleFeatures() {
     const features = [
       ['fas fa-chalkboard-teacher', 'Courses', '/admin/courses', '#44bd32', true],
-      ['far fa-object-group', 'Forum', '/admin/forum', '#B7B7B7', false],
+      // ['far fa-object-group', 'Forum', '/admin/forum', '#B7B7B7', false],
       ['fas fa-users-cog', 'Users', '/admin/users', '#273c75', false],
     ];
 

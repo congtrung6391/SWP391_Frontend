@@ -33,7 +33,8 @@ class AdminCourseStudentProvider extends React.Component {
     }
 
     const { studentList } = this.state;
-    const index = studentList.findIndex((s) => s.id === sid);
+    const index = studentList.findIndex((s) => s.courseStudentId === parseInt(sid, 10));
+    console.log(sid);
     if (!action) {
       studentList.splice(index, 1);
     } else {

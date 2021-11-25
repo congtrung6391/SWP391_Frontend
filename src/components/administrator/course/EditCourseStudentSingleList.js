@@ -65,9 +65,9 @@ const EditCourseStudentSingleList = ({ course, student, index }) => {
             approving && <Loading />
           }
           {
-            student.learningStatus && !approving
-              ? null
-              : <CheckCircleOutlineIcon />
+            (!student.learningStatus && !approving)
+              ? <CheckCircleOutlineIcon />
+              : null
           }
         </IconButton>
       </TableCell>

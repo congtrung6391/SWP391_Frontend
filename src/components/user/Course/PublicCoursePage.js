@@ -58,6 +58,8 @@ const PublicCoursePage = (props) => {
       toastContext.addNotification("Error", "Registration falied", 'error');
     } else {
       toastContext.addNotification('Success', 'Register success');
+      course.registered = true;
+      setCourse(course);
     }
     setRegistering(false);
   }

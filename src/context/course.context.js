@@ -49,6 +49,11 @@ class CourseProvider extends React.Component {
       return response;
     }
 
+    const { courseList } = this.state;
+    const index = courseList.findIndex((c) => c.id === courseId);
+    courseList[index].registered = true;
+    this.setState({ courseList });
+
     return response;
   }
 
